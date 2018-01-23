@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CPSC233-GroupProject.iml" filepath="$PROJECT_DIR$/CPSC233-GroupProject.iml" />
+      <module fileurl="file://C:\Users\devon\AndroidStudioProjects\cpsc233-DeSCriBe-SemesterProject\CPSC233-GroupProject.iml" filepath="C:\Users\devon\AndroidStudioProjects\cpsc233-DeSCriBe-SemesterProject\CPSC233-GroupProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cpsc233-DeSCriBe-SemesterProject.iml" filepath="$PROJECT_DIR$/cpsc233-DeSCriBe-SemesterProject.iml" />
     </modules>
   </component>
 </project>
