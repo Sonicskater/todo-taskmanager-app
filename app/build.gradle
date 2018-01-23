@@ -3,12 +3,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.describe.term_project"
+        applicationId 'com.describe.term_project'
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName '0.0.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionNameSuffix 'Alpha'
     }
     buildTypes {
         release {
@@ -17,6 +18,8 @@ android {
         }
     }
     buildToolsVersion '26.0.2'
+    productFlavors {
+    }
 }
 
 dependencies {
