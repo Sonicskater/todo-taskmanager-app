@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Term-Project</string>
+
+    <string name="title_activity_blank_screen">BlankScreen</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
