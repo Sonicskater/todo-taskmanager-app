@@ -35,5 +35,7 @@ build:
 
 deploy:
   stage: deploy
+  dependencies:
+    - build
   script:
     - ./gradlew publishApkRelease
