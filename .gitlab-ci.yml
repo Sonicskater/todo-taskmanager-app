@@ -38,4 +38,4 @@ deploy:
   dependencies:
     - build
   script:
-    - ./gradlew publishApkRelease
+    - ./gradlew app:publishApkRelease
