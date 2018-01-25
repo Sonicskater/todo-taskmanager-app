@@ -9,7 +9,7 @@ android {
     }
     signingConfigs {
         upload {
-            storeFile file('C:/Users/devon/AndroidStudioProjects/cpsc233-DeSCriBe-SemesterProject/app/keystore.jks')
+            storeFile file('C:/Users/devon/AndroidStudioProjects/cpsc233-DeSCriBe-SemesterProject/app/keystore.keystore')
         }
     }
     play {
