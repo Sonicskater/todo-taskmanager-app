@@ -23,6 +23,7 @@ before_script:
 stages:
   - build
   - test
+  - deploy
 
 build:
   stage: build
@@ -31,3 +32,8 @@ build:
   artifacts:
     paths:
     - app/build/outputs/
+
+deploy:
+  stage: deploy
+  script:
+    - ./gradlew publishApkRelease
