@@ -38,7 +38,7 @@ deploy:
   stage: deploy
   dependencies:
     - build
-  enviroment:
+  environment:
     name: Google Play Alpha Chaannel
     url: https://play.google.com/store?hl=en
   script:
