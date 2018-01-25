@@ -7,6 +7,7 @@ variables:
 
 before_script:
   - apt-get --quiet update --yes
+  - chmod +x ./gradlew
   
 
 stages:
@@ -28,7 +29,6 @@ build:
     - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-google-m2repository
     - export ANDROID_HOME=$PWD/android-sdk-linux
     - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
-    - chmod +x ./gradlew
     - ./gradlew assembleRelease
   artifacts:
     paths:
@@ -38,5 +38,8 @@ deploy:
   stage: deploy
   dependencies:
     - build
+  enviroment:
+    name: Google Play Alpha Chaannel
+    url: https://play.google.com/store?hl=en
   script:
     - ./gradlew app:publishApkRelease
