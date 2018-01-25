@@ -10,6 +10,9 @@ android {
     signingConfigs {
         upload {
             storeFile file('keystore.keystore')
+            storePassword ''
+            keyAlias 'upload'
+            keyPassword ''
         }
     }
     play {
