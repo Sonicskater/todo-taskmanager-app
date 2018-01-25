@@ -1,6 +1,22 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.github.triplet.play'
 android {
+    playAccountConfigs {
+        defaultAccountConfig {
+            serviceAccountEmail = 'gitlab-ci-uploader@api-5838958897138910585-275795.iam.gserviceaccount.com'
+            pk12File = file('Google Play Android Developer-76bd2ae3ded4.p12')
+        }
+    }
+    signingConfigs {
+        upload {
+            storeFile file('C:/Users/devon/AndroidStudioProjects/cpsc233-DeSCriBe-SemesterProject/app/keystore.jks')
+        }
+    }
+    play {
+        // ...
+        track = 'alpha' // or 'rollout' or 'beta' or 'alpha'
+        userFraction = 0.2 // only necessary for 'rollout', in this case default is 0.1 (10% of the target)
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId 'com.describe.term_project'
