@@ -8,17 +8,12 @@ android {
         }
     }
     signingConfigs {
-        upload {
-            storeFile file('keystore.keystore')
-            storePassword ''
-            keyAlias 'upload'
-            keyPassword 'pass1234'
-        }
         release {
-            storeFile file('keystore.keystore')
-            storePassword ''
+
             keyAlias 'upload'
-            keyPassword 'pass1234'
+            keyPassword 'describeupload'
+            storeFile file('upload.keystore')
+            storePassword 'describekeys'
         }
     }
     play {
@@ -28,13 +23,14 @@ android {
     }
     compileSdkVersion 26
     defaultConfig {
-        applicationId 'com.describe.term_project'
+        applicationId 'com.describe.taskmanager'
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName '0.0.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionNameSuffix 'Alpha'
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
