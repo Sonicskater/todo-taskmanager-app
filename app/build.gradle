@@ -12,13 +12,13 @@ android {
             storeFile file('keystore.keystore')
             storePassword ''
             keyAlias 'upload'
-            keyPassword ''
+            keyPassword 'pass1234'
         }
         release {
             storeFile file('keystore.keystore')
             storePassword ''
             keyAlias 'upload'
-            keyPassword ''
+            keyPassword 'pass1234'
         }
     }
     play {
