@@ -70,6 +70,7 @@ android {
 }
 
 def increaseVersionCode() {
+    def versionPropsFile = file('version.properties')
     gradle.taskGraph.whenReady { taskGraph ->
         if (taskGraph.hasTask(assembleRelease)) {
             /* when run release task */
