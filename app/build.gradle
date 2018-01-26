@@ -14,6 +14,12 @@ android {
             keyAlias 'upload'
             keyPassword ''
         }
+        release {
+            storeFile file('keystore.keystore')
+            storePassword ''
+            keyAlias 'upload'
+            keyPassword ''
+        }
     }
     play {
         // ...
