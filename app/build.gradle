@@ -3,8 +3,8 @@ apply plugin: 'com.github.triplet.play'
 android {
     playAccountConfigs {
         defaultAccountConfig {
-            serviceAccountEmail = 'gitlab-ci-uploader@api-5838958897138910585-275795.iam.gserviceaccount.com'
-            pk12File = file('Google Play Android Developer-76bd2ae3ded4.p12')
+            serviceAccountEmail = 'ci-uploader@api-5838958897138910585-275795.iam.gserviceaccount.com'
+            pk12File = file('CI-Uploader.p12')
         }
     }
     signingConfigs {
