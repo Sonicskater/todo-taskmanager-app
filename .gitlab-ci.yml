@@ -6,6 +6,7 @@ variables:
   ANDROID_SDK_TOOLS: "24.4.1"
 
 before_script:
+  - export ANDROID_HOME=$PWD/android-sdk-linux
   - chmod +x ./gradlew
   - export GRADLE_USER_HOME=cache/.gradle
   

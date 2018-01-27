@@ -52,8 +52,8 @@ android {
         def Properties versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
-        def name = System.getenv("CI_PIPELINE_ID").toInteger()
-        def code = versionProps['VERSION_CODE'].toInteger()
+        def code = System.getenv("CI_PIPELINE_ID").toInteger()
+        def name = versionProps['VERSION_NAME']
         versionProps['VERSION_CODE']=code.toString()
         versionProps.store(versionPropsFile.newWriter(), null)
 
