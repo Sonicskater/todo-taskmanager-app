@@ -52,7 +52,7 @@ android {
         def Properties versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
-        def name = versionProps['VERSION_NAME']
+        def name = "$System.env.CI_PIPELINE_ID".toInteger()-8100
         def code = versionProps['VERSION_CODE'].toInteger()
         versionProps['VERSION_CODE']=code.toString()
         versionProps.store(versionPropsFile.newWriter(), null)
@@ -68,31 +68,9 @@ android {
     else {
         throw new GradleException("Could not read version.properties!")
     }
-    increaseVersionCode()
 }
 
-def increaseVersionCode() {
-    def versionPropsFile = file('version.properties')
-    gradle.taskGraph.whenReady { taskGraph ->
-        if (taskGraph.hasTask(assembleRelease)) {
-            /* when run release task */
-            if (versionPropsFile.canRead()) {
-                def Properties versionProps = new Properties()
 
-                versionProps.load(new FileInputStream(versionPropsFile))
-
-                def build = versionProps['VERSION_BUILD'].toInteger() + 1
-                def code = versionProps['VERSION_CODE'].toInteger() + 1
-
-                versionProps['VERSION_BUILD'] = build.toString()
-                versionProps['VERSION_CODE'] = code.toString()
-                versionProps.store(versionPropsFile.newWriter(), null)
-            } else {
-                throw new GradleException("Could not read version.properties!")
-            }
-        }
-    }
-}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
