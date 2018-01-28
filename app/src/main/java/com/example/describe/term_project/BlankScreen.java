@@ -107,8 +107,7 @@ public class BlankScreen extends AppCompatActivity {
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        // while interacting with the UI
 
         final Button test_crash_button = findViewById(R.id.test_crash);
         test_crash_button.setOnClickListener(new View.OnClickListener() {
