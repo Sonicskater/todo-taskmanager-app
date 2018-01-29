@@ -84,7 +84,7 @@ public class BlankScreen extends AppCompatActivity {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+                //delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
             return false;
         }
@@ -129,7 +129,7 @@ public class BlankScreen extends AppCompatActivity {
 
     private void toggle() {
         if (mVisible) {
-            hide();
+            //hide();
         } else {
             show();
         }
