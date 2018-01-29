@@ -27,6 +27,8 @@ deploy:
   stage: deploy
   dependencies:
     - build
+  only:
+    - master
   environment:
     name: Google Play Alpha Chaannel
     url: https://play.google.com/store?hl=en
