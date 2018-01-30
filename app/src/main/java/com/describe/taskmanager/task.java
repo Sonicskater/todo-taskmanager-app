@@ -1,4 +1,5 @@
-package com.example.describe.term_project;
+package com.describe.taskmanager
+        ;
 
 /**
  * Created by devon on 1/26/2018.
@@ -22,7 +23,7 @@ public class task {
             this.taskTitle = newTitle;
         }
         else{
-            //Display "You do not have permissions" pop-up
+            //Display "Yall do not have permissions" pop-up
         }
     }
     public void setTaskContents(int editorID, String newContents){

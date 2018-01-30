@@ -1,9 +1,9 @@
-apply plugin:'com.android.application'
+apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-perf'
-apply plugin:'io.fabric'
+apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
 android {
-    
+
     playAccountConfigs {
         defaultAccountConfig {
             serviceAccountEmail = 'ci-uploader@api-5838958897138910585-275795.iam.gserviceaccount.com'
@@ -22,7 +22,8 @@ android {
     play {
         // ...
         track = 'alpha' // or 'rollout' or 'beta' or 'alpha'
-        userFraction = 0.2 // only necessary for 'rollout', in this case default is 0.1 (10% of the target)
+        userFraction = 0.2
+        // only necessary for 'rollout', in this case default is 0.1 (10% of the target)
     }
     compileSdkVersion 26
     defaultConfig {
@@ -56,11 +57,11 @@ android {
         try {
             code = System.getenv("CI_PIPELINE_ID").toInteger() - 8100
         }
-        catch(Exception exception){
+        catch (Exception exception) {
             code = 1
         }
         def name = versionProps['VERSION_NAME']
-        versionProps['VERSION_CODE']=code.toString()
+        versionProps['VERSION_CODE'] = code.toString()
         versionProps.store(versionPropsFile.newWriter(), null)
 
         defaultConfig {
@@ -70,8 +71,7 @@ android {
             minSdkVersion 21
             targetSdkVersion 26
         }
-    }
-    else {
+    } else {
         throw new GradleException("Could not read version.properties!")
     }
 }
@@ -81,6 +81,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:design:26.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
