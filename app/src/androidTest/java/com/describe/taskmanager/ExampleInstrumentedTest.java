@@ -1,4 +1,4 @@
-package com.example.describe.term_project;
+package com.describe.taskmanager;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
