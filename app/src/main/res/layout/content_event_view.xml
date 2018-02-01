@@ -8,86 +8,104 @@
     tools:context="com.describe.taskmanager.EventView"
     tools:showIn="@layout/activity_event_view">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:width="300dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="35dp" />
+    <RelativeLayout
+        android:layout_width="395dp"
+        android:layout_height="587dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="300dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:minHeight="220dp"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="116dp" />
+        <EditText
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="37dp"
+            android:width="300dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Title" />
 
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="120dp"
-        android:ems="10"
-        android:inputType="date"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="373dp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/titleText"
+            android:layout_marginTop="14dp"
+            android:text="Title" />
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="120dp"
-        android:ems="10"
-        android:inputType="time"
-        tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="373dp" />
+        <EditText
+            android:id="@+id/descriptionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:width="300dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:minHeight="250dp"
+            android:text="Description" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/titleText"
+            android:layout_below="@+id/titleText"
+            android:layout_marginTop="20dp"
+            android:text="Description" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:text="Description"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="100dp" />
+        <EditText
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/descriptionText"
+            android:layout_below="@+id/descriptionText"
+            android:layout_marginTop="42dp"
+            android:width="120dp"
+            android:ems="10"
+            android:inputType="date"
+            android:text="Date" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="353dp" />
+        <EditText
+            android:id="@+id/timeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/dateText"
+            android:layout_alignBottom="@+id/dateText"
+            android:layout_alignEnd="@+id/descriptionText"
+            android:width="120dp"
+            android:ems="10"
+            android:inputType="time"
+            android:text="Time" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time"
-        tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="354dp" />
+        <TextView
+            android:id="@+id/Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/timeText"
+            android:layout_alignStart="@+id/dateText"
+            android:text="Date" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="250dp"
-        tools:layout_editor_absoluteY="447dp" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/timeText"
+            android:layout_alignStart="@+id/timeText"
+            android:text="Time" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeText"
+            android:layout_marginTop="36dp"
+            android:layout_toEndOf="@+id/textView4"
+            android:onClick="onCreateEvent"
+            android:text="Save" />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
