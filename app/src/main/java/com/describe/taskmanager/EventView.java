@@ -1,10 +1,12 @@
 package com.describe.taskmanager;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.describe.taskmanager.domain.Event;
@@ -15,6 +17,7 @@ import java.util.Date;
 
 
 public class EventView extends AppCompatActivity {
+    Dialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class EventView extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        datePickerDialog = new Dialog(this);
     }
 
     public void onCreateEvent(View view) throws ParseException {
@@ -34,6 +38,12 @@ public class EventView extends AppCompatActivity {
         System.out.println("Description " + newEvent.getDescription());
         System.out.println("Date - " + newEvent.getDate());
         System.out.println("Time " + newEvent.getTime());
+    }
+
+    protected void onClickEventDate(View view) {
+
+        datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
+        datePickerDialog.show();
     }
 
     private void ShowToast(String message) {
@@ -49,7 +59,7 @@ public class EventView extends AppCompatActivity {
         event.setDescription(description.getText().toString());
 
         try {
-            EditText date   = findViewById(R.id.dateText);
+            TextView date   = findViewById(R.id.eventDate);
             event.setDate(parseDate(date.getText().toString()));
         } catch (ParseException ex) {
             System.out.println("error parsing the date");

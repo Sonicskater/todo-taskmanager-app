@@ -19,7 +19,8 @@
         <activity
             android:name=".EventView"
             android:label="@string/title_activity_event_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DatePickerPopup"></activity>
     </application>
 
 </manifest>

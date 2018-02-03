@@ -57,24 +57,23 @@
             android:layout_marginTop="20dp"
             android:text="Description" />
 
-        <EditText
-            android:id="@+id/dateText"
+
+        <TextView
+            android:id="@+id/eventDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/descriptionText"
             android:layout_below="@+id/descriptionText"
             android:layout_marginTop="42dp"
-            android:width="120dp"
-            android:ems="10"
-            android:inputType="date"
-            android:text="Date" />
+            android:onClick="onClickEventDate"
+            android:text="date here" />
 
         <EditText
             android:id="@+id/timeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/dateText"
-            android:layout_alignBottom="@+id/dateText"
+            android:layout_alignBaseline="@+id/eventDate"
+            android:layout_alignBottom="@+id/eventDate"
             android:layout_alignEnd="@+id/descriptionText"
             android:width="120dp"
             android:ems="10"
@@ -86,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/timeText"
-            android:layout_alignStart="@+id/dateText"
+            android:layout_alignStart="@+id/eventDate"
             android:text="Date" />
 
         <TextView
