@@ -5,7 +5,7 @@ package com.describe.taskmanager;
  */
 
 public class user {
-    private int userID = 0;
+    public int userID = 0;
     private int[] userCatagories = {0};
     private String username = "default_user";
 }
