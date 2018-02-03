@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,8 +42,24 @@ public class EventView extends AppCompatActivity {
     }
 
     protected void onClickEventDate(View view) {
-
         datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
+
+        Button cancelButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog.dismiss();
+            }
+        });
+
+        Button okButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerOk);
+        okButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                datePickerDialog.dismiss();
+            }
+        });
+
         datePickerDialog.show();
     }
 
