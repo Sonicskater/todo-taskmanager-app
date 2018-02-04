@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.describe.taskmanager.domain.Event;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -23,6 +21,8 @@ import java.util.GregorianCalendar;
 public class EventView extends AppCompatActivity {
     Dialog datePickerDialog;
     Date chosenDate ;
+    Dialog timePickerDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class EventView extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         datePickerDialog = new Dialog(this);
+        timePickerDialog = new Dialog(this);
     }
 
     public void onCreateEvent(View view) throws ParseException {
@@ -72,9 +73,26 @@ public class EventView extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void ShowToast(String message) {
-        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
-        toast.show();
+    protected void onClickEventTime(View view){
+        timePickerDialog.setContentView(R.layout.activity_time_picker_popup);
+
+        Button cancelButton = timePickerDialog.findViewById(R.id.btnTimePickerCancel);
+        cancelButton.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                timePickerDialog.dismiss();
+            }
+        });
+
+        Button okButton  = timePickerDialog.findViewById(R.id.btnTimePickerOk);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerDialog.dismiss();
+            }
+        });
+
+        timePickerDialog.show();
     }
 
     private Event setProperties(Event event) {
@@ -87,7 +105,7 @@ public class EventView extends AppCompatActivity {
         TextView date   = findViewById(R.id.eventDate);
         event.setDate(this.chosenDate);
 
-        EditText time = findViewById(R.id.timeText);
+        TextView time = findViewById(R.id.timeText);
         event.setTime(time.getText().toString());
 
         return event;
