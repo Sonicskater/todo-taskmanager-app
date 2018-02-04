@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,11 +15,14 @@ import com.describe.taskmanager.domain.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class EventView extends AppCompatActivity {
     Dialog datePickerDialog;
+    Date chosenDate ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,11 @@ public class EventView extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                DatePicker datePicker = datePickerDialog.findViewById(R.id.datePicker);
+
+                chosenDate = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())
+                                      .getTime();
+
                 datePickerDialog.dismiss();
             }
         });
@@ -75,22 +84,12 @@ public class EventView extends AppCompatActivity {
         EditText description   = findViewById(R.id.descriptionText);
         event.setDescription(description.getText().toString());
 
-        try {
-            TextView date   = findViewById(R.id.eventDate);
-            event.setDate(parseDate(date.getText().toString()));
-        } catch (ParseException ex) {
-            System.out.println("error parsing the date");
-            ShowToast("Invalid Date.  dd-MM-yyyy expected");
-        }
+        TextView date   = findViewById(R.id.eventDate);
+        event.setDate(this.chosenDate);
 
         EditText time = findViewById(R.id.timeText);
         event.setTime(time.getText().toString());
 
         return event;
-    }
-
-    private Date parseDate(String value) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        return dateFormat.parse(value);
     }
 }
