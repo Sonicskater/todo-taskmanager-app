@@ -9,18 +9,22 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.TimePicker;
 
 import com.describe.taskmanager.domain.Event;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 
 public class EventView extends AppCompatActivity {
     Dialog datePickerDialog;
-    Date chosenDate ;
+    Date chosenDate = new Date();
     Dialog timePickerDialog;
 
 
@@ -66,6 +70,7 @@ public class EventView extends AppCompatActivity {
                 chosenDate = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())
                                       .getTime();
 
+                showEventDate();
                 datePickerDialog.dismiss();
             }
         });
@@ -88,11 +93,32 @@ public class EventView extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TimePicker timePicker = timePickerDialog.findViewById(R.id.timePicker);
+
+                GregorianCalendar cal = new GregorianCalendar();
+                cal.setTime(chosenDate);
+                cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+
+                chosenDate = cal.getTime();
+                showEventDate();
+
                 timePickerDialog.dismiss();
             }
         });
 
         timePickerDialog.show();
+    }
+
+    private void showEventDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+        TextView date   = findViewById(R.id.eventDate);
+        date.setText(dateFormat.format(chosenDate));
+
+        TextView time = findViewById(R.id.timeText);
+        time.setText(timeFormat.format(chosenDate));
     }
 
     private Event setProperties(Event event) {
@@ -102,7 +128,6 @@ public class EventView extends AppCompatActivity {
         EditText description   = findViewById(R.id.descriptionText);
         event.setDescription(description.getText().toString());
 
-        TextView date   = findViewById(R.id.eventDate);
         event.setDate(this.chosenDate);
 
         TextView time = findViewById(R.id.timeText);
