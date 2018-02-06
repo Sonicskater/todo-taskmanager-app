@@ -10,7 +10,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -36,23 +39,19 @@ public class firebaseAgent {
                     }
                 });
     }
-    public int getUSerID(String file,final UIInterface callingObject,final String fieldName){
+    //Gets a specified UserDocument and returns it to the requested field
+    public void getUserDocument(String file, final UIInterface callingObject, final String fieldName){
         DocumentReference docRef = db.collection("users").document(file);
 
-        final int num = 1234;
-        Task document = docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-                        Log.d(TAG, "DocumentSnapshot data: " + task.getResult().getData());
-                        Log.d("test",task.getResult().getData().get("user_object").toString());
-                        Log.d("test",task.getResult().getData().get("user_object").getClass().toString());
-                        Log.d("test",Integer.toString(num));
-                        callingObject.updateField(fieldName,"test_content");
-                        user tempUser = document.toObject(com.describe.taskmanager.user.class);
-                        int userID = tempUser.userID;
+
+                        callingObject.updateField(fieldName,task.getResult().getData().toString());
+
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -61,15 +60,67 @@ public class firebaseAgent {
                 }
             }
         });
+    }
+    //Gets a specified CategoryDocument and return it to the requested field
+    public void getCategoryDocument(String file, final UIInterface callingObject, final String fieldName){
+        DocumentReference docRef = db.collection("users").document(file).collection("categories").document("category");
 
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
 
+                        callingObject.updateField(fieldName,task.getResult().getData().toString());
 
-        int userID = 0;
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+    //Gets a specified TaskDocument and return it to the requested field
+    public void getTaskDocument(String file, final UIInterface callingObject, final String fieldName){
+        DocumentReference docRef = db.collection("users").document(file).collection("categories").document("category").collection("tasks").document("default_task");
 
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
 
+                        callingObject.updateField(fieldName,task.getResult().getData().toString());
 
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+    // Returns the collection of categories from a specified user.
+    public void getCategoryCollection(final String user,final UIInterface callingObject){
+        db.collection("users").document(user).collection("categories").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            List<String> docs = new ArrayList<String>();
 
+                            for (DocumentSnapshot taskDoc : task.getResult()){
+                                docs.add(taskDoc.getData().toString());
+                            }
+                            callingObject.updateCollection(user.toString()+"/"+callingObject.toString(),docs.toString());
+                        }
+                    }
+                });
 
-        return userID;
     }
 }

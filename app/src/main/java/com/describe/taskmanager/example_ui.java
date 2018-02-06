@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.crashlytics.android.core.CrashlyticsCore;
 /*
-This file is ment as an example of how to implement the UIInterface interface and for tesing the database, NOT MEANT FOR PRODUCTION USE
+This file is meant as an example of how to implement the UIInterface interface and for tesing the database, NOT MEANT FOR PRODUCTION USE
  */
 
 public class example_ui extends AppCompatActivity implements UIInterface {
@@ -24,7 +24,10 @@ public class example_ui extends AppCompatActivity implements UIInterface {
         final Button getUserButton = findViewById(R.id.getUserButton);
         getUserButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Log.d("EMPTY_SCREEN_TEST", Integer.toString(fbAgent.getUSerID("g2x3irLzu1DTJXbymPXw",self,"test_field")));
+                fbAgent.getUserDocument("g2x3irLzu1DTJXbymPXw",self,"test_field");
+                fbAgent.getCategoryDocument("g2x3irLzu1DTJXbymPXw",self,"test_field");
+                fbAgent.getTaskDocument("g2x3irLzu1DTJXbymPXw",self,"test_field");
+                fbAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",self);
             }
         });
     }
@@ -32,5 +35,11 @@ public class example_ui extends AppCompatActivity implements UIInterface {
     @Override
     public void updateField(String fieldName, String fieldContent) {
         Log.d("Interface_TEST",(fieldName.toString()+" "+fieldContent.toString()));
+    }
+    @Override
+    public void updateCollection(String address, String content){
+        Log.d("Interface_TEST",address);
+        Log.d("Interface_TEST",content);
+
     }
 }

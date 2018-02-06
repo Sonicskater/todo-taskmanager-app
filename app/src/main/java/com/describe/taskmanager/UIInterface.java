@@ -6,4 +6,6 @@ package com.describe.taskmanager;
 
 public interface UIInterface {
     void updateField(String fieldName, String fieldContent);
+    void updateCollection(String collectionName, String collectionContent);
 }
+
