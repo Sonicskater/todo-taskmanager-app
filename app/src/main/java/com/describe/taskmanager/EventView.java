@@ -1,5 +1,6 @@
 package com.describe.taskmanager;
 
+
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,9 @@ public class EventView extends AppCompatActivity {
         System.out.println("Description " + newEvent.getDescription());
         System.out.println("Date - " + newEvent.getDate());
         System.out.println("Time " + newEvent.getTime());
+
+
+
     }
 
     protected void onClickEventDate(View view) {
