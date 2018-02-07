@@ -1,13 +1,37 @@
 package com.describe.taskmanager;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class emptyScreen extends AppCompatActivity {
+    Button button;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get the view from activity_main.xml
         setContentView(R.layout.activity_empty_screen);
+
+        // Locate the button in activity_main.xml
+        button = (Button) findViewById(R.id.newActivityButton);
+
+        // Capture button clicks
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+
+                // Start NewActivity.class
+                Intent myIntent = new Intent(emptyScreen.this,
+                        EventView.class);
+                startActivity(myIntent);
+            }
+        });
     }
+
 }

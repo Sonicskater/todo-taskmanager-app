@@ -1,4 +1,4 @@
-package com.describe.taskmanager
+package com.describe.taskmanager.domain
         ;
 
 /**
