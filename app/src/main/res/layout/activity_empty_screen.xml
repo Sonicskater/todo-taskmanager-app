@@ -5,7 +5,45 @@
     android:id="@+id/test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.describe.taskmanager.emptyScreen">
+    tools:context="com.describe.taskmanager.example_ui">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="151dp" />
+
+    <Button
+        android:id="@+id/getUserButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GET user"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="243dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UserID"
+        tools:layout_editor_absoluteX="61dp"
+        tools:layout_editor_absoluteY="113dp" />
+
+    <TextView
+        android:id="@+id/userIDDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="113dp" />
+
+    <TextView
+        android:id="@+id/usernameDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="151dp" />
 
     <Button
         android:id="@+id/newActivityButton"
