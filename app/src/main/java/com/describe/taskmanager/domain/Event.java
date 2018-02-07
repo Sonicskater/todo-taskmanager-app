@@ -48,4 +48,14 @@ public class Event {
         private int[] userCatagories = {0};
         private String username = "default_user";
     }
+    //default
+    public Event(){
+
+    }
+    public Event(String title, String description, Date date, String Time){
+        this.title = title;
+        this.description = title;
+        this.date = date;
+        this.time = time;
+    }
 }
