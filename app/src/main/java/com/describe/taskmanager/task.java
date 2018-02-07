@@ -6,33 +6,43 @@ package com.describe.taskmanager
  */
 
 public class task {
-    private int ownerID = 0;
+    private String ownerID = "0";
     private String taskTitle = "";
     private String taskContents = "";
     private int categoryID = 0;
 
-    public task(int creatorID,String title, String content, int categoryID){
+    //Need empty constructor in order to allow firebase to convert the object to a form it can use automatically.
+    //No I don't know why
+    public task(){}
+
+    public task(String creatorID,String title, String content, int categoryID){
         this.categoryID = categoryID;
         this.taskTitle = title;
         this.ownerID = creatorID;
         this.taskContents = content;
 
     }
-    public void setTaskTitle(int editorID, String newTitle){
-        if (editorID == this.ownerID){
-            this.taskTitle = newTitle;
-        }
-        else{
-            //Display "Yall do not have permissions" pop-up
-        }
+    public void setTaskTitle(String newTitle){
+
+        this.taskTitle = newTitle;
+
     }
-    public void setTaskContents(int editorID, String newContents){
-        if (editorID == this.ownerID){
-            this.taskContents = newContents;
-        }
-        else{
-            //Display "You do not have permissions" pop-up
-        }
+    public void setTaskContents(String newContents){
+
+        this.taskContents = newContents;
+
+    }
+    public String getOwnerID(){
+        return this.ownerID;
+    }
+    public String getTaskTitle(){
+        return this.taskTitle;
+    }
+    public String getTaskContents(){
+        return this.taskContents;
+    }
+    public int getCategoryID(){
+        return this.categoryID;
     }
 
 }

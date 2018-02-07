@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -21,24 +23,9 @@ import static android.content.ContentValues.TAG;
  * Created by devon on 1/31/2018.
  */
 
-public class firebaseAgent {
+public class firestoreAgent {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public void getUserCollection(){
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-    }
+
     //Gets a specified UserDocument and returns it to the requested field
     public void getUserDocument(String file, final UIInterface callingObject, final String fieldName){
         DocumentReference docRef = db.collection("users").document(file);
@@ -122,5 +109,54 @@ public class firebaseAgent {
                     }
                 });
 
+    }
+    public void getTaskCollection(final String user,final UIInterface callingObject,final String category){
+        db.collection("users").document(user).collection("categories").document(category).collection("tasks").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            List<String> docs = new ArrayList<String>();
+
+                            for (DocumentSnapshot taskDoc : task.getResult()){
+                                docs.add(taskDoc.getData().toString());
+                            }
+                            callingObject.updateCollection(category.toString()+"/"+user.toString()+"/"+callingObject.toString(),docs.toString());
+                        }
+                    }
+                });
+
+    }
+    public void addCategory(final String user, final category categoryObj, final UIInterface callingObject){
+        db.collection("users").document(user).collection("categories").document(categoryObj.getCategoryTitle()).set(categoryObj
+
+        ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                   @Override
+                                   public void onSuccess(Void aVoid) {
+                                       callingObject.firebaseSuccess("Added category","category added successfully");
+                                   }
+                               }
+        ).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callingObject.firebaseFailure("1x000A","Failed to add Category","failed to add Category to user");
+            }
+        });
+    }
+    public void addTask(final String user, final String category,final task taskObj,final UIInterface callingObject){
+        db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(taskObj.getTaskTitle()).set(taskObj
+
+        ).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                callingObject.firebaseSuccess("Added task","task added successfully");
+            }
+                                                                                                                            }
+        ).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callingObject.firebaseFailure("1x000A","Failed to add task","failed to add task to user");
+            }
+        });
     }
 }
