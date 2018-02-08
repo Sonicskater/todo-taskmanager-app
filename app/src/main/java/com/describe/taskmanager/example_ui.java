@@ -30,7 +30,7 @@ public class example_ui extends AppCompatActivity implements UIInterface {
                 fbAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",self);
                 fbAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw",self,"category");
                 task taskObj = new task("g2x3irLzu1DTJXbymPXw","test_task_001","task for testing firebase system",1);
-                fbAgent.addTask("g2x3irLzu1DTJXbymPXw","category",taskObj,self);
+                //fbAgent.addTask("g2x3irLzu1DTJXbymPXw","category",taskObj,self);
                 category categoryObj = new category(001,"debug_category_001");
                 fbAgent.addCategory("g2x3irLzu1DTJXbymPXw",categoryObj,self);
             }

@@ -1,4 +1,4 @@
-package com.describe.taskmanager.domain;
+package com.describe.taskmanager;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by bencook on 2018-01-31.
  */
 
-public class Event {
+public class taskEvent {
 
     private String title;
     private String description;
@@ -49,10 +49,10 @@ public class Event {
         private String username = "default_user";
     }
     //default
-    public Event(){
+    public taskEvent(){
 
     }
-    public Event(String title, String description, Date date, String Time){
+    public taskEvent(String title, String description, Date date, String Time){
         this.title = title;
         this.description = title;
         this.date = date;

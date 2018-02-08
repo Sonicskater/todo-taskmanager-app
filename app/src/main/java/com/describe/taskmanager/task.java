@@ -1,5 +1,4 @@
-package com.describe.taskmanager.domain
-        ;
+package com.describe.taskmanager;
 
 /**
  * Created by devon on 1/26/2018.

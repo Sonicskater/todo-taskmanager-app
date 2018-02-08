@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.describe.taskmanager.EventView"
+    tools:context="com.describe.taskmanager.EventCreateView"
     tools:showIn="@layout/activity_event_view">
 
     <RelativeLayout
@@ -65,7 +65,7 @@
             android:layout_alignStart="@+id/descriptionText"
             android:layout_below="@+id/descriptionText"
             android:layout_marginTop="42dp"
-            android:onClick="onClickEventDate"
+
             android:text="date here" />
 
         <Button
@@ -85,7 +85,7 @@
             android:layout_alignEnd="@+id/descriptionText"
             android:layout_alignTop="@+id/eventDate"
             android:layout_marginEnd="45dp"
-            android:onClick="onClickEventTime"
+
             android:text="time here" />
 
         <TextView

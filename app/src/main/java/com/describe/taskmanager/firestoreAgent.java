@@ -143,8 +143,8 @@ public class firestoreAgent {
             }
         });
     }
-    public void addTask(final String user, final String category,final task taskObj,final UIInterface callingObject){
-        db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(taskObj.getTaskTitle()).set(taskObj
+    public void addTask(final String user, final String category,final taskEvent taskObj,final UIInterface callingObject){
+        db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(taskObj.getTitle()).set(taskObj
 
         ).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
