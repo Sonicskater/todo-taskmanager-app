@@ -102,7 +102,7 @@ public class firestoreAgent {
                             for (DocumentSnapshot taskDoc : task.getResult()){
                                 docs.add(taskDoc.getData().toString());
                             }
-                            callingObject.updateCollection(user.toString()+"/"+callingObject.toString(),docs.toString());
+                            callingObject.updateCollection(user+"/"+callingObject.toString(),docs.toString());
                         }
                     }
                 });
@@ -119,7 +119,7 @@ public class firestoreAgent {
                             for (DocumentSnapshot taskDoc : task.getResult()){
                                 docs.add(taskDoc.getData().toString());
                             }
-                            callingObject.updateCollection(category.toString()+"/"+user.toString()+"/"+callingObject.toString(),docs.toString());
+                            callingObject.updateCollection(category+"/"+user+"/"+callingObject.toString(),docs.toString());
                         }
                     }
                 });
