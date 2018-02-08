@@ -16,7 +16,7 @@ public class emptyScreen extends AppCompatActivity {
         setContentView(R.layout.activity_empty_screen);
 
         // Locate the button in activity_main.xml
-        button = (Button) findViewById(R.id.newActivityButton);
+        button = findViewById(R.id.newActivityButton);
 
         // Capture button clicks
         button.setOnClickListener(new View.OnClickListener() {

@@ -113,82 +113,12 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
         taskEvent newEvent = setProperties(new taskEvent());
         //saves the text in the field after the submit button pressed
 
-        System.out.println("Title - " + newEvent.getTitle());
-        System.out.println("Description " + newEvent.getDescription());
-        System.out.println("Date - " + newEvent.getDate());
-        System.out.println("Time " + newEvent.getTime());
-
+        //Uploads task to Firestore
         fbAgent.addTask(debug_user,"category",newEvent,this);
 
 
 
     }
-    /*
-
-    This is jank as fuck and not standard. Replace with Fragments
-    Relocated to setOnClickListener(s) to resolve an xml error i can't sort out -Devon
-*/
-    protected void onClickEventDate(View view) {
-        datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
-
-        Button cancelButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerCancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickerDialog.dismiss();
-            }
-        });
-
-        Button okButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerOk);
-        okButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                DatePicker datePicker = datePickerDialog.findViewById(R.id.datePicker);
-
-                chosenDate = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())
-                                      .getTime();
-
-                showEventDate();
-                datePickerDialog.dismiss();
-            }
-        });
-
-        datePickerDialog.show();
-    }
-
-    protected void onClickEventTime(View view){
-        timePickerDialog.setContentView(R.layout.activity_time_picker_popup);
-
-        Button cancelButton = timePickerDialog.findViewById(R.id.btnTimePickerCancel);
-        cancelButton.setOnClickListener (new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                timePickerDialog.dismiss();
-            }
-        });
-
-        Button okButton  = timePickerDialog.findViewById(R.id.btnTimePickerOk);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePicker timePicker = timePickerDialog.findViewById(R.id.timePicker);
-
-                GregorianCalendar cal = new GregorianCalendar();
-                cal.setTime(chosenDate);
-                cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-                cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-
-                chosenDate = cal.getTime();
-                showEventDate();
-
-                timePickerDialog.dismiss();
-            }
-        });
-
-        timePickerDialog.show();
-    }
-
-
 
     private void showEventDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -217,7 +147,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
     }
 
     @Override
-    public void updateField(String fieldName, String fieldContent) {
+    public void updateObject(String fieldName, Object requestedObj) {
 
     }
 

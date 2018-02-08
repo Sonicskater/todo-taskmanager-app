@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.crashlytics.android.core.CrashlyticsCore;
 /*
-This file is meant as an example of how to implement the UIInterface interface and for tesing the database, NOT MEANT FOR PRODUCTION USE
+This file is meant as an example of how to implement the UIInterface interface and for testing the database, NOT MEANT FOR PRODUCTION USE
  */
 
 public class example_ui extends AppCompatActivity implements UIInterface {
@@ -24,22 +24,23 @@ public class example_ui extends AppCompatActivity implements UIInterface {
         final Button getUserButton = findViewById(R.id.getUserButton);
         getUserButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                //Set of function calls originally used to test firestoreAgent.java. No longer used.
                 fbAgent.getUserDocument("g2x3irLzu1DTJXbymPXw",self,"user_field");
                 fbAgent.getCategoryDocument("g2x3irLzu1DTJXbymPXw",self,"category_field");
-                fbAgent.getTaskDocument("g2x3irLzu1DTJXbymPXw",self,"task_field");
+                fbAgent.getTaskDocument("g2x3irLzu1DTJXbymPXw","category","Task",self,"task_field");
                 fbAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",self);
                 fbAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw",self,"category");
-                task taskObj = new task("g2x3irLzu1DTJXbymPXw","test_task_001","task for testing firebase system",1);
+                //task taskObj = new task("g2x3irLzu1DTJXbymPXw","test_task_001","task for testing firebase system",1);
                 //fbAgent.addTask("g2x3irLzu1DTJXbymPXw","category",taskObj,self);
-                category categoryObj = new category(001,"debug_category_001");
+                category categoryObj = new category(1,"debug_category_001");
                 fbAgent.addCategory("g2x3irLzu1DTJXbymPXw",categoryObj,self);
             }
         });
     }
 
     @Override
-    public void updateField(String fieldName, String fieldContent) {
-        Log.d("Interface_TEST",(fieldName.toString()+" "+fieldContent.toString()));
+    public void updateObject(String fieldName, Object requestedObj) {
+        Log.d("Interface_TEST",(fieldName+" "+requestedObj.toString()));
     }
     @Override
     public void updateCollection(String address, String content){

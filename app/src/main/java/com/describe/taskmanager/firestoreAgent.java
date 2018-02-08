@@ -13,8 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -37,7 +35,7 @@ public class firestoreAgent {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
 
-                        callingObject.updateField(fieldName,task.getResult().getData().toString());
+                        callingObject.updateObject(fieldName,task.getResult().getData().toString());
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -59,7 +57,7 @@ public class firestoreAgent {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
 
-                        callingObject.updateField(fieldName,task.getResult().getData().toString());
+                        callingObject.updateObject(fieldName,task.getResult().getData().toString());
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -71,17 +69,17 @@ public class firestoreAgent {
         });
     }
     //Gets a specified TaskDocument and return it to the requested field
-    public void getTaskDocument(String file, final UIInterface callingObject, final String fieldName){
-        DocumentReference docRef = db.collection("users").document(file).collection("categories").document("category").collection("tasks").document("default_task");
+    public void getTaskDocument(String user, String category, String task, final UIInterface callingObject, final String fieldName){
+        DocumentReference docRef = db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(task);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null) {
+                    taskEvent taskObj = task.getResult().toObject(taskEvent.class);
+                    if (taskObj != null) {
 
-                        callingObject.updateField(fieldName,task.getResult().getData().toString());
+                        callingObject.updateObject(fieldName,taskObj);
 
                     } else {
                         Log.d(TAG, "No such document");
