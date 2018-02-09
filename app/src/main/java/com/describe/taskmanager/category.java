@@ -8,13 +8,27 @@ public class category {
 
     private int categoryID = 0;
     private String categoryTitle  = "Default";
-    private int[] color = {0,255,0};
 
-    public category(int categoryID, String categoryTitle, int[] categoryColor){
+    public category(){}
+    public category(int categoryID,String categoryTitle){
         this.categoryID = categoryID;
         this.categoryTitle = categoryTitle;
-        this.color[0] = categoryColor[0];
-        this.color[1] = categoryColor[1];
-        this.color[2] = categoryColor[2];
+
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public String getCategoryTitle() {
+        return categoryTitle;
+    }
+
+    public void setCategoryTitle(String categoryTitle) {
+        this.categoryTitle = categoryTitle;
     }
 }
