@@ -8,6 +8,6 @@ public class emptyScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_empty_screen);
+        setContentView(R.layout.task_list);
     }
 }
