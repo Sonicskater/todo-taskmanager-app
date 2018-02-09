@@ -7,8 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TaskList extends AppCompatActivity {
 
@@ -19,7 +23,7 @@ public class TaskList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,6 +32,7 @@ public class TaskList extends AppCompatActivity {
 
             }
         });
+        */
 
         ListView resultsListView = (ListView) findViewById(R.id.results_listview);
 
@@ -40,8 +45,8 @@ public class TaskList extends AppCompatActivity {
         nameAddresses.put("Social", "French Revolution");
         nameAddresses.put("Biology", "Mitochondria");
 
-        List<HashMap<String, String>> listIteams = new ArrayLists<>();
-        SimpleAdapter adapter = new SimpleAdapter(this, listItems,R.layout.list_item),
+        List<HashMap<String, String>> listItems = new ArrayList<>();
+        SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), listItems,R.layout.list_item),
                 new String[]{"First line", "Second Line"},
                 new int[]{R.id.text1, R.id.text2}
 
