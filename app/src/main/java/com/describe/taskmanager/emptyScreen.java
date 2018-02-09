@@ -30,4 +30,10 @@ public class emptyScreen extends AppCompatActivity {
         });
     }
 
+    public void goToCategoryList(View v)
+    {
+        Intent i = new Intent(getApplicationContext(), CategoryList.class);
+        startActivity(i);
+
+    }
 }

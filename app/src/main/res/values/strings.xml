@@ -4,6 +4,10 @@
     <string name="title_activity_blank_screen">BlankScreen</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_category_list">CategoryList</string>
+
     <string name="title_activity_event_view">CreateSingleEvent</string>
     <string name="title_activity_date_picker_popup">DatePickerPopup</string>
+
 </resources>

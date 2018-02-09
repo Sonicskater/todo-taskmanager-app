@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        
+
         <activity android:name="com.describe.taskmanager.EventCreateView"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
 
                 <action android:name="android.intent.action.MAIN" />
@@ -18,8 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".CategoryList"
+            android:label="@string/title_activity_category_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity android:name=".DatePickerPopup"></activity>
         <activity android:name=".TimePickerPopup"></activity>
+
     </application>
 
 </manifest>
