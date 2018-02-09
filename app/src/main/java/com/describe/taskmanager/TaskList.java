@@ -55,7 +55,7 @@ public class TaskList extends AppCompatActivity  {
 
         List<HashMap<String, String>> listItems = new ArrayList<>();
         SimpleAdapter adapter = new SimpleAdapter(this, listItems, R.layout.list_item,
-                new String[]{"First line", "Second Line"},
+                new String[]{"Second Line","First Line"},
                 new int[]{R.id.text2, R.id.text1});
 
         Iterator iter = TaskHash.entrySet().iterator();
@@ -67,12 +67,13 @@ public class TaskList extends AppCompatActivity  {
 
                 resultsMap.put("Second Line", pair.getValue().toString());
                 resultsMap.put("First Line", pair.getKey().toString());
+
                 listItems.add(resultsMap);
 
 
         }
 
-        Log.d("TEST_OUT", listItems.toString());
+
         resultsListView.setAdapter(adapter);
 
     }
