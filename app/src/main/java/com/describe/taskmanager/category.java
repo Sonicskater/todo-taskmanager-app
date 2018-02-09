@@ -10,7 +10,7 @@ public class category {
     private String categoryTitle  = "Default";
     private int[] color = {0,255,0};
 
-    public category(int categoryID,String categoryTitle, int[] categoryColor){
+    public category(int categoryID, String categoryTitle, int[] categoryColor){
         this.categoryID = categoryID;
         this.categoryTitle = categoryTitle;
         this.color[0] = categoryColor[0];
