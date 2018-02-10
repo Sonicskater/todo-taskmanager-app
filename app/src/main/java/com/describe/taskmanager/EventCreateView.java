@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,7 +27,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
     Dialog datePickerDialog;
     Date chosenDate = new Date();
     Dialog timePickerDialog;
-    firestoreAgent fbAgent = new firestoreAgent();
+    FirestoreAgent fbAgent = new FirestoreAgent();
     String debug_user = "g2x3irLzu1DTJXbymPXw";
 
     @Override
@@ -110,11 +111,11 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
 
     public void onCreateEvent(View view) throws ParseException {
         //creates new event
-        taskEvent newEvent = setProperties(new taskEvent());
+        TaskEvent newEvent = setProperties(new TaskEvent());
         //saves the text in the field after the submit button pressed
 
         //Uploads task to Firestore
-        fbAgent.addTask(debug_user,"category",newEvent,this);
+        fbAgent.addTask(debug_user,"Category",newEvent,this);
 
 
 
@@ -131,7 +132,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
         time.setText(timeFormat.format(chosenDate));
     }
 
-    private taskEvent setProperties(taskEvent event) {
+    private TaskEvent setProperties(TaskEvent event) {
         EditText title   = findViewById(R.id.titleText);
         event.setTitle(title.getText().toString());
 
@@ -152,7 +153,12 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
     }
 
     @Override
-    public void updateCollection(String collectionName, String collectionContent) {
+    public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
+
+    }
+
+    @Override
+    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
 
     }
 

@@ -1,7 +1,6 @@
 package com.describe.taskmanager;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,27 +10,32 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-public class CategoryList extends AppCompatActivity
-{
+import java.util.ArrayList;
 
+public class CategoryList extends AppCompatActivity implements UIInterface
+{
+    CategoryAdapter gridAdapter;
+    GridView gridview;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
 
+        //Code derived from Android Documentation
+        FirestoreAgent fsAgent = new FirestoreAgent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        String[] categories = {"First Category", "Second Category", "Third Category", "YOLO"};
-        gridview.setAdapter(new ContentAdapter (this, categories));
+        gridview =findViewById(R.id.gridview);
+        fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
+        gridview.setAdapter(gridAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                Toast.makeText(getApplicationContext(), "Your category ;D", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Your Category ;D", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -49,5 +53,35 @@ public class CategoryList extends AppCompatActivity
     }
 
 
+    @Override
+    public void updateObject(String fieldName, Object requestedObj) {
 
+    }
+
+    @Override
+    public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
+
+    }
+    @Override
+    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
+
+        ArrayList<String> catList = new ArrayList<String>();
+
+        for (Category cat : collectionContent){
+            catList.add(cat.getCategoryTitle());
+        }
+
+        gridAdapter = new CategoryAdapter(this,catList);
+        gridview.setAdapter(gridAdapter);
+    }
+
+    @Override
+    public void firebaseSuccess(String message_title, String message_content) {
+
+    }
+
+    @Override
+    public void firebaseFailure(String error_code, String message_title, String extra_content) {
+
+    }
 }

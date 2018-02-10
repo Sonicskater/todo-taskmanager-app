@@ -13,7 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -21,8 +20,10 @@ import static android.content.ContentValues.TAG;
  * Created by devon on 1/31/2018.
  */
 
-public class firestoreAgent {
+public class FirestoreAgent {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    //Code derived from Firstore docs
 
     //Gets a specified UserDocument and returns it to the requested field
     public void getUserDocument(String file, final UIInterface callingObject, final String fieldName){
@@ -46,9 +47,11 @@ public class firestoreAgent {
             }
         });
     }
+
+
     //Gets a specified CategoryDocument and return it to the requested field
     public void getCategoryDocument(String file, final UIInterface callingObject, final String fieldName){
-        DocumentReference docRef = db.collection("users").document(file).collection("categories").document("category");
+        DocumentReference docRef = db.collection("users").document(file).collection("categories").document("Category");
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -76,7 +79,7 @@ public class firestoreAgent {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    taskEvent taskObj = task.getResult().toObject(taskEvent.class);
+                    TaskEvent taskObj = task.getResult().toObject(TaskEvent.class);
                     if (taskObj != null) {
 
                         callingObject.updateObject(fieldName,taskObj);
@@ -90,19 +93,19 @@ public class firestoreAgent {
             }
         });
     }
-    // Returns the collection of categories from a specified user.
+    // Returns the collection of categories from a specified User.
     public void getCategoryCollection(final String user,final UIInterface callingObject){
         db.collection("users").document(user).collection("categories").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            List<String> docs = new ArrayList<String>();
+                            ArrayList<Category> docs = new ArrayList<Category>();
 
                             for (DocumentSnapshot taskDoc : task.getResult()){
-                                docs.add(taskDoc.getData().toString());
+                                docs.add(taskDoc.toObject(Category.class));
                             }
-                            callingObject.updateCollection(user+"/"+callingObject.toString(),docs.toString());
+                            callingObject.updateCategoryCollection(user+"/"+callingObject.toString(),docs);
                         }
                     }
                 });
@@ -114,34 +117,34 @@ public class firestoreAgent {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            List<String> docs = new ArrayList<String>();
+                            ArrayList<TaskEvent> docs = new ArrayList<TaskEvent>();
 
                             for (DocumentSnapshot taskDoc : task.getResult()){
-                                docs.add(taskDoc.getData().toString());
+                                docs.add(taskDoc.toObject(TaskEvent.class));
                             }
-                            callingObject.updateCollection(category+"/"+user+"/"+callingObject.toString(),docs.toString());
+                            callingObject.updateTaskCollection(category+"/"+user+"/"+callingObject.toString(),docs);
                         }
                     }
                 });
 
     }
-    public void addCategory(final String user, final category categoryObj, final UIInterface callingObject){
+    public void addCategory(final String user, final Category categoryObj, final UIInterface callingObject){
         db.collection("users").document(user).collection("categories").document(categoryObj.getCategoryTitle()).set(categoryObj
 
         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                    @Override
                                    public void onSuccess(Void aVoid) {
-                                       callingObject.firebaseSuccess("Added category","category added successfully");
+                                       callingObject.firebaseSuccess("Added Category","Category added successfully");
                                    }
                                }
         ).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                callingObject.firebaseFailure("1x000A","Failed to add Category","failed to add Category to user");
+                callingObject.firebaseFailure("1x000A","Failed to add Category","failed to add Category to User");
             }
         });
     }
-    public void addTask(final String user, final String category,final taskEvent taskObj,final UIInterface callingObject){
+    public void addTask(final String user, final String category, final TaskEvent taskObj, final UIInterface callingObject){
         db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(taskObj.getTitle()).set(taskObj
 
         ).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -153,7 +156,7 @@ public class firestoreAgent {
         ).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                callingObject.firebaseFailure("1x000A","Failed to add task","failed to add task to user");
+                callingObject.firebaseFailure("1x000A","Failed to add task","failed to add task to User");
             }
         });
     }

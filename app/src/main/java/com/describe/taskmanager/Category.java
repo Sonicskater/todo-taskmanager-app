@@ -4,13 +4,13 @@ package com.describe.taskmanager;
  * Created by devon on 1/26/2018.
  */
 
-public class category {
+public class Category {
 
     private int categoryID = 0;
     private String categoryTitle  = "Default";
 
-    public category(){}
-    public category(int categoryID,String categoryTitle){
+    public Category(){}
+    public Category(int categoryID, String categoryTitle){
         this.categoryID = categoryID;
         this.categoryTitle = categoryTitle;
 

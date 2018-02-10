@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by bencook on 2018-01-31.
  */
 
-public class taskEvent {
+public class TaskEvent {
 
     private String title;
     private String description;
@@ -49,10 +49,10 @@ public class taskEvent {
         private String username = "default_user";
     }
     //default
-    public taskEvent(){
+    public TaskEvent(){
 
     }
-    public taskEvent(String title, String description, Date date, String Time){
+    public TaskEvent(String title, String description, Date date, String Time){
         this.title = title;
         this.description = title;
         this.date = date;
