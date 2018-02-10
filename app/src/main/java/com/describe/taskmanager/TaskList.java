@@ -2,6 +2,7 @@ package com.describe.taskmanager;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -22,7 +23,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
         FirestoreAgent fsAgent = new FirestoreAgent();
 
-        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw",this,"Category");
+        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw",this,"category");
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
@@ -46,7 +47,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         for (TaskEvent event:collectionContent){
             TaskHash.put(event.getTitle(),event.getDescription());
         }
-
+        Log.d("DEBUG_TASKLIST",collectionContent.toString());
         //Create a sit of hashmaps for the SimpleAdapter to read
         List<HashMap<String, String>> listItems = new ArrayList<>();
         adapter = new SimpleAdapter(this, listItems, R.layout.list_item,

@@ -115,7 +115,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
         //saves the text in the field after the submit button pressed
 
         //Uploads task to Firestore
-        fbAgent.addTask(debug_user,"Category",newEvent,this);
+        fbAgent.addTask(debug_user,"category",newEvent,this);
 
 
 

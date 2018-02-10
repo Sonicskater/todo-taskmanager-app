@@ -121,6 +121,7 @@ public class FirestoreAgent {
 
                             for (DocumentSnapshot taskDoc : task.getResult()){
                                 docs.add(taskDoc.toObject(TaskEvent.class));
+                                Log.d("TASK_ADDED",taskDoc.toObject(TaskEvent.class).getTitle());
                             }
                             callingObject.updateTaskCollection(category+"/"+user+"/"+callingObject.toString(),docs);
                         }

@@ -43,11 +43,7 @@ public class TaskEvent {
      * Created by devon on 1/26/2018.
      */
 
-    public static class user {
-        private int userID = 0;
-        private int[] userCatagories = {0};
-        private String username = "default_user";
-    }
+
     //default
     public TaskEvent(){
 
