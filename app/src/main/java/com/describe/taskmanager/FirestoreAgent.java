@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
@@ -20,9 +21,10 @@ import static android.content.ContentValues.TAG;
  * Created by devon on 1/31/2018.
  */
 
+
 public class FirestoreAgent {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    Random randTaskID = new Random();
     //Code derived from Firstore docs
 
     //Gets a specified UserDocument and returns it to the requested field
@@ -146,19 +148,39 @@ public class FirestoreAgent {
         });
     }
     public void addTask(final String user, final String category, final TaskEvent taskObj, final UIInterface callingObject){
-        db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(taskObj.getTitle()).set(taskObj
 
-        ).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                callingObject.firebaseSuccess("Added task","task added successfully");
-            }
-                                                                                                                            }
-        ).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                callingObject.firebaseFailure("1x000A","Failed to add task","failed to add task to User");
-            }
-        });
+
+
+            final int newTaskID = randTaskID.nextInt(99999999);
+            db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()){
+                                DocumentSnapshot doc = task.getResult();
+                                if (doc.exists()) {
+                                    addTask(user,category,taskObj,callingObject);
+                                }
+                                else{
+                                    db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).set(taskObj
+
+                                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            callingObject.firebaseSuccess("Added task","task added successfully");
+                                        }
+                                    }
+                                    ).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            callingObject.firebaseFailure("1x000A","Failed to add task","failed to add task to User");
+                                        }
+                                    });
+                                }
+
+                            }
+                        }
+                    });
+
     }
 }
