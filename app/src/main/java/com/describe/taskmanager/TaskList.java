@@ -3,8 +3,11 @@ package com.describe.taskmanager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -27,9 +30,6 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
-
-
-
     }
 
     @Override
@@ -70,6 +70,15 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
         }
 
+        resultsListView.setClickable(true);
+        resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                HashMap<String, String> o = (HashMap<String, String>)resultsListView.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), o.get("Title"),Toast.LENGTH_SHORT).show();
+            }
+        });
         //Apply the adapter
         resultsListView.setAdapter(adapter);
     }
