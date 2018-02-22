@@ -149,9 +149,8 @@ public class FirestoreAgent {
     }
     public void addTask(final String user, final String category, final TaskEvent taskObj, final UIInterface callingObject){
 
-
-
             final int newTaskID = randTaskID.nextInt(99999999);
+            taskObj.setId(newTaskID);
             db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override

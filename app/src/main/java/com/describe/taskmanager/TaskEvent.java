@@ -8,12 +8,17 @@ import java.util.Date;
 
 public class TaskEvent {
 
+    private int id;
     private String title;
     private String description;
     private Date date;
     private String time;
 
     //getters and setters
+
+
+    public void setId(int id) { this.id = id;}
+    public int getId(){ return this.id; }
     public void setTitle (String newTitle){
         this.title = newTitle;
     }
