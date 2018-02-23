@@ -52,7 +52,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         List<HashMap<String, String>> listItems = new ArrayList<>();
         adapter = new SimpleAdapter(this, listItems, R.layout.list_item,
                 new String[]{"Content","Title"},
-                new int[]{R.id.text2, R.id.text1});
+                new int[]{R.id.title, R.id.content});
         //Create iterator to convert single hashmaps to dual hashmaps.
         Iterator iter = TaskHash.entrySet().iterator();
 
@@ -66,13 +66,10 @@ public class TaskList extends AppCompatActivity implements UIInterface {
             resultsMap.put("Content", pair.getValue().toString());
 
             listItems.add(resultsMap);
-
-
         }
 
         resultsListView.setClickable(true);
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 HashMap<String, String> o = (HashMap<String, String>)resultsListView.getItemAtPosition(position);
