@@ -11,8 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".EventCreateView"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CategoryList"
             android:label="@string/title_activity_category_list"
@@ -21,7 +20,7 @@
         <activity android:name=".DatePickerPopup" />
         <activity android:name=".TimePickerPopup" />
         <activity
-            android:name="com.describe.taskmanager.LandingScreen"
+            android:name=".LandingScreen"
             android:label="@string/title_activity_landing_screen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -30,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TaskEventView"></activity>
     </application>
 
 </manifest>

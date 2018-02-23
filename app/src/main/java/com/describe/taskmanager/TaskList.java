@@ -1,5 +1,6 @@
 package com.describe.taskmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -73,7 +74,10 @@ public class TaskList extends AppCompatActivity implements UIInterface {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 HashMap<String, String> o = (HashMap<String, String>)resultsListView.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), o.get("Title"),Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), o.get("Title"),Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(getApplicationContext(),TaskEventView.class);
+                startActivity(i);
             }
         });
         //Apply the adapter
