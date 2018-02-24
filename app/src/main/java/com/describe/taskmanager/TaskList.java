@@ -20,6 +20,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
     SimpleAdapter adapter;
     ListView resultsListView;
+    static ArrayList<TaskEvent> taskEvents;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
 
+        this.taskEvents = collectionContent; //will use later.
 
         //Hashmap for placeholder data
         HashMap<String, String> TaskHash = new HashMap<>();
@@ -76,8 +78,24 @@ public class TaskList extends AppCompatActivity implements UIInterface {
                 HashMap<String, String> o = (HashMap<String, String>)resultsListView.getItemAtPosition(position);
                // Toast.makeText(getApplicationContext(), o.get("Title"),Toast.LENGTH_SHORT).show();
 
+                TaskEvent taskEvent = this.findTaskByTitle(o.get("Title"));
+                if (taskEvent == null) {
+                    Log.d("TaskList", "TaskEvent for taskEvent: " + o.get("Title") + ".");
+                    return;  //taskEvent for
+                }
+
                 Intent i = new Intent(getApplicationContext(),TaskEventView.class);
+                i.putExtra("taskEvent", taskEvent);
                 startActivity(i);
+            }
+
+            private TaskEvent findTaskByTitle(String title) {
+                for (TaskEvent event : TaskList.taskEvents) {
+                    if (event.getTitle() == title) {
+                        return event;
+                    }
+                }
+                return null;
             }
         });
         //Apply the adapter

@@ -1,12 +1,13 @@
 package com.describe.taskmanager;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by bencook on 2018-01-31.
  */
 
-public class TaskEvent {
+public class TaskEvent implements Serializable {
 
     private int id;
     private String title;
@@ -15,7 +16,6 @@ public class TaskEvent {
     private String time;
 
     //getters and setters
-
 
     public void setId(int id) { this.id = id;}
     public int getId(){ return this.id; }
@@ -43,11 +43,6 @@ public class TaskEvent {
     public String getTime(){
         return time;
     }
-
-    /**
-     * Created by devon on 1/26/2018.
-     */
-
 
     //default
     public TaskEvent(){
