@@ -7,15 +7,17 @@ import android.view.View;
 
 public class TaskEventView extends AppCompatActivity {
     private final String TAG = "TaskEventView";
-    private TaskEvent event;
+    private TaskEvent currentEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_event_view);
 
-        this.event = (TaskEvent)getIntent().getSerializableExtra("taskEvent");
-        Log.d(TAG, "got the task " + this.event.getTitle());
+        this.currentEvent = (TaskEvent)getIntent().getSerializableExtra("taskEvent");
+        //log to make sure that the object is passed in
+        Log.d(TAG, "got the title " + this.currentEvent.getTitle());
+
     }
 
     public void onDelete(View view) {
