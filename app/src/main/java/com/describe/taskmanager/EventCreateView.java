@@ -117,8 +117,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
         //Uploads task to Firestore
         fbAgent.addTask(debug_user,"category",newEvent,this);
 
-
-
     }
 
     private void showEventDate() {

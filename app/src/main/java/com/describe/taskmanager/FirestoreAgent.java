@@ -182,4 +182,8 @@ public class FirestoreAgent {
                     });
 
     }
+
+    public void updateTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) throws Exception {
+        //this is a thing for devon to do, need to fill this in
+    }
 }
