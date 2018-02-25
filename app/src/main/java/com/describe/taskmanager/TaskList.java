@@ -8,25 +8,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class TaskList extends AppCompatActivity implements UIInterface {
 
     SimpleAdapter adapter;
     ListView resultsListView;
     static ArrayList<TaskEvent> taskEvents;
+    FirestoreAgent fsAgent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        FirestoreAgent fsAgent = new FirestoreAgent();
+        fsAgent = new FirestoreAgent();
 
         fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw",this,"category");
 
@@ -87,6 +87,8 @@ public class TaskList extends AppCompatActivity implements UIInterface {
                 Intent i = new Intent(getApplicationContext(),TaskEventView.class);
                 i.putExtra("taskEvent", taskEvent);
                 startActivity(i);
+
+                //should now rebuild the list from the fbAgent
             }
 
             private TaskEvent findTaskByTitle(String title) {

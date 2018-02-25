@@ -1,8 +1,6 @@
 package com.describe.taskmanager;
 
-
 import android.app.Dialog;
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,13 +37,13 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
 
         datePickerDialog = new Dialog(this);
         timePickerDialog = new Dialog(this);
-        TextView dateField = findViewById(R.id.eventDate);
+        TextView dateField = findViewById(R.id.dateText);
         dateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
 
-                Button cancelButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerCancel);
+                Button cancelButton = datePickerDialog.findViewById(R.id.btnDatePickerCancel);
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -55,7 +51,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
                     }
                 });
 
-                Button okButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerOk);
+                Button okButton = datePickerDialog.findViewById(R.id.btnDatePickerOk);
                 okButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
@@ -72,6 +68,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
                 datePickerDialog.show();
             }
         });
+
         TextView timeField = findViewById(R.id.timeText);
         timeField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +120,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-        TextView date   = findViewById(R.id.eventDate);
+        TextView date   = findViewById(R.id.dateText);
         date.setText(dateFormat.format(chosenDate));
 
         TextView time = findViewById(R.id.timeText);

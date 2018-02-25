@@ -35,7 +35,7 @@ public class TaskEventView extends AppCompatActivity {
         Log.d(TAG, "got the title " + this.currentEvent.getTitle());
         datePickerDialog = new Dialog(this);
         timePickerDialog = new Dialog(this);
-        TextView dateField = findViewById(R.id.eventDate);
+        TextView dateField = findViewById(R.id.dateText);
         dateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,12 +101,33 @@ public class TaskEventView extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+
+        this.updateUIFields(currentEvent);
     }
+
+    private void updateUIFields(TaskEvent currentEvent) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+        this.chosenDate = currentEvent.getDate();
+
+        setText(currentEvent.getTitle(), R.id.titleText);
+        setText(currentEvent.getDescription(), R.id.descriptionText);
+        setText(dateFormat.format(chosenDate), R.id.dateText);
+        setText(timeFormat.format(chosenDate), R.id.timeText);
+    }
+
+    private void setText(String value, int id) {
+        TextView aTextView = findViewById(id);
+        aTextView.setText(value);
+    }
+
     private void showEventDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-        TextView date   = findViewById(R.id.eventDate);
+        TextView date   = findViewById(R.id.dateText);
         date.setText(dateFormat.format(chosenDate));
 
         TextView time = findViewById(R.id.timeText);
@@ -127,14 +148,31 @@ public class TaskEventView extends AppCompatActivity {
 
         return event;
     }
+
     public void onDelete(View view) {
         Log.d("onDelete", "onDelete: ");
-        
+
     }
 
     public void onSave(View view) {
         Log.d("onSave", "onSave: ");
+        this.setProperties();
 
      //   fbAgent.updateTask(debug_user,"category", currentEvent,this);
+    }
+
+    private void setProperties() {
+        TaskEvent event = this.currentEvent;
+
+        EditText title   = findViewById(R.id.titleText);
+        event.setTitle(title.getText().toString());
+
+        EditText description   = findViewById(R.id.descriptionText);
+        event.setDescription(description.getText().toString());
+
+        event.setDate(this.chosenDate);
+
+        TextView time = findViewById(R.id.timeText);
+        event.setTime(time.getText().toString());
     }
 }

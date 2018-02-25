@@ -57,7 +57,7 @@
 
 
         <TextView
-            android:id="@+id/eventDate"
+            android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/descriptionText"
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/descriptionText"
-            android:layout_alignTop="@+id/eventDate"
+            android:layout_alignTop="@+id/dateText"
             android:layout_marginEnd="45dp"
 
             android:text="time here" />
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/timeText"
-            android:layout_alignStart="@+id/eventDate"
+            android:layout_alignStart="@+id/dateText"
             android:text="Date" />
 
         <TextView
