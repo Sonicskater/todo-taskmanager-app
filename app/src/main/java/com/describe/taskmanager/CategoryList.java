@@ -1,25 +1,48 @@
 package com.describe.taskmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CategoryList extends AppCompatActivity implements UIInterface
 {
+    private static final int RC_SIGN_IN = 1;
     CategoryAdapter gridAdapter;
     GridView gridview;
+    List<AuthUI.IdpConfig> providers = Arrays.asList(
+            //new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+            //new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
+            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
+            //new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
+            //new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()
+    );
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-
+        //Open Sign-in Prompt
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
         //Code derived from Android Documentation
         FirestoreAgent fsAgent = new FirestoreAgent();
         super.onCreate(savedInstanceState);
@@ -83,5 +106,25 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     @Override
     public void firebaseFailure(String error_code, String message_title, String extra_content) {
 
+    }
+
+    //Receive sign-in status
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                Log.d("AUTH","Successfully signed in");
+                // ...
+            } else {
+                // Sign in failed, check response for error code
+                Log.d("AUTH","Sign-in failed");
+                // ...
+            }
+        }
     }
 }

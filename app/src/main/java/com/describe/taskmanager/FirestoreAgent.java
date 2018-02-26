@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,9 +28,11 @@ public class FirestoreAgent {
     Random randTaskID = new Random();
     //Code derived from Firstore docs
 
+    String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     //Gets a specified UserDocument and returns it to the requested field
-    public void getUserDocument(String file, final UIInterface callingObject, final String fieldName){
-        DocumentReference docRef = db.collection("users").document(file);
+
+    public void getUserDocument(String user, final UIInterface callingObject, final String fieldName){
+        DocumentReference docRef = db.collection("users").document(UserID);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -52,8 +55,8 @@ public class FirestoreAgent {
 
 
     //Gets a specified CategoryDocument and return it to the requested field
-    public void getCategoryDocument(String file, final UIInterface callingObject, final String fieldName){
-        DocumentReference docRef = db.collection("users").document(file).collection("categories").document("Category");
+    public void getCategoryDocument(String user, final UIInterface callingObject, final String fieldName){
+        DocumentReference docRef = db.collection("users").document(UserID).collection("categories").document("Category");
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -75,7 +78,7 @@ public class FirestoreAgent {
     }
     //Gets a specified TaskDocument and return it to the requested field
     public void getTaskDocument(String user, String category, String task, final UIInterface callingObject, final String fieldName){
-        DocumentReference docRef = db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(task);
+        DocumentReference docRef = db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(task);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -97,7 +100,7 @@ public class FirestoreAgent {
     }
     // Returns the collection of categories from a specified User.
     public void getCategoryCollection(final String user,final UIInterface callingObject){
-        db.collection("users").document(user).collection("categories").get()
+        db.collection("users").document(UserID).collection("categories").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -107,14 +110,14 @@ public class FirestoreAgent {
                             for (DocumentSnapshot taskDoc : task.getResult()){
                                 docs.add(taskDoc.toObject(Category.class));
                             }
-                            callingObject.updateCategoryCollection(user+"/"+callingObject.toString(),docs);
+                            callingObject.updateCategoryCollection(UserID+"/"+callingObject.toString(),docs);
                         }
                     }
                 });
 
     }
     public void getTaskCollection(final String user,final UIInterface callingObject,final String category){
-        db.collection("users").document(user).collection("categories").document(category).collection("tasks").get()
+        db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -125,14 +128,14 @@ public class FirestoreAgent {
                                 docs.add(taskDoc.toObject(TaskEvent.class));
                                 Log.d("TASK_ADDED",taskDoc.toObject(TaskEvent.class).getTitle());
                             }
-                            callingObject.updateTaskCollection(category+"/"+user+"/"+callingObject.toString(),docs);
+                            callingObject.updateTaskCollection(category+"/"+UserID+"/"+callingObject.toString(),docs);
                         }
                     }
                 });
 
     }
     public void addCategory(final String user, final Category categoryObj, final UIInterface callingObject){
-        db.collection("users").document(user).collection("categories").document(categoryObj.getCategoryTitle()).set(categoryObj
+        db.collection("users").document(UserID).collection("categories").document(categoryObj.getCategoryTitle()).set(categoryObj
 
         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                    @Override
@@ -152,17 +155,17 @@ public class FirestoreAgent {
 
 
             final int newTaskID = randTaskID.nextInt(99999999);
-            db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).get()
+            db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()){
                                 DocumentSnapshot doc = task.getResult();
                                 if (doc.exists()) {
-                                    addTask(user,category,taskObj,callingObject);
+                                    addTask(UserID,category,taskObj,callingObject);
                                 }
                                 else{
-                                    db.collection("users").document(user).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).set(taskObj
+                                    db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).set(taskObj
 
                                     ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
