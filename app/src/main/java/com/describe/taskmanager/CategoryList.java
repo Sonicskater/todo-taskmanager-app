@@ -27,7 +27,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     CategoryAdapter gridAdapter;
     GridView gridview;
     List<AuthUI.IdpConfig> providers = Arrays.asList(
-            //new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+            new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
             //new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
             new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
             //new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
@@ -118,7 +118,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                Log.d("AUTH","Successfully signed in");
+                Log.d("AUTH","Successfully signed in,UID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
                 // ...
             } else {
                 // Sign in failed, check response for error code
