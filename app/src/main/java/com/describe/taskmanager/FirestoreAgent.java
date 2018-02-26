@@ -1,6 +1,7 @@
 package com.describe.taskmanager;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,17 +19,19 @@ import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by devon on 1/31/2018.
- */
+
 
 
 public class FirestoreAgent {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Random randTaskID = new Random();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Random randTaskID = new Random();
+
+    @NonNull private String UserID= FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+
     //Code derived from Firstore docs
 
-    String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     //Gets a specified UserDocument and returns it to the requested field
 
     public void getUserDocument(String user, final UIInterface callingObject, final String fieldName){
