@@ -8,28 +8,33 @@
         android:label="DeSCriBe Task Manager"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".EventCreateView"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".CategoryList"
             android:label="@string/title_activity_category_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TaskList" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".TaskList"
+            android:label="Task List"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".DatePickerPopup" />
         <activity android:name=".TimePickerPopup" />
         <activity
-            android:name="com.describe.taskmanager.LandingScreen"
+            android:name=".LandingScreen"
             android:label="@string/title_activity_landing_screen"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

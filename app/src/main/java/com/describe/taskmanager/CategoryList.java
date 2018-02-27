@@ -2,20 +2,24 @@ package com.describe.taskmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +51,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
         FirestoreAgent fsAgent = new FirestoreAgent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         gridview =findViewById(R.id.gridview);
@@ -62,7 +66,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -73,6 +77,14 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             }
 
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId()==R.id.action_settings){
+            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(i);
+        }
+        return true;
     }
 
 
@@ -88,7 +100,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     @Override
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
 
-        ArrayList<String> catList = new ArrayList<String>();
+        ArrayList<String> catList = new ArrayList<>();
 
         for (Category cat : collectionContent){
             catList.add(cat.getCategoryTitle());
@@ -107,6 +119,14 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     public void firebaseFailure(String error_code, String message_title, String extra_content) {
 
     }
+    //Add menu to action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_menu, menu);
+        return true;
+    }
+
 
     //Receive sign-in status
     @Override
@@ -114,10 +134,11 @@ public class CategoryList extends AppCompatActivity implements UIInterface
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
+
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
+
                 Log.d("AUTH","Successfully signed in,UID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
                 // ...
             } else {
