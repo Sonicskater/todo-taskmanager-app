@@ -50,7 +50,6 @@ public class FirestoreAgent {
         });
     }
 
-
     //Gets a specified CategoryDocument and return it to the requested field
     public void getCategoryDocument(String file, final UIInterface callingObject, final String fieldName){
         DocumentReference docRef = db.collection("users").document(file).collection("categories").document("Category");
@@ -183,7 +182,10 @@ public class FirestoreAgent {
 
     }
 
-    public void updateTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) throws Exception {
+    public void updateTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) {
         //this is a thing for devon to do, need to fill this in
+    }
+
+    public void deleteTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) {
     }
 }

@@ -17,8 +17,11 @@ public class TaskEvent implements Serializable {
 
     //getters and setters
 
+    //this is a recent update, makes it so the event knows about it's own ID number
     public void setId(int id) { this.id = id;}
     public int getId(){ return this.id; }
+
+
     public void setTitle (String newTitle){
         this.title = newTitle;
     }

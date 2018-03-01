@@ -20,87 +20,117 @@ import java.util.GregorianCalendar;
 
 
 public class EventCreateView extends AppCompatActivity implements UIInterface{
+    //initialized instance varibles
     Dialog datePickerDialog;
     Date chosenDate = new Date();
     Dialog timePickerDialog;
+    //firebase database agent
     FirestoreAgent fbAgent = new FirestoreAgent();
     String debug_user = "g2x3irLzu1DTJXbymPXw";
 
+    //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //base Android onCreate functionality
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_view);
 
-
+        //initalizes the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //create the new date and time picker dialogs
         datePickerDialog = new Dialog(this);
         timePickerDialog = new Dialog(this);
+        //the textbox in the main window, (outside of the popup)
         TextView dateField = findViewById(R.id.dateText);
+        //set the onclick listener
         dateField.setOnClickListener(new View.OnClickListener() {
+            //onclick implementation of datePicker diaglog
             @Override
             public void onClick(View view) {
+
+                //sets content view to the popup
                 datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
 
+                //onclick event for the datepicker dialog cancel button
                 Button cancelButton = datePickerDialog.findViewById(R.id.btnDatePickerCancel);
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //if cancel is clicked, remove popup
                         datePickerDialog.dismiss();
                     }
                 });
 
+                //onlclick event for the datepicker dialog save button
                 Button okButton = datePickerDialog.findViewById(R.id.btnDatePickerOk);
                 okButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
                         DatePicker datePicker = datePickerDialog.findViewById(R.id.datePicker);
 
+                        //on the save/ok button, sets the date chosen
                         chosenDate = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())
                                 .getTime();
 
+                        //formats the date into a string to be placed in the textfield on the main window
                         showEventDate();
+                        //if save is clicked, remove popup
                         datePickerDialog.dismiss();
                     }
                 });
 
+                //dialog is shown after all of the onclicks are defined
                 datePickerDialog.show();
             }
         });
 
+        //the textbox in the main window (outside of popup)
         TextView timeField = findViewById(R.id.timeText);
+        //sets the onclick listener to pop up the time picker
         timeField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //sets the content view to the popup
                 timePickerDialog.setContentView(R.layout.activity_time_picker_popup);
 
+                //cancel button and onclick listener
                 Button cancelButton = timePickerDialog.findViewById(R.id.btnTimePickerCancel);
                 cancelButton.setOnClickListener (new View.OnClickListener() {
                     @Override
                     public void onClick(View v){
+                        //dismisses if cancel is clicked
                         timePickerDialog.dismiss();
                     }
                 });
 
+                //save button and onclikc listener
                 Button okButton  = timePickerDialog.findViewById(R.id.btnTimePickerOk);
                 okButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         TimePicker timePicker = timePickerDialog.findViewById(R.id.timePicker);
 
+                        //note time is also stored in a GregorianCalender object
                         GregorianCalendar cal = new GregorianCalendar();
+                        //sets the time and feeds in the chosen date (not really necessary to feed date in but easier to format)
                         cal.setTime(chosenDate);
                         cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                         cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
 
+
                         chosenDate = cal.getTime();
+                        //formats the time into a string to be placed in the textfield on the main window
                         showEventDate();
 
+                        //dismisses is save is pressed
                         timePickerDialog.dismiss();
                     }
                 });
 
+                //dialog is shown after all of the onclicks are defined
                 timePickerDialog.show();
             }
         });
@@ -116,6 +146,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
 
     }
 
+    //this method just formats the date and times into readable strings
     private void showEventDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -127,6 +158,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
         time.setText(timeFormat.format(chosenDate));
     }
 
+    //sets the object properties based on what the user typed/picked on the screen
     private TaskEvent setProperties(TaskEvent event) {
         EditText title   = findViewById(R.id.titleText);
         event.setTitle(title.getText().toString());
@@ -139,6 +171,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
         TextView time = findViewById(R.id.timeText);
         event.setTime(time.getText().toString());
 
+        //returns the event with filled out fields
         return event;
     }
 

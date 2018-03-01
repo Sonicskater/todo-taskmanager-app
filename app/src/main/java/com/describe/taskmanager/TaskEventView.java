@@ -16,32 +16,43 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+
 public class TaskEventView extends AppCompatActivity {
+    //initialized instance varibles
     private final String TAG = "TaskEventView";
     private TaskEvent currentEvent;
     Dialog datePickerDialog;
     Date chosenDate = new Date();
     Dialog timePickerDialog;
+    //firebase database agent
     FirestoreAgent fbAgent = new FirestoreAgent();
     String debug_user = "g2x3irLzu1DTJXbymPXw";
 
+    //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //base Android onCreate functionality
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_event_view);
 
+        //
         this.currentEvent = (TaskEvent)getIntent().getSerializableExtra("taskEvent");
         //log to make sure that the object is passed in
         Log.d(TAG, "got the title " + this.currentEvent.getTitle());
+
+        //create the new date and time picker dialogs
         datePickerDialog = new Dialog(this);
         timePickerDialog = new Dialog(this);
+        //the textbox in the main window, (outside of the popup)
         TextView dateField = findViewById(R.id.dateText);
+        //sets the onclick listener
         dateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
 
-                Button cancelButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerCancel);
+                Button cancelButton = datePickerDialog.findViewById(R.id.btnDatePickerCancel);
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -49,7 +60,7 @@ public class TaskEventView extends AppCompatActivity {
                     }
                 });
 
-                Button okButton = (Button)datePickerDialog.findViewById(R.id.btnDatePickerOk);
+                Button okButton = datePickerDialog.findViewById(R.id.btnDatePickerOk);
                 okButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
@@ -152,13 +163,15 @@ public class TaskEventView extends AppCompatActivity {
     public void onDelete(View view) {
         Log.d("onDelete", "onDelete: ");
 
+
+        fbAgent.deleteTask(debug_user,"category", currentEvent,this);
     }
 
     public void onSave(View view) {
         Log.d("onSave", "onSave: ");
         this.setProperties();
 
-     //   fbAgent.updateTask(debug_user,"category", currentEvent,this);
+        fbAgent.updateTask(debug_user,"category", currentEvent,this);
     }
 
     private void setProperties() {
