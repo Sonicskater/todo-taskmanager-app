@@ -9,18 +9,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.HashMap;
+
 public class LandingScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Button taskListButton = findViewById(R.id.taskList);
         Button catListButton = findViewById(R.id.catList);
         Button newTaskButton = findViewById(R.id.createTask);
+
 
         taskListButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -41,12 +41,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     public void onCreate(Bundle savedInstanceState)
     {
         //Open Sign-in Prompt
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build(),
-                RC_SIGN_IN);
+
         //Code derived from Android Documentation
         FirestoreAgent fsAgent = new FirestoreAgent();
         super.onCreate(savedInstanceState);
