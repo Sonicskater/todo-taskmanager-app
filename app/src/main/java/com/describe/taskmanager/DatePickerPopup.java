@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class DatePickerPopup extends AppCompatActivity {
 
+    //overridden method, initializes the date picker popup activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

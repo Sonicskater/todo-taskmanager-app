@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.describe.taskmanager.EventCreateView"
-    tools:showIn="@layout/activity_event_view">
+    tools:context="com.describe.taskmanager.TaskEventView">
 
     <RelativeLayout
         android:layout_width="395dp"
@@ -68,16 +66,6 @@
 
             android:text="date here" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/descriptionText"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="46dp"
-            android:onClick="onCreateEvent"
-            android:text="Save" />
-
         <TextView
             android:id="@+id/timeText"
             android:layout_width="wrap_content"
@@ -104,6 +92,28 @@
             android:layout_alignStart="@+id/timeText"
             android:text="Time" />
 
-    </RelativeLayout>
 
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="11dp"
+            android:layout_marginEnd="12dp"
+            android:onClick="onDelete"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/deleteButton"
+            android:layout_alignBottom="@+id/deleteButton"
+            android:layout_marginEnd="14dp"
+            android:layout_toStartOf="@+id/deleteButton"
+            android:onClick="onSave"
+            android:text="Save" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

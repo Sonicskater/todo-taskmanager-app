@@ -1,19 +1,27 @@
 package com.describe.taskmanager;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by bencook on 2018-01-31.
  */
 
-public class TaskEvent {
+public class TaskEvent implements Serializable {
 
+    private int id;
     private String title;
     private String description;
     private Date date;
     private String time;
 
     //getters and setters
+
+    //this is a recent update, makes it so the event knows about it's own ID number
+    public void setId(int id) { this.id = id;}
+    public int getId(){ return this.id; }
+
+
     public void setTitle (String newTitle){
         this.title = newTitle;
     }
@@ -38,11 +46,6 @@ public class TaskEvent {
     public String getTime(){
         return time;
     }
-
-    /**
-     * Created by devon on 1/26/2018.
-     */
-
 
     //default
     public TaskEvent(){

@@ -56,7 +56,6 @@ public class FirestoreAgent {
         });
     }
 
-
     //Gets a specified CategoryDocument and return it to the requested field
     public void getCategoryDocument(String user, final UIInterface callingObject, final String fieldName){
         DocumentReference docRef = db.collection("users").document(UserID).collection("categories").document("Category");
@@ -155,8 +154,6 @@ public class FirestoreAgent {
     }
     public void addTask(final String user, final String category, final TaskEvent taskObj, final UIInterface callingObject){
 
-
-
             final int newTaskID = randTaskID.nextInt(99999999);
             db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -188,5 +185,12 @@ public class FirestoreAgent {
                         }
                     });
 
+    }
+
+    public void updateTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) {
+        //this is a thing for devon to do, need to fill this in
+    }
+
+    public void deleteTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) {
     }
 }
