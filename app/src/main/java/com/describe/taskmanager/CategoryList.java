@@ -49,6 +49,8 @@ public class CategoryList extends AppCompatActivity implements UIInterface
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         gridview =findViewById(R.id.gridview);
         fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
         gridview.setAdapter(gridAdapter);
