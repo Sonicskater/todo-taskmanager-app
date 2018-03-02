@@ -93,7 +93,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
             private TaskEvent findTaskByTitle(String title) {
                 for (TaskEvent event : TaskList.taskEvents) {
-                    if (event.getTitle() == title) {
+                    if (event.getTitle().equals(title)) {
                         return event;
                     }
                 }

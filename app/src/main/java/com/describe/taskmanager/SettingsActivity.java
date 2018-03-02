@@ -284,7 +284,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
             if (FirebaseAuth.getInstance().getCurrentUser()!= null){
-                findPreference("SignOut").setSummary("Currently signed in with "+ FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                if(!FirebaseAuth.getInstance().getCurrentUser().isAnonymous()) {
+                    findPreference("SignOut").setSummary("Currently signed in with " + FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                }
+                else{
+                    findPreference("SignOut").setSummary("Signed in anonymously. Data saved cannot be accessed from other devices.");
+                }
             }
             else {
                 findPreference("SignOut").setSummary("Not signed in.");
