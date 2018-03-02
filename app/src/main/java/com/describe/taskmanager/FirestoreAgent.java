@@ -238,10 +238,36 @@ public class FirestoreAgent {
 
     }
 
-    public void updateTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) {
-        //this is a thing for devon to do, need to fill this in
+    public void updateTask(String category, final TaskEvent taskObj, final UIInterface callingObject) {
+        db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(taskObj.getId())).set(taskObj
+
+        ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                   @Override
+                                   public void onSuccess(Void aVoid) {
+                                       callingObject.firebaseSuccess("Updated task", "task updated successfully");
+                                   }
+                               }
+        ).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callingObject.firebaseFailure("1x000A", "Failed to update task", "failed to update task " +Integer.toString(taskObj.getId())+ " User");
+            }
+        });
     }
 
-    public void deleteTask(String debug_user, String category, TaskEvent currentEvent, TaskEventView taskEventView) {
+    public void deleteTask(String category, final TaskEvent taskObj, final UIInterface callingObject) {
+        db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(taskObj.getId())).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                   @Override
+                                   public void onSuccess(Void aVoid) {
+                                       callingObject.firebaseSuccess("Deleted task", "task deleted successfully");
+                                   }
+                               }
+        ).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callingObject.firebaseFailure("1x000A", "Failed to delete task", "failed to delete task " +Integer.toString(taskObj.getId())+ " User");
+            }
+        });
     }
 }
