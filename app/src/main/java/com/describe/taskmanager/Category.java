@@ -9,13 +9,17 @@ public class Category {
     private int categoryID = 0;
     private String categoryTitle  = "Default";
 
+    //default category constructor
     public Category(){}
+
+    //category constructor
     public Category(int categoryID, String categoryTitle){
         this.categoryID = categoryID;
         this.categoryTitle = categoryTitle;
 
     }
 
+    //getters and setters for category ID and Title
     public int getCategoryID() {
         return categoryID;
     }

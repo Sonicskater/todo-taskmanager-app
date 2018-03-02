@@ -41,18 +41,15 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     public void onCreate(Bundle savedInstanceState)
     {
         //Open Sign-in Prompt
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build(),
-                RC_SIGN_IN);
+
         //Code derived from Android Documentation
         FirestoreAgent fsAgent = new FirestoreAgent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         gridview =findViewById(R.id.gridview);
         fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);

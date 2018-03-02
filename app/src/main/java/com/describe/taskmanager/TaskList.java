@@ -1,35 +1,37 @@
 package com.describe.taskmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class TaskList extends AppCompatActivity implements UIInterface {
 
     SimpleAdapter adapter;
     ListView resultsListView;
+    static ArrayList<TaskEvent> taskEvents;
+    FirestoreAgent fsAgent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        FirestoreAgent fsAgent = new FirestoreAgent();
+        fsAgent = new FirestoreAgent();
 
         fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw",this,"category");
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
-
-
-
     }
 
     @Override
@@ -40,6 +42,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
 
+        this.taskEvents = collectionContent; //will use later.
 
         //Hashmap for placeholder data
         HashMap<String, String> TaskHash = new HashMap<>();
@@ -52,7 +55,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         List<HashMap<String, String>> listItems = new ArrayList<>();
         adapter = new SimpleAdapter(this, listItems, R.layout.list_item,
                 new String[]{"Content","Title"},
-                new int[]{R.id.text2, R.id.text1});
+                new int[]{R.id.title, R.id.content});
         //Create iterator to convert single hashmaps to dual hashmaps.
         Iterator iter = TaskHash.entrySet().iterator();
 
@@ -66,10 +69,37 @@ public class TaskList extends AppCompatActivity implements UIInterface {
             resultsMap.put("Content", pair.getValue().toString());
 
             listItems.add(resultsMap);
-
-
         }
 
+        resultsListView.setClickable(true);
+        resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                HashMap<String, String> o = (HashMap<String, String>)resultsListView.getItemAtPosition(position);
+               // Toast.makeText(getApplicationContext(), o.get("Title"),Toast.LENGTH_SHORT).show();
+
+                TaskEvent taskEvent = this.findTaskByTitle(o.get("Title"));
+                if (taskEvent == null) {
+                    Log.d("TaskList", "TaskEvent for taskEvent: " + o.get("Title") + ".");
+                    return;  //taskEvent for
+                }
+
+                Intent i = new Intent(getApplicationContext(),TaskEventView.class);
+                i.putExtra("taskEvent", taskEvent);
+                startActivity(i);
+
+                //should now rebuild the list from the fbAgent
+            }
+
+            private TaskEvent findTaskByTitle(String title) {
+                for (TaskEvent event : TaskList.taskEvents) {
+                    if (event.getTitle().equals(title)) {
+                        return event;
+                    }
+                }
+                return null;
+            }
+        });
         //Apply the adapter
         resultsListView.setAdapter(adapter);
     }

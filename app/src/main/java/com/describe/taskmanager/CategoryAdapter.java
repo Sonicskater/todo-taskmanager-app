@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 
 
-
 public class CategoryAdapter extends BaseAdapter
 {
     private Context context;
@@ -28,7 +27,6 @@ public class CategoryAdapter extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -36,9 +34,6 @@ public class CategoryAdapter extends BaseAdapter
 
         if (convertView == null)
         {
-
-
-
             // get layout from mobile.xml
             gridView = inflater.inflate(R.layout.grid_item_label, null);
 
