@@ -22,7 +22,7 @@ public class LandingScreen extends AppCompatActivity {
 
         Button taskListButton = findViewById(R.id.taskList);
         Button catListButton = findViewById(R.id.catList);
-        Button newTaskButton = findViewById(R.id.createTask);
+
 
 
         taskListButton.setOnClickListener(new View.OnClickListener() {
@@ -39,13 +39,7 @@ public class LandingScreen extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        newTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),EventCreateView.class);
-                startActivity(i);
-            }
-        });
+
 
 
         //Does nothing
