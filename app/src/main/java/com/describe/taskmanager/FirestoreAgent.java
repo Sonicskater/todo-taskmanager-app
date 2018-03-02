@@ -214,6 +214,7 @@ public class FirestoreAgent {
                                 if (doc.exists()) {
                                     addTask(UserID, category, taskObj, callingObject);
                                 } else {
+                                    taskObj.setId(newTaskID);
                                     db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(newTaskID)).set(taskObj
 
                                     ).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class TaskEvent implements Serializable {
 
+
     private int id;
     private String title;
     private String description;
