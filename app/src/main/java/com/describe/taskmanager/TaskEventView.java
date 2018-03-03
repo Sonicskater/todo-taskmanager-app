@@ -12,12 +12,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class TaskEventView extends AppCompatActivity {
+public class TaskEventView extends AppCompatActivity implements UIInterface {
     //initialized instance varibles
     private final String TAG = "TaskEventView";
     private TaskEvent currentEvent;
@@ -164,14 +165,14 @@ public class TaskEventView extends AppCompatActivity {
         Log.d("onDelete", "onDelete: ");
 
 
-        fbAgent.deleteTask(debug_user,"category", currentEvent,this);
+        fbAgent.deleteTask("category", currentEvent,this);
     }
 
     public void onSave(View view) {
         Log.d("onSave", "onSave: ");
         this.setProperties();
 
-        fbAgent.updateTask(debug_user,"category", currentEvent,this);
+        fbAgent.updateTask("category", currentEvent,this);
     }
 
     private void setProperties() {
@@ -187,5 +188,30 @@ public class TaskEventView extends AppCompatActivity {
 
         TextView time = findViewById(R.id.timeText);
         event.setTime(time.getText().toString());
+    }
+
+    @Override
+    public void updateObject(String fieldName, Object requestedObj) {
+
+    }
+
+    @Override
+    public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
+
+    }
+
+    @Override
+    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
+
+    }
+
+    @Override
+    public void firebaseSuccess(String message_title, String message_content) {
+
+    }
+
+    @Override
+    public void firebaseFailure(String error_code, String message_title, String extra_content) {
+
     }
 }
