@@ -22,7 +22,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".DatePickerPopup" />
         <activity android:name=".TimePickerPopup" />
-        <activity android:name=".TaskEventView"/>
         <activity
             android:name=".LandingScreen"
             android:label="@string/title_activity_landing_screen"
@@ -35,8 +34,11 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"/>
-
+            android:label="@string/title_activity_settings"></activity>
+        <activity
+            android:name=".CategoryCreateView"
+            android:label="Create a new Category"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"></activity>
     </application>
 
 </manifest>
