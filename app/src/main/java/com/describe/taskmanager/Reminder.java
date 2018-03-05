@@ -40,7 +40,7 @@ public class Reminder extends AppCompatActivity {
         remoteViews.setOnClickPendingIntent(R.id.button, p_button_intent);
 
 
-        findViewById(R.id.button_show_notify).setOnClickListener(new View.OnClickListener()) {
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent notification_intent = new Intent(context,Reminder.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notification_intent,0);
@@ -53,7 +53,7 @@ public class Reminder extends AppCompatActivity {
                 notificationManager.notify(notification_id, builder.build());
 
             }
-        }
+        });
 
 
 

@@ -31,22 +31,21 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(),EventCreateView.class);
-                        startActivity(i);
+                Intent i = new Intent(getApplicationContext(), EventCreateView.class);
+                startActivity(i);
 
-                }
+            }
 
         });
 
         fsAgent = new FirestoreAgent();
 
-        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw",this,"category");
-
+        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, "category");
 
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
-
+    }
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
 
