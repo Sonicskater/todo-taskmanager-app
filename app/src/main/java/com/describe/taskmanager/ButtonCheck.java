@@ -11,7 +11,7 @@ import android.widget.Toast;
  * Created by solanduressa on 2018-03-05.
  */
 
-public class Button_check extends BroadcastReceiver {
+public class ButtonCheck extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent){
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
