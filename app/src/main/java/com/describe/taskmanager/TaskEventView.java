@@ -52,31 +52,9 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
         dateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
 
-                Button cancelButton = datePickerDialog.findViewById(R.id.btnDatePickerCancel);
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        datePickerDialog.dismiss();
-                    }
-                });
-
-                Button okButton = datePickerDialog.findViewById(R.id.btnDatePickerOk);
-                okButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        DatePicker datePicker = datePickerDialog.findViewById(R.id.datePicker);
-
-                        chosenDate = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())
-                                .getTime();
-
-                        showEventDate();
-                        datePickerDialog.dismiss();
-                    }
-                });
-
-                datePickerDialog.show();
+                DatePickerFragment timePickerFragment = DatePickerFragment.newInstance(chosenDate, self);
+                timePickerFragment.show(getSupportFragmentManager(), "Frag");
             }
         });
         TextView timeField = findViewById(R.id.timeText);
