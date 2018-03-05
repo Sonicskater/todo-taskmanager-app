@@ -12,12 +12,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class TaskEventView extends AppCompatActivity {
+public class TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
     //initialized instance varibles
     private final String TAG = "TaskEventView";
     private TaskEvent currentEvent;
@@ -31,6 +32,7 @@ public class TaskEventView extends AppCompatActivity {
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final TaskEventView self = this;
 
         //base Android onCreate functionality
         super.onCreate(savedInstanceState);
@@ -50,66 +52,17 @@ public class TaskEventView extends AppCompatActivity {
         dateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
 
-                Button cancelButton = datePickerDialog.findViewById(R.id.btnDatePickerCancel);
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        datePickerDialog.dismiss();
-                    }
-                });
-
-                Button okButton = datePickerDialog.findViewById(R.id.btnDatePickerOk);
-                okButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        DatePicker datePicker = datePickerDialog.findViewById(R.id.datePicker);
-
-                        chosenDate = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())
-                                .getTime();
-
-                        showEventDate();
-                        datePickerDialog.dismiss();
-                    }
-                });
-
-                datePickerDialog.show();
+                DatePickerFragment timePickerFragment = DatePickerFragment.newInstance(chosenDate, self);
+                timePickerFragment.show(getSupportFragmentManager(), "Frag");
             }
         });
         TextView timeField = findViewById(R.id.timeText);
         timeField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timePickerDialog.setContentView(R.layout.activity_time_picker_popup);
-
-                Button cancelButton = timePickerDialog.findViewById(R.id.btnTimePickerCancel);
-                cancelButton.setOnClickListener (new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v){
-                        timePickerDialog.dismiss();
-                    }
-                });
-
-                Button okButton  = timePickerDialog.findViewById(R.id.btnTimePickerOk);
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TimePicker timePicker = timePickerDialog.findViewById(R.id.timePicker);
-
-                        GregorianCalendar cal = new GregorianCalendar();
-                        cal.setTime(chosenDate);
-                        cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-                        cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-
-                        chosenDate = cal.getTime();
-                        showEventDate();
-
-                        timePickerDialog.dismiss();
-                    }
-                });
-
-                timePickerDialog.show();
+                TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(chosenDate,self);
+                timePickerFragment.show(getSupportFragmentManager(),"Frag");
             }
         });
 
@@ -164,14 +117,14 @@ public class TaskEventView extends AppCompatActivity {
         Log.d("onDelete", "onDelete: ");
 
 
-        fbAgent.deleteTask(debug_user,"category", currentEvent,this);
+        fbAgent.deleteTask("category", currentEvent,this);
     }
 
     public void onSave(View view) {
         Log.d("onSave", "onSave: ");
         this.setProperties();
 
-        fbAgent.updateTask(debug_user,"category", currentEvent,this);
+        fbAgent.updateTask("category", currentEvent,this);
     }
 
     private void setProperties() {
@@ -187,5 +140,36 @@ public class TaskEventView extends AppCompatActivity {
 
         TextView time = findViewById(R.id.timeText);
         event.setTime(time.getText().toString());
+    }
+
+    @Override
+    public void updateObject(String fieldName, Object requestedObj) {
+
+    }
+
+    @Override
+    public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
+
+    }
+
+    @Override
+    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
+
+    }
+
+    @Override
+    public void firebaseSuccess(String message_title, String message_content) {
+
+    }
+
+    @Override
+    public void firebaseFailure(String error_code, String message_title, String extra_content) {
+
+    }
+
+    @Override
+    public void passDateTime(Date passedDate) {
+        this.chosenDate = passedDate;
+        this.showEventDate();
     }
 }

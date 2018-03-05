@@ -22,7 +22,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".DatePickerPopup" />
         <activity android:name=".TimePickerPopup" />
-        <activity android:name=".TaskEventView"/>
+        <activity android:name=".TaskEventView" />
         <activity
             android:name=".LandingScreen"
             android:label="@string/title_activity_landing_screen"
