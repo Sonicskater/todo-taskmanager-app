@@ -46,7 +46,6 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
-    }
 
     @Override
     public void updateObject(String fieldName, Object requestedObj) {

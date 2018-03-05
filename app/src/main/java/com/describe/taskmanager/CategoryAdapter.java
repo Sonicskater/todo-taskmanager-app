@@ -34,7 +34,7 @@ public class CategoryAdapter extends BaseAdapter
 
         if (convertView == null)
         {
-            // get layout from mobile.xml
+            // get reminder_notification from mobile.xml
             gridView = inflater.inflate(R.layout.grid_item_label, null);
 
             // set value into textview
