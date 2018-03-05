@@ -51,51 +51,22 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         //the textbox in the main window, (outside of the popup)
         TextView dateField = findViewById(R.id.dateText);
         //set the onclick listener
+        final DateTimeInterface self = this;
         dateField.setOnClickListener(new View.OnClickListener() {
-            //onclick implementation of datePicker diaglog
+
             @Override
             public void onClick(View view) {
 
-                //sets content view to the popup
-                datePickerDialog.setContentView(R.layout.activity_date_picker_popup);
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(chosenDate,self);
+                datePickerFragment.show(getSupportFragmentManager(),"Frag");
 
-                //onclick event for the datepicker dialog cancel button
-                Button cancelButton = datePickerDialog.findViewById(R.id.btnDatePickerCancel);
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //if cancel is clicked, remove popup
-                        datePickerDialog.dismiss();
-                    }
-                });
-
-                //onlclick event for the datepicker dialog save button
-                Button okButton = datePickerDialog.findViewById(R.id.btnDatePickerOk);
-                okButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        DatePicker datePicker = datePickerDialog.findViewById(R.id.datePicker);
-
-                        //on the save/ok button, sets the date chosen
-                        chosenDate = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())
-                                .getTime();
-
-                        //formats the date into a string to be placed in the textfield on the main window
-                        showEventDate();
-                        //if save is clicked, remove popup
-                        datePickerDialog.dismiss();
-                    }
-                });
-
-                //dialog is shown after all of the onclicks are defined
-                datePickerDialog.show();
             }
         });
 
         //the textbox in the main window (outside of popup)
         TextView timeField = findViewById(R.id.timeText);
         //sets the onclick listener to pop up the time picker fragment
-        final DateTimeInterface self = this;
+
         timeField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
