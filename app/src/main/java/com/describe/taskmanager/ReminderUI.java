@@ -12,7 +12,7 @@ import android.content.Context;
 
 
 
-public class Reminder extends AppCompatActivity {
+public class ReminderUI extends AppCompatActivity {
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
     private int notification_id;
@@ -42,7 +42,7 @@ public class Reminder extends AppCompatActivity {
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent notification_intent = new Intent(context,Reminder.class);
+                Intent notification_intent = new Intent(context,ReminderUI.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notification_intent,0);
 
                 builder = new NotificationCompat.Builder(context);

@@ -52,9 +52,10 @@ public class TaskEvent implements Serializable {
     public TaskEvent(){
 
     }
+
     public TaskEvent(String title, String description, Date date, String Time){
         this.title = title;
-        this.description = title;
+        this.description = description;
         this.date = date;
         this.time = time;
     }
