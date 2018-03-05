@@ -1,6 +1,9 @@
 package com.describe.taskmanager;
 
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +22,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class EventCreateView extends AppCompatActivity implements UIInterface{
+public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
     //initialized instance varibles
     Dialog datePickerDialog;
     Date chosenDate = new Date();
@@ -31,6 +34,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final FragmentManager fragManager = getFragmentManager();
 
         //base Android onCreate functionality
         super.onCreate(savedInstanceState);
@@ -89,49 +94,15 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
 
         //the textbox in the main window (outside of popup)
         TextView timeField = findViewById(R.id.timeText);
-        //sets the onclick listener to pop up the time picker
+        //sets the onclick listener to pop up the time picker fragment
+        final DateTimeInterface self = this;
         timeField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //sets the content view to the popup
-                timePickerDialog.setContentView(R.layout.activity_time_picker_popup);
 
-                //cancel button and onclick listener
-                Button cancelButton = timePickerDialog.findViewById(R.id.btnTimePickerCancel);
-                cancelButton.setOnClickListener (new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v){
-                        //dismisses if cancel is clicked
-                        timePickerDialog.dismiss();
-                    }
-                });
+                TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(chosenDate,self);
+                timePickerFragment.show(getSupportFragmentManager(),"Frag");
 
-                //save button and onclikc listener
-                Button okButton  = timePickerDialog.findViewById(R.id.btnTimePickerOk);
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TimePicker timePicker = timePickerDialog.findViewById(R.id.timePicker);
-
-                        //note time is also stored in a GregorianCalender object
-                        GregorianCalendar cal = new GregorianCalendar();
-                        //sets the time and feeds in the chosen date (not really necessary to feed date in but easier to format)
-                        cal.setTime(chosenDate);
-                        cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-                        cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-
-
-                        chosenDate = cal.getTime();
-                        //formats the time into a string to be placed in the textfield on the main window
-                        showEventDate();
-
-                        //dismisses is save is pressed
-                        timePickerDialog.dismiss();
-                    }
-                });
-
-                //dialog is shown after all of the onclicks are defined
-                timePickerDialog.show();
             }
         });
     }
@@ -200,5 +171,11 @@ public class EventCreateView extends AppCompatActivity implements UIInterface{
     public void firebaseFailure(String error_code, String message_title, String extra_content) {
         Toast toast = Toast.makeText(EventCreateView.this,message_title, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void passDateTime(Date passedDate) {
+        this.chosenDate = passedDate;
+        this.showEventDate();
     }
 }
