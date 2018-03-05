@@ -35,7 +35,14 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"/>
+        <receiver
+            android:name="Button_check">
+            <intent-filter>
+                <action android:name="Button_Pressed" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
