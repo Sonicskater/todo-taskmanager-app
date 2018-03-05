@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,12 +30,14 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     Date chosenDate = new Date();
     Dialog timePickerDialog;
     //firebase database agent
+    Spinner categoriesSpinner;
     FirestoreAgent fbAgent = new FirestoreAgent();
     String debug_user = "g2x3irLzu1DTJXbymPXw";
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         final FragmentManager fragManager = getFragmentManager();
 
@@ -48,6 +52,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         //create the new date and time picker dialogs
         datePickerDialog = new Dialog(this);
         timePickerDialog = new Dialog(this);
+        categoriesSpinner = findViewById(R.id.categoriesSpinner);
+        fbAgent.getCategoryCollection("",this);
         //the textbox in the main window, (outside of the popup)
         TextView dateField = findViewById(R.id.dateText);
         //set the onclick listener
@@ -78,7 +84,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         });
     }
 
-    public void onCreateEvent(View view) throws ParseException {
+    public void onCreateEvent(View view) throws ParseException
+    {
         //creates new event
         TaskEvent newEvent = setProperties(new TaskEvent());
         //saves the text in the field after the submit button pressed
@@ -89,7 +96,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     }
 
     //this method just formats the date and times into readable strings
-    private void showEventDate() {
+    private void showEventDate()
+    {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
@@ -101,7 +109,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     }
 
     //sets the object properties based on what the user typed/picked on the screen
-    private TaskEvent setProperties(TaskEvent event) {
+    private TaskEvent setProperties(TaskEvent event)
+    {
         EditText title   = findViewById(R.id.titleText);
         event.setTitle(title.getText().toString());
 
@@ -128,12 +137,19 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     }
 
     @Override
-    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
-
+    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
+    {
+        String[] items = new String[collectionContent.size()];
+        for (int i = 0; i< collectionContent.size();i++){
+            items[i] = collectionContent.get(i).getCategoryTitle();
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,items);
+        categoriesSpinner.setAdapter(adapter);
     }
 
     @Override
-    public void firebaseSuccess(String message_title, String message_content) {
+    public void firebaseSuccess(String message_title, String message_content)
+    {
         Toast toast = Toast.makeText(EventCreateView.this,message_title, Toast.LENGTH_SHORT);
         toast.show();
     }

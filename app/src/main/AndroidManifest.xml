@@ -45,6 +45,11 @@
         <activity android:name=".ReminderUI"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
+            android:label="@string/title_activity_settings"></activity>
+        <activity
+            android:name=".CategoryCreateView"
+            android:label="Create a new Category"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"></activity>
     </application>
 
 </manifest>

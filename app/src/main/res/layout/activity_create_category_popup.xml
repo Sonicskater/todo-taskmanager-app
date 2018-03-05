@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/categoryNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/buttonCreateCategory"
+            app:layout_constraintStart_toEndOf="@+id/buttonCreateCategory"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonCreateCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonCancelCreateCategory"
+            android:layout_alignBottom="@+id/buttonCancelCreateCategory"
+            android:layout_alignStart="@+id/categoryNameText"
+            android:text="Add" />
+
+        <Button
+            android:id="@+id/buttonCancelCreateCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/categoryNameText"
+            android:layout_below="@+id/categoryNameText"
+            android:layout_marginTop="35dp"
+            android:text="Cancel" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/categoryNameText"
+            android:layout_marginTop="23dp"
+            android:text="Name" />
+
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

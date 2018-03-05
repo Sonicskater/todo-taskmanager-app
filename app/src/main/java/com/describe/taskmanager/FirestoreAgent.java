@@ -22,9 +22,6 @@ import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
-
-
-
 public class FirestoreAgent {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth AuthInstance = FirebaseAuth.getInstance();
@@ -39,12 +36,6 @@ public class FirestoreAgent {
             AuthInstance.signInAnonymously();
         }
     }
-
-
-
-
-
-
 
 
     //Code derived from Firestore docs
