@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class TaskEventView extends AppCompatActivity implements UIInterface {
+public class TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
     //initialized instance varibles
     private final String TAG = "TaskEventView";
     private TaskEvent currentEvent;
@@ -32,6 +32,7 @@ public class TaskEventView extends AppCompatActivity implements UIInterface {
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final TaskEventView self = this;
 
         //base Android onCreate functionality
         super.onCreate(savedInstanceState);
@@ -82,35 +83,8 @@ public class TaskEventView extends AppCompatActivity implements UIInterface {
         timeField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timePickerDialog.setContentView(R.layout.activity_time_picker_popup);
-
-                Button cancelButton = timePickerDialog.findViewById(R.id.btnTimePickerCancel);
-                cancelButton.setOnClickListener (new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v){
-                        timePickerDialog.dismiss();
-                    }
-                });
-
-                Button okButton  = timePickerDialog.findViewById(R.id.btnTimePickerOk);
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TimePicker timePicker = timePickerDialog.findViewById(R.id.timePicker);
-
-                        GregorianCalendar cal = new GregorianCalendar();
-                        cal.setTime(chosenDate);
-                        cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-                        cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-
-                        chosenDate = cal.getTime();
-                        showEventDate();
-
-                        timePickerDialog.dismiss();
-                    }
-                });
-
-                timePickerDialog.show();
+                TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(chosenDate,self);
+                timePickerFragment.show(getSupportFragmentManager(),"Frag");
             }
         });
 
@@ -213,5 +187,11 @@ public class TaskEventView extends AppCompatActivity implements UIInterface {
     @Override
     public void firebaseFailure(String error_code, String message_title, String extra_content) {
 
+    }
+
+    @Override
+    public void passDateTime(Date passedDate) {
+        this.chosenDate = passedDate;
+        this.showEventDate();
     }
 }
