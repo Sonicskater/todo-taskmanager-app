@@ -19,13 +19,7 @@ import java.util.List;
 
 public class LandingScreen extends AppCompatActivity {
 
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build()
-//            new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-//            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
-//            new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-//            new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()
-    );
+
 
     private static final int RC_SIGN_IN = 1;
 
@@ -33,17 +27,7 @@ public class LandingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FirebaseAuth.getInstance().signOut();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null){
-            //Open Sign-in Prompt
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .build(),
-                    RC_SIGN_IN);
-        }
+
 
         setContentView(R.layout.activity_landing_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -81,31 +65,6 @@ public class LandingScreen extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                Log.d("AUTH","Successfully signed in,UID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
-                // ...
-            } else {
-                // Sign in failed, check response for error code
-                Log.d("AUTH","Sign-in failed");
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if(user == null){
-                    //Open Sign-in Prompt
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setAvailableProviders(providers)
-                                    .build(),
-                            RC_SIGN_IN);
-                }
-            }
-        }
-
-    }
 
 }

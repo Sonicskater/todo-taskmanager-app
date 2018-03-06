@@ -51,8 +51,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
                 Intent intent = new Intent(getApplicationContext(),CategoryCreateView.class);
                 startActivityForResult(intent,CATEGORY_CREATE);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
 
         });

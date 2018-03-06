@@ -43,7 +43,7 @@
             </intent-filter>
         </receiver>/
         <activity android:name=".ReminderUI"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
 
             android:label="@string/title_activity_settings"></activity>
         <activity

@@ -48,13 +48,7 @@
         android:src="@drawable/ic_add_white_24dp"
         android:tint="@android:color/white" />
 
-    <fragment
-        android:name="com.describe.taskmanager.CreateCategory"
-        android:id="@+id/fragment_create_category"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        />
+
 
 </android.support.design.widget.CoordinatorLayout>
 
