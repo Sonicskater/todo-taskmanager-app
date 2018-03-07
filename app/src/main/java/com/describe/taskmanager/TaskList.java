@@ -39,8 +39,9 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         });
 
         fsAgent = new FirestoreAgent();
+        String category = "Default";
 
-        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, "category");
+        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, category);
 
 
         //Reference to list view for SimpleAdapter to fill
