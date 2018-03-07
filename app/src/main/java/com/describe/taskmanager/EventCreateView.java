@@ -83,12 +83,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
     public void onCreateEvent(View view) throws ParseException
     {
-        //creates new event
-        TaskEvent newEvent = buildTask();
-        //saves the text in the field after the submit button pressed
-
-        //Uploads task to Firestore
-        fbAgent.addTask(debug_user,"category",newEvent,this);
+        ///Create and upload task to Firestore
+        fbAgent.addTask(debug_user,"category", buildTask(),this);
     }
 
     //this method just formats the date and times into readable strings
@@ -116,7 +112,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     }
 
     private String getTextValue(int fieldId) {
-        TextView field = (TextView)findViewById(fieldId);
+        TextView field = findViewById(fieldId);
         return field.getText().toString();
     }
 

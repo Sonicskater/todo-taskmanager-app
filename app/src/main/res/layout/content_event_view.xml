@@ -40,10 +40,9 @@
         <Spinner
             android:id="@+id/categoriesSpinner"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignStart="@+id/titleText"
             android:layout_below="@+id/titleText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="17dp"
             android:width="300dp"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />
