@@ -1,27 +1,24 @@
 package com.describe.taskmanager;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 
 public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
@@ -87,12 +84,11 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     public void onCreateEvent(View view) throws ParseException
     {
         //creates new event
-        TaskEvent newEvent = setProperties(new TaskEvent());
+        TaskEvent newEvent = buildTask();
         //saves the text in the field after the submit button pressed
 
         //Uploads task to Firestore
         fbAgent.addTask(debug_user,"category",newEvent,this);
-
     }
 
     //this method just formats the date and times into readable strings
@@ -109,21 +105,19 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     }
 
     //sets the object properties based on what the user typed/picked on the screen
-    private TaskEvent setProperties(TaskEvent event)
+    private TaskEvent buildTask()
     {
-        EditText title   = findViewById(R.id.titleText);
-        event.setTitle(title.getText().toString());
-
-        EditText description   = findViewById(R.id.descriptionText);
-        event.setDescription(description.getText().toString());
-
-        event.setDate(this.chosenDate);
-
-        TextView time = findViewById(R.id.timeText);
-        event.setTime(time.getText().toString());
+        String title = getTextValue(R.id.titleText);
+        String description = getTextValue(R.id.descriptionText);
+        String time = getTextValue(R.id.timeText);
 
         //returns the event with filled out fields
-        return event;
+        return new TaskEvent(title, description, this.chosenDate, time);
+    }
+
+    private String getTextValue(int fieldId) {
+        TextView field = (TextView)findViewById(fieldId);
+        return field.getText().toString();
     }
 
     @Override
