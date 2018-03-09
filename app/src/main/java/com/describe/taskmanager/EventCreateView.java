@@ -105,7 +105,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
         //Uploads task to Firestore
         fbAgent.addTask(debug_user,categoriesSpinner.getSelectedItem().toString(),newEvent,this);
-        finish();
+
 
     }
 
@@ -166,6 +166,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     {
         Toast toast = Toast.makeText(EventCreateView.this,message_title, Toast.LENGTH_SHORT);
         toast.show();
+        finish();
     }
 
     @Override
