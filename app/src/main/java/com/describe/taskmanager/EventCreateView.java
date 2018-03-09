@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -82,6 +84,17 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
             }
         });
+
+        //Handle share intents from system.
+        if (getIntent().getExtras()!=null) {
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            //Handle text share
+            if (action.equals(Intent.ACTION_SEND) && intent.getType().equals("text/plain")) {
+                EditText desc = findViewById(R.id.descriptionText);
+                desc.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            }
+        }
     }
 
     public void onCreateEvent(View view) throws ParseException
@@ -92,6 +105,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
         //Uploads task to Firestore
         fbAgent.addTask(debug_user,categoriesSpinner.getSelectedItem().toString(),newEvent,this);
+
 
     }
 
@@ -152,6 +166,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     {
         Toast toast = Toast.makeText(EventCreateView.this,message_title, Toast.LENGTH_SHORT);
         toast.show();
+        finish();
     }
 
     @Override
