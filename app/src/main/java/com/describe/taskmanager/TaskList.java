@@ -19,6 +19,7 @@ import java.util.Map;
 
 public class TaskList extends AppCompatActivity implements UIInterface {
 
+    String categoryName;
     SimpleAdapter adapter;
     ListView resultsListView;
     static ArrayList<TaskEvent> taskEvents;
@@ -40,7 +41,8 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
         fsAgent = new FirestoreAgent();
 
-        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, "category");
+        this.categoryName = getIntent().getStringExtra("categoryName");
+        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, this.categoryName);
 
 
         //Reference to list view for SimpleAdapter to fill
