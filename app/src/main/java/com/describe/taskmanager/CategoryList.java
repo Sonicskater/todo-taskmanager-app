@@ -3,7 +3,6 @@ package com.describe.taskmanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CategoryList extends AppCompatActivity implements UIInterface
 {
@@ -21,6 +21,8 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     CategoryAdapter gridAdapter;
     GridView gridview;
 
+
+    //initialization of android activity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -29,16 +31,24 @@ public class CategoryList extends AppCompatActivity implements UIInterface
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FirestoreAgent fsAgent = new FirestoreAgent();
         gridview =findViewById(R.id.gridview);
+        //gets the category collection from firebase
         fsAgent.getCategoryCollection("",this);
         gridview.setAdapter(gridAdapter);
 
+        //onclick listener
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                Toast.makeText(getApplicationContext(), "Your Category ;D", Toast.LENGTH_SHORT).show();
+                String categoryName = (String)gridview.getItemAtPosition(position);
+
+                Intent intent = new Intent(getApplicationContext(),TaskList.class);
+                intent.putExtra("categoryName", categoryName);
+                startActivity(intent);
+
             }
         });
 
@@ -48,15 +58,14 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             @Override
             public void onClick(View view)
             {
-
                 Intent intent = new Intent(getApplicationContext(),CategoryCreateView.class);
                 startActivityForResult(intent,CATEGORY_CREATE);
-
             }
 
         });
     }
 
+    //opens the settings/preferences menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -76,8 +85,9 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
-
     }
+
+    //
     @Override
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
     {

@@ -71,7 +71,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         //Create iterator to convert single hashmaps to dual hashmaps.
         Iterator iter = TaskHash.entrySet().iterator();
 
-        //Iterate thru the above hashmap,splitting each key-value pair so that SimpleAdapter can read them as a 2-part hashmap from its list.
+        //Iterate through the above hashmap,splitting each key-value pair so that SimpleAdapter can read them as a 2-part hashmap from its list.
         while (iter.hasNext()) {
 
             HashMap<String, String> resultsMap = new HashMap<>();

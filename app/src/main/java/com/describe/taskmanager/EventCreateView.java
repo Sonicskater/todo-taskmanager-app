@@ -35,7 +35,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         final FragmentManager fragManager = getFragmentManager();
 
         //base Android onCreate functionality
@@ -53,7 +52,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         fbAgent.getCategoryCollection("",this);
         //the textbox in the main window, (outside of the popup)
         TextView dateField = findViewById(R.id.dateText);
-        //set the onclick listener
+        //set the onclick listener for date picker
         final DateTimeInterface self = this;
         dateField.setOnClickListener(new View.OnClickListener() {
 
@@ -62,7 +61,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
                 DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(chosenDate,self);
                 datePickerFragment.show(getSupportFragmentManager(),"Frag");
-
             }
         });
 
@@ -81,6 +79,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         });
     }
 
+    //NOTE: this is wired to the save button in the event_view xml file, not manually with code
     public void onCreateEvent(View view) throws ParseException
     {
         ///Create and upload task to Firestore
@@ -107,14 +106,29 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         String description = getTextValue(R.id.descriptionText);
         String time = getTextValue(R.id.timeText);
 
-        //returns the event with filled out fields
+        //should update this so it updates the task with it's category from the drop down menu
+
+        //returns the task with filled out fields
         return new TaskEvent(title, description, this.chosenDate, time);
     }
 
+    //function to simply extract the text from a textfield turn it into a string
     private String getTextValue(int fieldId) {
         TextView field = findViewById(fieldId);
         return field.getText().toString();
     }
+
+    //dont need this, an event doesn't need to know its category
+    /*
+    //to get the category as a string out from the drop down menu
+    //IT WORKS :D String tho?
+    private String getCategoryFromSpinner(Spinner mySpinner){
+
+        String text = mySpinner.getSelectedItem().toString();
+        //System.out.println(text);
+        return text;
+    }
+    */
 
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
@@ -126,6 +140,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
     }
 
+    //what is this method??
     @Override
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
     {

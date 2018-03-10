@@ -48,7 +48,6 @@ public class TaskEvent implements Serializable {
     public String getTime(){
         return time;
     }
-    public Category getCategory() {return this.category;}
 
     //default
     public TaskEvent(){ }

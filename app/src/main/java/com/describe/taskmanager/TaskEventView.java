@@ -98,21 +98,6 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
         time.setText(timeFormat.format(chosenDate));
     }
 
-    private TaskEvent setProperties(TaskEvent event) {
-        EditText title   = findViewById(R.id.titleText);
-        event.setTitle(title.getText().toString());
-
-        EditText description   = findViewById(R.id.descriptionText);
-        event.setDescription(description.getText().toString());
-
-        event.setDate(this.chosenDate);
-
-        TextView time = findViewById(R.id.timeText);
-        event.setTime(time.getText().toString());
-
-        return event;
-    }
-
     public void onDelete(View view) {
         Log.d("onDelete", "onDelete: ");
 
@@ -130,16 +115,20 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
     private void setProperties() {
         TaskEvent event = this.currentEvent;
 
-        EditText title   = findViewById(R.id.titleText);
-        event.setTitle(title.getText().toString());
 
-        EditText description   = findViewById(R.id.descriptionText);
-        event.setDescription(description.getText().toString());
+        event.setTitle(getTextValue(R.id.titleText));
+        
+        event.setDescription(getTextValue(R.id.descriptionText));
+
+        event.setTime(getTextValue(R.id.timeText));
 
         event.setDate(this.chosenDate);
+    }
 
-        TextView time = findViewById(R.id.timeText);
-        event.setTime(time.getText().toString());
+    //function to simply extract the text from a textfield turn it into a string
+    private String getTextValue(int fieldId) {
+        TextView field = findViewById(fieldId);
+        return field.getText().toString();
     }
 
     @Override
