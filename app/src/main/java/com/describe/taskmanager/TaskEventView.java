@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -148,11 +149,15 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
 
     @Override
     public void firebaseSuccess(String message_title, String message_content) {
-
+        Toast toast = Toast.makeText(TaskEventView.this,message_title, Toast.LENGTH_SHORT);
+        toast.show();
+        finish();
     }
 
     @Override
     public void firebaseFailure(String error_code, String message_title, String extra_content) {
+        Toast toast = Toast.makeText(TaskEventView.this,message_title, Toast.LENGTH_SHORT);
+        toast.show();
 
     }
 

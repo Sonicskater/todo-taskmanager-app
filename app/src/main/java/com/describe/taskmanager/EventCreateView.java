@@ -2,7 +2,9 @@ package com.describe.taskmanager;
 
 import android.app.Dialog;
 import android.app.FragmentManager;
-import android.net.wifi.p2p.WifiP2pManager;
+import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -77,13 +79,30 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
             }
         });
+
+        //Handle share intents from system.
+        if (getIntent().getExtras()!=null) {
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            //Handle text share
+            if (action.equals(Intent.ACTION_SEND) && intent.getType().equals("text/plain")) {
+                EditText desc = findViewById(R.id.descriptionText);
+                desc.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            }
+        }
     }
 
     //NOTE: this is wired to the save button in the event_view xml file, not manually with code
     public void onCreateEvent(View view) throws ParseException
     {
-        ///Create and upload task to Firestore
-        fbAgent.addTask(debug_user,"category", buildTask(),this);
+        //creates new event
+        TaskEvent newEvent = setProperties(new TaskEvent());
+        //saves the text in the field after the submit button pressed
+
+        //Uploads task to Firestore
+        fbAgent.addTask(debug_user,categoriesSpinner.getSelectedItem().toString(),newEvent,this);
+
+
     }
 
     //this method just formats the date and times into readable strings
@@ -157,6 +176,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     {
         Toast toast = Toast.makeText(EventCreateView.this,message_title, Toast.LENGTH_SHORT);
         toast.show();
+        finish();
     }
 
     @Override

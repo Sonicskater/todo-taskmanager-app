@@ -40,6 +40,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         });
 
         fsAgent = new FirestoreAgent();
+        String category = "Default";
 
         this.categoryName = getIntent().getStringExtra("categoryName");
         fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, this.categoryName);
