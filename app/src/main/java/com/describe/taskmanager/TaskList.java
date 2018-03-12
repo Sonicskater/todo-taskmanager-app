@@ -19,6 +19,7 @@ import java.util.Map;
 
 public class TaskList extends AppCompatActivity implements UIInterface {
 
+    String categoryName;
     SimpleAdapter adapter;
     ListView resultsListView;
     static ArrayList<TaskEvent> taskEvents;
@@ -41,7 +42,8 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         fsAgent = new FirestoreAgent();
         String category = "Default";
 
-        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, category);
+        this.categoryName = getIntent().getStringExtra("categoryName");
+        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, this.categoryName);
 
 
         //Reference to list view for SimpleAdapter to fill
@@ -72,7 +74,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         //Create iterator to convert single hashmaps to dual hashmaps.
         Iterator iter = TaskHash.entrySet().iterator();
 
-        //Iterate thru the above hashmap,splitting each key-value pair so that SimpleAdapter can read them as a 2-part hashmap from its list.
+        //Iterate through the above hashmap,splitting each key-value pair so that SimpleAdapter can read them as a 2-part hashmap from its list.
         while (iter.hasNext()) {
 
             HashMap<String, String> resultsMap = new HashMap<>();

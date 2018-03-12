@@ -1,7 +1,6 @@
 package com.describe.taskmanager;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.Notification;
@@ -11,19 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 
 public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
@@ -40,7 +37,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         final FragmentManager fragManager = getFragmentManager();
 
         //base Android onCreate functionality
@@ -58,7 +54,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         fbAgent.getCategoryCollection("",this);
         //the textbox in the main window, (outside of the popup)
         TextView dateField = findViewById(R.id.dateText);
-        //set the onclick listener
+        //set the onclick listener for date picker
         final DateTimeInterface self = this;
         dateField.setOnClickListener(new View.OnClickListener() {
 
@@ -67,7 +63,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
                 DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(chosenDate,self);
                 datePickerFragment.show(getSupportFragmentManager(),"Frag");
-
             }
         });
 
@@ -97,6 +92,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         }
     }
 
+    //NOTE: this is wired to the save button in the event_view xml file, not manually with code
     public void onCreateEvent(View view) throws ParseException
     {
         //creates new event
@@ -123,22 +119,35 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     }
 
     //sets the object properties based on what the user typed/picked on the screen
-    private TaskEvent setProperties(TaskEvent event)
+    private TaskEvent buildTask()
     {
-        EditText title   = findViewById(R.id.titleText);
-        event.setTitle(title.getText().toString());
+        String title = getTextValue(R.id.titleText);
+        String description = getTextValue(R.id.descriptionText);
+        String time = getTextValue(R.id.timeText);
 
-        EditText description   = findViewById(R.id.descriptionText);
-        event.setDescription(description.getText().toString());
+        //should update this so it updates the task with it's category from the drop down menu
 
-        event.setDate(this.chosenDate);
-
-        TextView time = findViewById(R.id.timeText);
-        event.setTime(time.getText().toString());
-
-        //returns the event with filled out fields
-        return event;
+        //returns the task with filled out fields
+        return new TaskEvent(title, description, this.chosenDate, time);
     }
+
+    //function to simply extract the text from a textfield turn it into a string
+    private String getTextValue(int fieldId) {
+        TextView field = findViewById(fieldId);
+        return field.getText().toString();
+    }
+
+    //dont need this, an event doesn't need to know its category
+    /*
+    //to get the category as a string out from the drop down menu
+    //IT WORKS :D String tho?
+    private String getCategoryFromSpinner(Spinner mySpinner){
+
+        String text = mySpinner.getSelectedItem().toString();
+        //System.out.println(text);
+        return text;
+    }
+    */
 
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
@@ -150,6 +159,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
     }
 
+    //what is this method??
     @Override
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
     {

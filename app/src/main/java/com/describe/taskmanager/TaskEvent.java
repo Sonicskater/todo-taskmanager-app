@@ -15,6 +15,7 @@ public class TaskEvent implements Serializable {
     private String description;
     private Date date;
     private String time;
+    private Category category;
 
     //getters and setters
 
@@ -49,11 +50,9 @@ public class TaskEvent implements Serializable {
     }
 
     //default
-    public TaskEvent(){
+    public TaskEvent(){ }
 
-    }
-
-    public TaskEvent(String title, String description, Date date, String Time){
+    public TaskEvent(String title, String description, Date date, String time){
         this.title = title;
         this.description = description;
         this.date = date;
