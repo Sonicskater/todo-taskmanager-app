@@ -20,6 +20,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     private static final int CATEGORY_CREATE = 2;
     CategoryAdapter gridAdapter;
     GridView gridview;
+    FirestoreAgent fsAgent;
 
 
     //initialization of android activity
@@ -32,7 +33,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
         setSupportActionBar(toolbar);
 
 
-        FirestoreAgent fsAgent = new FirestoreAgent();
+        this.fsAgent = new FirestoreAgent();
         gridview =findViewById(R.id.gridview);
         //gets the category collection from firebase
         fsAgent.getCategoryCollection("",this);
@@ -63,6 +64,12 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             }
 
         });
+    }
+    //onResume is triggered when this activity is brought back into focus
+    @Override
+    protected void onResume(){
+        super.onResume();
+        fsAgent.getCategoryCollection("",this);
     }
 
     //opens the settings/preferences menu
