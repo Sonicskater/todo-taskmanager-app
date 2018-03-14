@@ -1,9 +1,10 @@
 package com.describe.taskmanager;
 
-import android.app.Dialog;
+
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -22,13 +23,12 @@ import java.util.Locale;
 
 public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
     //initialized instance varibles
-    Dialog datePickerDialog;
     Date chosenDate = new Date();
-    Dialog timePickerDialog;
-    //firebase database agent
+
+
     Spinner categoriesSpinner;
     FirestoreAgent fbAgent = new FirestoreAgent();
-    String debug_user = "g2x3irLzu1DTJXbymPXw";
+    String debug_user = "";
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
@@ -45,8 +45,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         setSupportActionBar(toolbar);
 
         //create the new date and time picker dialogs
-        datePickerDialog = new Dialog(this);
-        timePickerDialog = new Dialog(this);
+
         categoriesSpinner = findViewById(R.id.categoriesSpinner);
         fbAgent.getCategoryCollection("",this);
         //the textbox in the main window, (outside of the popup)
@@ -79,10 +78,13 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
         //Handle share intents from system.
         if (getIntent().getExtras()!=null) {
+            @NonNull
             Intent intent = getIntent();
+
             String action = intent.getAction();
             //Handle text share
-            if (action.equals(Intent.ACTION_SEND) && intent.getType().equals("text/plain")) {
+            //Added null checks
+            if (action!=null && action.equals(Intent.ACTION_SEND) && intent.getType()!= null && intent.getType().equals("text/plain")) {
                 EditText desc = findViewById(R.id.descriptionText);
                 desc.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
             }
