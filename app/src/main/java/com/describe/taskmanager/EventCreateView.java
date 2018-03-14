@@ -1,9 +1,7 @@
 package com.describe.taskmanager;
 
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.Notification;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +13,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
@@ -37,14 +34,14 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        final FragmentManager fragManager = getFragmentManager();
+
 
         //base Android onCreate functionality
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_view);
 
         //initalizes the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //create the new date and time picker dialogs
@@ -108,8 +105,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     //this method just formats the date and times into readable strings
     private void showEventDate()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
 
         TextView date   = findViewById(R.id.dateText);
         date.setText(dateFormat.format(chosenDate));
@@ -167,7 +164,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         for (int i = 0; i< collectionContent.size();i++){
             items[i] = collectionContent.get(i).getCategoryTitle();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,items);
         categoriesSpinner.setAdapter(adapter);
     }
 

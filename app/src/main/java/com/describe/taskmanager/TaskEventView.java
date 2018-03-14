@@ -5,23 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
+
 import android.widget.TextView;
-import android.widget.TimePicker;
+
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
-import java.util.GregorianCalendar;
+
+import java.util.Locale;
 
 
 public class TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
     //initialized instance varibles
-    private final String TAG = "TaskEventView";
+
     private TaskEvent currentEvent;
     private String category;
     Dialog datePickerDialog;
@@ -29,7 +28,7 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
     Dialog timePickerDialog;
     //firebase database agent
     FirestoreAgent fbAgent = new FirestoreAgent();
-    String debug_user = "g2x3irLzu1DTJXbymPXw";
+
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
@@ -43,8 +42,7 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
         //
         this.currentEvent = (TaskEvent)getIntent().getSerializableExtra("taskEvent");
         this.category = (String)getIntent().getSerializableExtra("category");
-        //log to make sure that the object is passed in
-        Log.d(TAG, "got the title " + this.currentEvent.getTitle());
+
 
         //create the new date and time picker dialogs
         datePickerDialog = new Dialog(this);
@@ -74,8 +72,8 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
 
     private void updateUIFields(TaskEvent currentEvent) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
 
         this.chosenDate = currentEvent.getDate();
 
@@ -91,8 +89,8 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
     }
 
     private void showEventDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
 
         TextView date   = findViewById(R.id.dateText);
         date.setText(dateFormat.format(chosenDate));
