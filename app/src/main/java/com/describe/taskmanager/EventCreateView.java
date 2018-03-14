@@ -1,11 +1,10 @@
 package com.describe.taskmanager;
 
-import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.Notification;
+
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,41 +14,38 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
     //initialized instance varibles
-    Dialog datePickerDialog;
     Date chosenDate = new Date();
-    Dialog timePickerDialog;
-    //firebase database agent
+
+
     Spinner categoriesSpinner;
     FirestoreAgent fbAgent = new FirestoreAgent();
-    String debug_user = "g2x3irLzu1DTJXbymPXw";
+    String debug_user = "";
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        final FragmentManager fragManager = getFragmentManager();
+
 
         //base Android onCreate functionality
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_view);
 
         //initalizes the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //create the new date and time picker dialogs
-        datePickerDialog = new Dialog(this);
-        timePickerDialog = new Dialog(this);
+
         categoriesSpinner = findViewById(R.id.categoriesSpinner);
         fbAgent.getCategoryCollection("",this);
         //the textbox in the main window, (outside of the popup)
@@ -82,10 +78,13 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
         //Handle share intents from system.
         if (getIntent().getExtras()!=null) {
+            @NonNull
             Intent intent = getIntent();
+
             String action = intent.getAction();
             //Handle text share
-            if (action.equals(Intent.ACTION_SEND) && intent.getType().equals("text/plain")) {
+            //Added null checks
+            if (action!=null && action.equals(Intent.ACTION_SEND) && intent.getType()!= null && intent.getType().equals("text/plain")) {
                 EditText desc = findViewById(R.id.descriptionText);
                 desc.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
             }
@@ -108,8 +107,8 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     //this method just formats the date and times into readable strings
     private void showEventDate()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
 
         TextView date   = findViewById(R.id.dateText);
         date.setText(dateFormat.format(chosenDate));
@@ -167,7 +166,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         for (int i = 0; i< collectionContent.size();i++){
             items[i] = collectionContent.get(i).getCategoryTitle();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,items);
         categoriesSpinner.setAdapter(adapter);
     }
 

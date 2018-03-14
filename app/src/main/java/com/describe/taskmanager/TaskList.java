@@ -43,11 +43,17 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         String category = "Default";
 
         this.categoryName = getIntent().getStringExtra("categoryName");
-        fsAgent.getTaskCollection("g2x3irLzu1DTJXbymPXw", this, this.categoryName);
+        fsAgent.getTaskCollection("", this, this.categoryName);
 
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
+    }
+    //onResume is called whenever this activity is brought back into focus, i.e. from a child dialog.
+    @Override
+    protected void onResume(){
+        super.onResume();
+        fsAgent.getTaskCollection("", this, this.categoryName);
     }
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
@@ -87,6 +93,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         }
 
         resultsListView.setClickable(true);
+        final TaskList self = this;
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -101,6 +108,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
                 Intent i = new Intent(getApplicationContext(),TaskEventView.class);
                 i.putExtra("taskEvent", taskEvent);
+                i.putExtra("category",self.categoryName);
                 startActivity(i);
 
                 //should now rebuild the list from the fbAgent

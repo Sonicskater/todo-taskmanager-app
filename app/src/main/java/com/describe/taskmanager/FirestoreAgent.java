@@ -1,16 +1,15 @@
 package com.describe.taskmanager;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.util.Log;
 
-import com.firebase.ui.auth.data.model.*;
-import com.google.android.gms.auth.api.Auth;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,15 +21,17 @@ import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
-public class FirestoreAgent {
+class FirestoreAgent {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth AuthInstance = FirebaseAuth.getInstance();
     private Random randTaskID = new Random();
     private String UserID = "";
-    private final com.google.firebase.auth.FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
-    public FirestoreAgent(){
+
+    FirestoreAgent(){
+
+        final com.google.firebase.auth.FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
         if (User != null){
-            UserID = AuthInstance.getCurrentUser().getUid();
+            UserID = User.getUid();
         }
         else{
             AuthInstance.signInAnonymously();
@@ -47,7 +48,7 @@ public class FirestoreAgent {
         }
     }
 
-    public void getUserDocument(String user, final UIInterface callingObject, final String fieldName){
+    void getUserDocument(String user, final UIInterface callingObject, final String fieldName){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
 
         this.updateUserID();
@@ -76,7 +77,7 @@ public class FirestoreAgent {
     }
 
     //Gets a specified CategoryDocument and return it to the requested field
-    public void getCategoryDocument(String user, final UIInterface callingObject, final String fieldName){
+    void getCategoryDocument(String user, final UIInterface callingObject, final String fieldName){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
 
         this.updateUserID();
@@ -102,7 +103,7 @@ public class FirestoreAgent {
         }
     }
     //Gets a specified TaskDocument and return it to the requested field
-    public void getTaskDocument(String user, String category, String task, final UIInterface callingObject, final String fieldName){
+    void getTaskDocument(String user, String category, String task, final UIInterface callingObject, final String fieldName){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
         if (!this.UserID.equals("")) {
@@ -112,14 +113,11 @@ public class FirestoreAgent {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
+                        @NonNull
                         TaskEvent taskObj = task.getResult().toObject(TaskEvent.class);
-                        if (taskObj != null) {
 
-                            callingObject.updateObject(fieldName, taskObj);
+                        callingObject.updateObject(fieldName, taskObj);
 
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
                     } else {
                         Log.d(TAG, "get failed with ", task.getException());
                     }
@@ -128,7 +126,7 @@ public class FirestoreAgent {
         }
     }
     // Returns the collection of categories from a specified User.
-    public void getCategoryCollection(final String user,final UIInterface callingObject){
+    void getCategoryCollection(final String user,final UIInterface callingObject){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
         if (!this.UserID.equals("")) {
@@ -149,7 +147,7 @@ public class FirestoreAgent {
         }
 
     }
-    public void getTaskCollection(final String user,final UIInterface callingObject,final String category){
+    void getTaskCollection(final String user,final UIInterface callingObject,final String category){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
         if (!this.UserID.equals("")) {
@@ -171,7 +169,7 @@ public class FirestoreAgent {
         }
 
     }
-    public void addCategory(final String user, final Category categoryObj, final UIInterface callingObject){
+    void addCategory(final String user, final Category categoryObj, final UIInterface callingObject){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
         if (!this.UserID.equals("")) {
@@ -191,7 +189,7 @@ public class FirestoreAgent {
             });
         }
     }
-    public void addTask(final String user, final String category, final TaskEvent taskObj, final UIInterface callingObject){
+    void addTask(final String user, final String category, final TaskEvent taskObj, final UIInterface callingObject){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
         if (!this.UserID.equals("")) {
@@ -229,7 +227,7 @@ public class FirestoreAgent {
 
     }
 
-    public void updateTask(String category, final TaskEvent taskObj, final UIInterface callingObject) {
+    void updateTask(String category, final TaskEvent taskObj, final UIInterface callingObject) {
         db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(taskObj.getId())).set(taskObj
 
         ).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -246,7 +244,7 @@ public class FirestoreAgent {
         });
     }
 
-    public void deleteTask(String category, final TaskEvent taskObj, final UIInterface callingObject) {
+    void deleteTask(String category, final TaskEvent taskObj, final UIInterface callingObject) {
         db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(taskObj.getId())).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                    @Override

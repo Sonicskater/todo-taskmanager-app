@@ -22,7 +22,7 @@ public class LandingScreen extends AppCompatActivity {
 
 
 
-    private static final int RC_SIGN_IN = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
