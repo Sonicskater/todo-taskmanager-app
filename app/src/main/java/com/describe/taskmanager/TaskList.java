@@ -2,14 +2,20 @@ package com.describe.taskmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +35,15 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         FloatingActionButton addTask = findViewById(R.id.addTask);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        @NonNull
+        ActionBar supportBar = getSupportActionBar();
+
+        supportBar.setDisplayHomeAsUpEnabled(true);
+        supportBar.setDisplayShowHomeEnabled(true);
+
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,9 +55,12 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         });
 
         fsAgent = new FirestoreAgent();
-        String category = "Default";
+
 
         this.categoryName = getIntent().getStringExtra("categoryName");
+        //set the title at the top of the screen to the current categorys
+        supportBar.setTitle(this.categoryName);
+
         fsAgent.getTaskCollection("", this, this.categoryName);
 
 
@@ -58,6 +76,28 @@ public class TaskList extends AppCompatActivity implements UIInterface {
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (item.getItemId()==android.R.id.home)
+        {
+            finish();
+        }
+        if (item.getItemId()==R.id.action_settings)
+        {
+            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(i);
+        }
+        return true;
+    }
+    //Add menu to action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_menu, menu);
+        return true;
     }
 
     @Override

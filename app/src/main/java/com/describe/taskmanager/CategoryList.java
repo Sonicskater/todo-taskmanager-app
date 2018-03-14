@@ -82,6 +82,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
             startActivity(i);
         }
+
         return true;
     }
 

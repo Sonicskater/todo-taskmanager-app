@@ -48,6 +48,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
         categoriesSpinner = findViewById(R.id.categoriesSpinner);
         fbAgent.getCategoryCollection("",this);
+
         //the textbox in the main window, (outside of the popup)
         TextView dateField = findViewById(R.id.dateText);
         //set the onclick listener for date picker
