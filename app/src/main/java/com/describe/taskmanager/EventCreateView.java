@@ -96,7 +96,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
     public void onCreateEvent(View view) throws ParseException
     {
         //creates new event
-        TaskEvent newEvent = setProperties(new TaskEvent());
+        TaskEvent newEvent = buildTask();
         //saves the text in the field after the submit button pressed
 
         //Uploads task to Firestore

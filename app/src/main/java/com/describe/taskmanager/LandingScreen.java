@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.List;
 
+@Deprecated
 public class LandingScreen extends AppCompatActivity {
 
 
