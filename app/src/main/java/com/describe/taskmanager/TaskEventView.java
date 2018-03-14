@@ -23,6 +23,7 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
     //initialized instance varibles
     private final String TAG = "TaskEventView";
     private TaskEvent currentEvent;
+    private String category;
     Dialog datePickerDialog;
     Date chosenDate = new Date();
     Dialog timePickerDialog;
@@ -41,6 +42,7 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
 
         //
         this.currentEvent = (TaskEvent)getIntent().getSerializableExtra("taskEvent");
+        this.category = (String)getIntent().getSerializableExtra("category");
         //log to make sure that the object is passed in
         Log.d(TAG, "got the title " + this.currentEvent.getTitle());
 
@@ -103,14 +105,14 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
         Log.d("onDelete", "onDelete: ");
 
 
-        fbAgent.deleteTask("category", currentEvent,this);
+        fbAgent.deleteTask(this.category, currentEvent,this);
     }
 
     public void onSave(View view) {
         Log.d("onSave", "onSave: ");
         this.setProperties();
 
-        fbAgent.updateTask("category", currentEvent,this);
+        fbAgent.updateTask(this.category, currentEvent,this);
     }
 
     private void setProperties() {

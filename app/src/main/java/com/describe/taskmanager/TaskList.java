@@ -93,6 +93,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         }
 
         resultsListView.setClickable(true);
+        final TaskList self = this;
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -107,6 +108,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
                 Intent i = new Intent(getApplicationContext(),TaskEventView.class);
                 i.putExtra("taskEvent", taskEvent);
+                i.putExtra("category",self.categoryName);
                 startActivity(i);
 
                 //should now rebuild the list from the fbAgent

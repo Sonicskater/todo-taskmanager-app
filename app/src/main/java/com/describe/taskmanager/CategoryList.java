@@ -48,6 +48,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
                 Intent intent = new Intent(getApplicationContext(),TaskList.class);
                 intent.putExtra("categoryName", categoryName);
+
                 startActivity(intent);
 
             }
