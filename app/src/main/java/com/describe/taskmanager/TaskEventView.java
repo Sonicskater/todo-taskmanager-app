@@ -18,7 +18,8 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
+public class
+ TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
     //initialized instance varibles
 
     private TaskEvent currentEvent;

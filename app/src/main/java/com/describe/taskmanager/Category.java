@@ -1,8 +1,6 @@
 package com.describe.taskmanager;
 
-/**
- * Created by devon on 1/26/2018.
- */
+
 
 public class Category {
 
@@ -11,6 +9,11 @@ public class Category {
 
     //default category constructor
     public Category(){}
+
+    public Category(Category category){
+        this.categoryID = category.categoryID;
+        this.categoryTitle = category.categoryTitle;
+    }
 
     //category constructor
     public Category(int categoryID, String categoryTitle){

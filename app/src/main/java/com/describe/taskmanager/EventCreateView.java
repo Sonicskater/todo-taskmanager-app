@@ -22,7 +22,7 @@ import java.util.Locale;
 
 
 public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
-    //initialized instance varibles
+    //initialized instance variables
     Date chosenDate = new Date();
 
 
@@ -159,7 +159,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
     }
 
-    //what is this method??
     @Override
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
     {
