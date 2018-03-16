@@ -29,7 +29,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     String categoryName;
     SimpleAdapter adapter;
     ListView resultsListView;
-    static ArrayList<TaskEvent> taskEvents;
+    //static ArrayList<TaskEvent> taskEvents;
     FirestoreAgent fsAgent;
     SwipeRefreshLayout refreshLayout;
 
@@ -64,7 +64,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
 
 
         this.onRefresh();
-        //set the title at the top of the screen to the current categorys
+        //set the title at the top of the screen to the current category
         supportBar.setTitle(this.categoryName);
 
 
@@ -113,7 +113,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
 
-        this.taskEvents = collectionContent; //will use later.
+        final ArrayList<TaskEvent> taskEvents = collectionContent; //will use later.
 
         //Hashmap for placeholder data
         HashMap<String, String> TaskHash = new HashMap<>();
@@ -166,7 +166,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
             }
 
             private TaskEvent findTaskByTitle(String title) {
-                for (TaskEvent event : TaskList.taskEvents) {
+                for (TaskEvent event : taskEvents) {
                     if (event.getTitle().equals(title)) {
                         return event;
                     }
