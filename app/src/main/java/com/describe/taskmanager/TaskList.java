@@ -30,6 +30,8 @@ public class TaskList extends AppCompatActivity implements UIInterface {
     ListView resultsListView;
     static ArrayList<TaskEvent> taskEvents;
     FirestoreAgent fsAgent;
+    MenuAdapter menuAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
+        this.menuAdapter = new MenuAdapter(getApplicationContext(), this);
     }
     //onResume is called whenever this activity is brought back into focus, i.e. from a child dialog.
     @Override
@@ -73,24 +76,18 @@ public class TaskList extends AppCompatActivity implements UIInterface {
         super.onResume();
         fsAgent.getTaskCollection("", this, this.categoryName);
     }
+
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (item.getItemId()==android.R.id.home)
-        {
-            finish();
-        }
-        if (item.getItemId()==R.id.action_settings)
-        {
-            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
-            startActivity(i);
-        }
-        return true;
+        return this.menuAdapter.onOptionSelected(item);
     }
+
     //Add menu to action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

@@ -21,7 +21,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     CategoryAdapter gridAdapter;
     GridView gridview;
     FirestoreAgent fsAgent;
-
+    MenuAdapter menuAdapter;
 
     //initialization of android activity
     @Override
@@ -65,6 +65,8 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             }
 
         });
+
+        this.menuAdapter = new MenuAdapter(getApplicationContext(), this);
     }
     //onResume is triggered when this activity is brought back into focus
     @Override
@@ -77,21 +79,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch(item.getItemId()) {
-            case R.id.action_settings:
-                Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
-                startActivity(i);
-                break;
-            case R.id.action_search:
-                Toast toast = Toast.makeText(CategoryList.this,"hello", Toast.LENGTH_SHORT);
-                toast.show();
-                break;
-            default:
-                return true;
-        }
-
-
-        return true;
+        return this.menuAdapter.onOptionSelected(item);
     }
 
 
@@ -150,4 +138,5 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
         }
     }
+
 }
