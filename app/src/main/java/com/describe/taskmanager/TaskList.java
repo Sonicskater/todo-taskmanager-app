@@ -78,7 +78,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     @Override
     protected void onResume(){
         super.onResume();
-        fsAgent.getTaskCollection("", this, this.categoryName);
+        this.onRefresh();
     }
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
