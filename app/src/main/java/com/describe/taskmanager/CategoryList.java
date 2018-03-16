@@ -1,42 +1,39 @@
 package com.describe.taskmanager;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
+import android.view.LayoutInflater;
+
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
 
-public class CategoryList extends AppCompatActivity implements UIInterface, SwipeRefreshLayout.OnRefreshListener
+public class CategoryList extends Fragment implements UIInterface, SwipeRefreshLayout.OnRefreshListener
 {
     private static final int CATEGORY_CREATE = 2;
     CategoryAdapter gridAdapter;
     GridView gridview;
     FirestoreAgent fsAgent;
     SwipeRefreshLayout refreshLayout;
-
-
-    //initialization of android activity
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_list);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        refreshLayout = findViewById(R.id.swiperefresh);
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
+        View view = inflater.inflate(R.layout.activity_category_list,viewGroup,false);
+
+
+
+        refreshLayout = view.findViewById(R.id.swiperefresh);
         refreshLayout.setOnRefreshListener(this);
 
         this.fsAgent = new FirestoreAgent();
-        gridview =findViewById(R.id.gridview);
+        gridview = view.findViewById(R.id.gridview);
         //gets the category collection from firebase
 
         //fsAgent.getCategoryCollection("",this);
@@ -51,7 +48,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface, Swip
             {
                 String categoryName = (String)gridview.getItemAtPosition(position);
 
-                Intent intent = new Intent(getApplicationContext(),TaskList.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),TaskList.class);
                 intent.putExtra("categoryName", categoryName);
 
                 startActivity(intent);
@@ -59,42 +56,30 @@ public class CategoryList extends AppCompatActivity implements UIInterface, Swip
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getApplicationContext(),CategoryCreateView.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),CategoryCreateView.class);
                 startActivityForResult(intent,CATEGORY_CREATE);
             }
 
         });
+        return view;
     }
+
+
     //onResume is triggered when this activity is brought back into focus
     @Override
-    protected void onResume(){
+    public void onResume(){
         super.onResume();
         this.onRefresh();
     }
 
     //opens the settings/preferences menu
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (item.getItemId()==R.id.action_settings)
-        {
-            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
-            startActivity(i);
-        }
-        if (item.getItemId()==R.id.action_refresh)
-        {
-            this.onRefresh();
-        }
 
-
-        return true;
-    }
 
 
     @Override
@@ -117,7 +102,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface, Swip
             catList.add(cat.getCategoryTitle());
         }
 
-        gridAdapter = new CategoryAdapter(this,catList);
+        gridAdapter = new CategoryAdapter(getActivity().getApplicationContext(),catList);
         gridview.setAdapter(gridAdapter);
         //end the refresh animation
         refreshLayout.setRefreshing(false);
@@ -135,13 +120,6 @@ public class CategoryList extends AppCompatActivity implements UIInterface, Swip
 
     }
     //Add menu to action bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
-        return true;
-    }
 
 
     //Called when refreshed via gesture
@@ -149,5 +127,10 @@ public class CategoryList extends AppCompatActivity implements UIInterface, Swip
     public void onRefresh() {
         refreshLayout.setRefreshing(true);
         fsAgent.getCategoryCollection("",this);
+    }
+
+    public static CategoryList newInstance(){
+        CategoryList frag = new CategoryList();
+        return frag;
     }
 }
