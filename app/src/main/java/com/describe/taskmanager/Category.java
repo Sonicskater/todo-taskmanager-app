@@ -12,6 +12,11 @@ public class Category {
     //default category constructor
     public Category(){}
 
+    public Category(Category category){
+        this.categoryID = category.categoryID;
+        this.categoryTitle = category.categoryTitle;
+    }
+
     //category constructor
     public Category(int categoryID, String categoryTitle){
         this.categoryID = categoryID;
