@@ -77,11 +77,19 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (item.getItemId()==R.id.action_settings)
-        {
-            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
-            startActivity(i);
+        switch(item.getItemId()) {
+            case R.id.action_settings:
+                Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
+                startActivity(i);
+                break;
+            case R.id.action_search:
+                Toast toast = Toast.makeText(CategoryList.this,"hello", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            default:
+                return true;
         }
+
 
         return true;
     }
