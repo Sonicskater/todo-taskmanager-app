@@ -2,14 +2,14 @@ package com.describe.taskmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,9 +20,9 @@ import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 public class TaskList extends AppCompatActivity implements UIInterface, SwipeRefreshLayout.OnRefreshListener {
 
@@ -44,12 +44,13 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
         refreshLayout.setOnRefreshListener(this);
         categoryName = getIntent().getStringExtra("categoryName");
 
-        @NonNull
+
         ActionBar supportBar = getSupportActionBar();
-
-        supportBar.setDisplayHomeAsUpEnabled(true);
-        supportBar.setDisplayShowHomeEnabled(true);
-
+        if (supportBar != null) {
+            supportBar.setDisplayHomeAsUpEnabled(true);
+            supportBar.setDisplayShowHomeEnabled(true);
+            supportBar.setTitle(this.categoryName);
+        }
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,12 +61,12 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
 
         });
 
-        fsAgent = new FirestoreAgent();
+        fsAgent = FirestoreAgent.getInstance();
 
 
         this.onRefresh();
         //set the title at the top of the screen to the current category
-        supportBar.setTitle(this.categoryName);
+
 
 
 
@@ -105,7 +106,6 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        MenuInflater inflater = getMenuInflater();
         this.onRefresh();
         return true;
     }
@@ -128,9 +128,19 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
                 new String[]{"Content","Title"},
                 new int[]{R.id.title, R.id.content});
         //Create iterator to convert single hashmaps to dual hashmaps.
-        Iterator iter = TaskHash.entrySet().iterator();
+        //Iterator iter = TaskHash.entrySet().iterator();
 
         //Iterate through the above hashmap,splitting each key-value pair so that SimpleAdapter can read them as a 2-part hashmap from its list.
+        for (String key : TaskHash.keySet()){
+            HashMap<String, String> resultsMap = new HashMap<>();
+
+
+            resultsMap.put("Title", key);
+            resultsMap.put("Content", TaskHash.get(key));
+
+            listItems.add(resultsMap);
+        }
+        /*
         while (iter.hasNext()) {
 
             HashMap<String, String> resultsMap = new HashMap<>();
@@ -141,6 +151,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
 
             listItems.add(resultsMap);
         }
+        */
 
         resultsListView.setClickable(true);
         final TaskList self = this;

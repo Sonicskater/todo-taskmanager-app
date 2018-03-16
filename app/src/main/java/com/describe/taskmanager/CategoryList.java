@@ -126,7 +126,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface, Swip
     @Override
     public void firebaseSuccess(String message_title, String message_content)
     {
-        FirestoreAgent fsAgent = new FirestoreAgent();
+        FirestoreAgent fsAgent = FirestoreAgent.getInstance();
         fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
     }
 
