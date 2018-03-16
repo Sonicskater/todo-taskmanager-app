@@ -27,6 +27,7 @@ class FirestoreAgent {
     private Random randTaskID = new Random();
     private String UserID = "";
     private static FirestoreAgent instance;
+    //reuse instance of FirestoreAgent instead of creating a new one every time.
     public static FirestoreAgent getInstance(){
         if(instance == null){
             instance = new FirestoreAgent();
@@ -57,7 +58,7 @@ class FirestoreAgent {
         }
     }
     @Deprecated
-    void getUserDocument(String user, final UIInterface callingObject, final String fieldName){
+    void getUserDocument( final UIInterface callingObject, final String fieldName){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
 
         this.updateUserID();
@@ -87,7 +88,7 @@ class FirestoreAgent {
 
     //Gets a specified CategoryDocument and return it to the requested field
     @Deprecated
-    void getCategoryDocument(String user, final UIInterface callingObject, final String fieldName){
+    void getCategoryDocument( final UIInterface callingObject, final String fieldName){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
 
         this.updateUserID();
@@ -114,7 +115,7 @@ class FirestoreAgent {
     }
     //Gets a specified TaskDocument and return it to the requested field
     @Deprecated
-    void getTaskDocument(String user, String category, String task, final UIInterface callingObject, final String fieldName){
+    void getTaskDocument(String category, String task, final UIInterface callingObject, final String fieldName){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
         if (!this.UserID.equals("")) {

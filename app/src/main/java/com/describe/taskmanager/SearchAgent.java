@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class SearchAgent implements UIInterface {
     //Ensure that the same instance of search agent is reused.
-    static private SearchAgent instance;
+    static private SearchAgent instance = null;
     private HashMap<Category,ArrayList<TaskEvent>> cachedDatabase;
     private FirestoreAgent fsAgent;
 
