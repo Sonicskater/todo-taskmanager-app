@@ -4,19 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
+
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.support.v7.widget.Toolbar;
+
+//import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,12 +39,15 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     SwipeRefreshLayout refreshLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         FloatingActionButton addTask = findViewById(R.id.addTask);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         refreshLayout = findViewById(R.id.swiperefresh);
         refreshLayout.setOnRefreshListener(this);
         categoryName = getIntent().getStringExtra("categoryName");
@@ -51,6 +59,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
             supportBar.setDisplayShowHomeEnabled(true);
             supportBar.setTitle(this.categoryName);
         }
+
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +115,9 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_menu, menu);
+
         this.onRefresh();
         return true;
     }

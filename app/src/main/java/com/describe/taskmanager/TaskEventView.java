@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class
  TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
-    //initialized instance varibles
+    //initialized instance variables
 
     private TaskEvent currentEvent;
     private String category;
@@ -28,7 +28,7 @@ public class
     Date chosenDate = new Date();
     Dialog timePickerDialog;
     //firebase database agent
-    FirestoreAgent fbAgent = new FirestoreAgent();
+    FirestoreAgent fbAgent = FirestoreAgent.getInstance();
 
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
