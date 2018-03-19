@@ -1,6 +1,6 @@
 package com.describe.taskmanager;
 
-import android.os.Build;
+
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -11,11 +11,9 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.zip.Inflater;
 
-/**
- * Created by devon on 3/4/2018.
- */
+
+
 
 public class DatePickerFragment extends DialogFragment {
     Button cancel;
