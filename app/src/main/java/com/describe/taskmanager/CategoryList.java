@@ -1,5 +1,6 @@
 package com.describe.taskmanager;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
     FirestoreAgent fsAgent;
     SwipeRefreshLayout refreshLayout;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
         View view = inflater.inflate(R.layout.activity_category_list,viewGroup,false);
 
 
@@ -47,11 +48,12 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
                 String categoryName = (String)gridview.getItemAtPosition(position);
+                if (getActivity()!=null) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), TaskList.class);
+                    intent.putExtra("categoryName", categoryName);
 
-                Intent intent = new Intent(getActivity().getApplicationContext(),TaskList.class);
-                intent.putExtra("categoryName", categoryName);
-
-                startActivity(intent);
+                    startActivity(intent);
+                }
 
             }
         });
@@ -62,8 +64,10 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getActivity().getApplicationContext(),CategoryCreateView.class);
-                startActivityForResult(intent,CATEGORY_CREATE);
+                if (getActivity()!=null) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), CategoryCreateView.class);
+                    startActivityForResult(intent, CATEGORY_CREATE);
+                }
             }
 
         });
@@ -101,9 +105,10 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
         {
             catList.add(cat.getCategoryTitle());
         }
-
-        gridAdapter = new CategoryAdapter(getActivity().getApplicationContext(),catList);
-        gridview.setAdapter(gridAdapter);
+        if (getActivity()!=null) {
+            gridAdapter = new CategoryAdapter(getActivity().getApplicationContext(), catList);
+            gridview.setAdapter(gridAdapter);
+        }
         //end the refresh animation
         refreshLayout.setRefreshing(false);
     }
@@ -112,7 +117,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
     public void firebaseSuccess(String message_title, String message_content)
     {
         FirestoreAgent fsAgent = FirestoreAgent.getInstance();
-        fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
+        fsAgent.getCategoryCollection("",this);
     }
 
     @Override
@@ -130,7 +135,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
     }
 
     public static CategoryList newInstance(){
-        CategoryList frag = new CategoryList();
-        return frag;
+
+        return new CategoryList();
     }
 }

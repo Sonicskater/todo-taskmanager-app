@@ -1,9 +1,9 @@
 package com.describe.taskmanager;
 
-import android.app.Fragment;
-import android.net.Uri;
+
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TimePicker;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by devon on 3/3/2018.
- */
+
 
 public class TimePickerFragment extends DialogFragment {
     Button cancel;
@@ -25,13 +22,15 @@ public class TimePickerFragment extends DialogFragment {
     Button confirm;
     TimePicker picker;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,Bundle savedState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
         View view = inflater.inflate(R.layout.fragment_time_picker,viewGroup,false);
         cancel = view.findViewById(R.id.cancel);
         confirm = view.findViewById(R.id.confirm);
         picker = view.findViewById(R.id.fragPicker);
         final Date time = new Date();
-        time.setTime(getArguments().getLong("time"));
+        if (getArguments()!=null) {
+            time.setTime(getArguments().getLong("time"));
+        }
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
