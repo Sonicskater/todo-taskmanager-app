@@ -2,38 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.describe.taskmanager.SearchFragment">
+    tools:context="com.describe.taskmanager.FragmentSearch">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ExpandableListView android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="@string/search_fragment" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="13dp"
-            android:layout_marginTop="33dp"
-            android:layout_toStartOf="@+id/searchButton"
-            android:width="250dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/editText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="19dp"
-            android:text="Search" />
-    </RelativeLayout>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

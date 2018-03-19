@@ -11,9 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CategoryList extends AppCompatActivity implements UIInterface
 {
@@ -21,7 +20,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
     CategoryAdapter gridAdapter;
     GridView gridview;
     FirestoreAgent fsAgent;
-    MenuAdapter menuAdapter;
+    MenuActions menuAdapter;
 
     //initialization of android activity
     @Override
@@ -66,7 +65,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
         });
 
-        this.menuAdapter = new MenuAdapter(getApplicationContext(), this);
+        this.menuAdapter = new MenuActions(getApplicationContext(), this);
     }
     //onResume is triggered when this activity is brought back into focus
     @Override
@@ -103,7 +102,7 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             catList.add(cat.getCategoryTitle());
         }
 
-        gridAdapter = new CategoryAdapter(this,catList);
+        gridAdapter = new CategoryAdapter(this, catList);
         gridview.setAdapter(gridAdapter);
     }
 

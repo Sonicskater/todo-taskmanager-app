@@ -30,7 +30,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
     ListView resultsListView;
     static ArrayList<TaskEvent> taskEvents;
     FirestoreAgent fsAgent;
-    MenuAdapter menuAdapter;
+    MenuActions menuAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class TaskList extends AppCompatActivity implements UIInterface {
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
-        this.menuAdapter = new MenuAdapter(getApplicationContext(), this);
+        this.menuAdapter = new MenuActions(getApplicationContext(), this);
     }
     //onResume is called whenever this activity is brought back into focus, i.e. from a child dialog.
     @Override
