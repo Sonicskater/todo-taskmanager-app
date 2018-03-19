@@ -28,7 +28,7 @@ class FirestoreAgent {
     private String UserID = "";
     private static FirestoreAgent instance;
     //reuse instance of FirestoreAgent instead of creating a new one every time.
-    public static FirestoreAgent getInstance(){
+    static FirestoreAgent getInstance(){
         if(instance == null){
             instance = new FirestoreAgent();
         }
@@ -36,8 +36,8 @@ class FirestoreAgent {
     }
 
     // use FirestoreAgent.getInstance() instead of new FirestoreAgent(). WILL BE MADE PRIVATE IN THE FUTURE
-    @Deprecated
-    FirestoreAgent(){
+
+    private FirestoreAgent(){
 
         final com.google.firebase.auth.FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
         if (User != null){

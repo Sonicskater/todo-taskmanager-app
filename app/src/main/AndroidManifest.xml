@@ -20,12 +20,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CategoryList"
-            android:label="@string/title_activity_category_list"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        </activity>
         <activity
             android:name=".TaskList"
             android:label="Task List"

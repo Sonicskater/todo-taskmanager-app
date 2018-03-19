@@ -1,24 +1,28 @@
 package com.describe.taskmanager;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
+
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
 //import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -27,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 //import java.util.Map;
 
-public class TaskList extends Activity implements UIInterface, SwipeRefreshLayout.OnRefreshListener {
+public class TaskList extends AppCompatActivity implements UIInterface, SwipeRefreshLayout.OnRefreshListener {
 
     String categoryName;
     SimpleAdapter adapter;
@@ -41,20 +45,23 @@ public class TaskList extends Activity implements UIInterface, SwipeRefreshLayou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         FloatingActionButton addTask = findViewById(R.id.addTask);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         refreshLayout = findViewById(R.id.swiperefresh);
         refreshLayout.setOnRefreshListener(this);
         categoryName = getIntent().getStringExtra("categoryName");
 
-        /*
+
         ActionBar supportBar = getSupportActionBar();
         if (supportBar != null) {
             supportBar.setDisplayHomeAsUpEnabled(true);
             supportBar.setDisplayShowHomeEnabled(true);
             supportBar.setTitle(this.categoryName);
         }
-        */
+
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +117,9 @@ public class TaskList extends Activity implements UIInterface, SwipeRefreshLayou
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_menu, menu);
+
         this.onRefresh();
         return true;
     }

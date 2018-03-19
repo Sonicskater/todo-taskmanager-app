@@ -28,7 +28,7 @@ public class
     Date chosenDate = new Date();
     Dialog timePickerDialog;
     //firebase database agent
-    FirestoreAgent fbAgent = new FirestoreAgent();
+    FirestoreAgent fbAgent = FirestoreAgent.getInstance();
 
 
     //initialize everything that has to do with the screen (like a constructor for the screen)

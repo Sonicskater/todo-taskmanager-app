@@ -32,7 +32,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
         refreshLayout = view.findViewById(R.id.swiperefresh);
         refreshLayout.setOnRefreshListener(this);
 
-        this.fsAgent = new FirestoreAgent();
+        this.fsAgent = FirestoreAgent.getInstance();
         gridview = view.findViewById(R.id.gridview);
         //gets the category collection from firebase
 
