@@ -27,7 +27,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
 
     Spinner categoriesSpinner;
-    FirestoreAgent fbAgent = new FirestoreAgent();
+    FirestoreAgent fbAgent = FirestoreAgent.getInstance();
     String debug_user = "";
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
