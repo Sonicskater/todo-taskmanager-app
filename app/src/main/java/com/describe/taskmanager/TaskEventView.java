@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class
  TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
-    //initialized instance varibles
+    //initialized instance variables
 
     private TaskEvent currentEvent;
     private String category;
