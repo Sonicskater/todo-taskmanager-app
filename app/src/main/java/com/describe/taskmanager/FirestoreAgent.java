@@ -147,7 +147,7 @@ class FirestoreAgent {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                ArrayList<Category> docs = new ArrayList<Category>();
+                                ArrayList<Category> docs = new ArrayList<>();
 
                                 for (DocumentSnapshot taskDoc : task.getResult()) {
                                     docs.add(taskDoc.toObject(Category.class));
@@ -168,7 +168,7 @@ class FirestoreAgent {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                ArrayList<TaskEvent> docs = new ArrayList<TaskEvent>();
+                                ArrayList<TaskEvent> docs = new ArrayList<>();
 
                                 for (DocumentSnapshot taskDoc : task.getResult()) {
                                     docs.add(taskDoc.toObject(TaskEvent.class));
