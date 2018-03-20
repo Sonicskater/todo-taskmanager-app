@@ -96,7 +96,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
     }
 
     //
-    @Override
+
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
     {
         ArrayList<String> catList = new ArrayList<>();
@@ -110,7 +110,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
             gridview.setAdapter(gridAdapter);
         }
         //end the refresh animation
-        refreshLayout.setRefreshing(false);
+        refreshLayout.setRefreshing (false);
     }
 
     @Override

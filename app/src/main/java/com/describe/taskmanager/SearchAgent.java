@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+@Deprecated
 public class SearchAgent implements UIInterface {
     //Ensure that the same instance of search agent is reused.
     static private SearchAgent instance = null;

@@ -26,7 +26,7 @@ class FirestoreAgent {
     private FirebaseAuth AuthInstance = FirebaseAuth.getInstance();
     private Random randTaskID = new Random();
     private String UserID = "";
-    private static FirestoreAgent instance;
+    private static FirestoreAgent instance = null;
     //reuse instance of FirestoreAgent instead of creating a new one every time.
     static FirestoreAgent getInstance(){
         if(instance == null){
