@@ -1,6 +1,7 @@
 package com.describe.taskmanager;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,17 +17,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FragmentSearch extends DialogFragment {
+public class FragmentSearch extends DialogFragment implements View.OnClickListener {
 
     private List<String> listCategoryHeader;
     private HashMap<String, List<String>> taskList;
     private SearchExpandableListAdapter listAdapter;
+    TextView searchText;
+
 
     public FragmentSearch() {
         // Required empty public constructor
@@ -68,6 +74,11 @@ public class FragmentSearch extends DialogFragment {
         ExpandableListView elv = view.findViewById(R.id.list);
         listAdapter = new SearchExpandableListAdapter(this.getActivity().getBaseContext(), listCategoryHeader, taskList);
         elv.setAdapter(listAdapter);
+
+        Button search = view.findViewById(R.id.searchButton);
+        search.setOnClickListener(this);
+
+        searchText =  view.findViewById(R.id.searchText);
         return view;
     }
 
@@ -78,4 +89,15 @@ public class FragmentSearch extends DialogFragment {
         return fragment;
     }
 
+    @Override
+    public void onClick(View view) {
+
+        String searchString = this.searchText.getText().toString();
+        if (searchString.length() == 0) return;
+
+        Toast toast = Toast.makeText(this.getActivity(),searchString, Toast.LENGTH_SHORT);
+        toast.show();
+
+
+    }
 }
