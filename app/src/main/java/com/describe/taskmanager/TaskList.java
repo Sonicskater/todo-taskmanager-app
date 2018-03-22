@@ -82,6 +82,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
 
         //Reference to list view for SimpleAdapter to fill
         resultsListView = findViewById(R.id.results_listview);
+        this.menuAdapter = new MenuActions(getApplicationContext(), this);
     }
     //onResume is called whenever this activity is brought back into focus, i.e. from a child dialog.
     @Override
@@ -89,10 +90,12 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
         super.onResume();
         this.onRefresh();
     }
+
     @Override
     public void updateObject(String fieldName, Object requestedObj) {
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -111,6 +114,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
         }
         return true;
     }
+
     //Add menu to action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

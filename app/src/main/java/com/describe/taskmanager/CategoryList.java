@@ -138,4 +138,5 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
 
         return new CategoryList();
     }
+
 }
