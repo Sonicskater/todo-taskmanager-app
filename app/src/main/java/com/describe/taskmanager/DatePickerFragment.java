@@ -1,7 +1,8 @@
 package com.describe.taskmanager;
 
-import android.os.Build;
+
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,9 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.zip.Inflater;
 
-/**
- * Created by devon on 3/4/2018.
- */
+
+
 
 public class DatePickerFragment extends DialogFragment {
     Button cancel;
@@ -23,13 +22,15 @@ public class DatePickerFragment extends DialogFragment {
     Button confirm;
     DateTimeInterface ownerObject;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
         View view = inflater.inflate(R.layout.fragment_date_picker,viewGroup,false);
         cancel = view.findViewById(R.id.cancel);
         confirm = view.findViewById(R.id.confirm);
         picker = view.findViewById(R.id.datePicker);
         final Date time = new Date();
-        time.setTime(getArguments().getLong("date"));
+        if (getArguments() != null) {
+            time.setTime(getArguments().getLong("date"));
+        }
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

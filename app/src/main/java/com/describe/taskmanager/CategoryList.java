@@ -1,41 +1,45 @@
 package com.describe.taskmanager;
 
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
+import android.support.v4.widget.SwipeRefreshLayout;
+
+import android.view.LayoutInflater;
+
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
 
-public class CategoryList extends AppCompatActivity implements UIInterface
+public class CategoryList extends Fragment implements UIInterface, SwipeRefreshLayout.OnRefreshListener
 {
     private static final int CATEGORY_CREATE = 2;
     CategoryAdapter gridAdapter;
     GridView gridview;
     FirestoreAgent fsAgent;
-    MenuActions menuAdapter;
-
-    //initialization of android activity
+    SwipeRefreshLayout refreshLayout;
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_list);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
+        View view = inflater.inflate(R.layout.activity_category_list,viewGroup,false);
 
 
-        this.fsAgent = new FirestoreAgent();
-        gridview =findViewById(R.id.gridview);
+
+        refreshLayout = view.findViewById(R.id.swiperefresh);
+        refreshLayout.setOnRefreshListener(this);
+
+        this.fsAgent = FirestoreAgent.getInstance();
+        gridview = view.findViewById(R.id.gridview);
         //gets the category collection from firebase
-        fsAgent.getCategoryCollection("",this);
+
+        //fsAgent.getCategoryCollection("",this);
+        this.onRefresh();
+
         gridview.setAdapter(gridAdapter);
 
         //onclick listener
@@ -44,42 +48,42 @@ public class CategoryList extends AppCompatActivity implements UIInterface
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
                 String categoryName = (String)gridview.getItemAtPosition(position);
+                if (getActivity()!=null) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), TaskList.class);
+                    intent.putExtra("categoryName", categoryName);
 
-                Intent intent = new Intent(getApplicationContext(),TaskList.class);
-                intent.putExtra("categoryName", categoryName);
-
-                startActivity(intent);
+                    startActivity(intent);
+                }
 
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getApplicationContext(),CategoryCreateView.class);
-                startActivityForResult(intent,CATEGORY_CREATE);
+                if (getActivity()!=null) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), CategoryCreateView.class);
+                    startActivityForResult(intent, CATEGORY_CREATE);
+                }
             }
 
         });
-
-        this.menuAdapter = new MenuActions(getApplicationContext(), this);
+        return view;
     }
+
+
     //onResume is triggered when this activity is brought back into focus
     @Override
-    protected void onResume(){
+    public void onResume(){
         super.onResume();
-        fsAgent.getCategoryCollection("",this);
+        this.onRefresh();
     }
 
     //opens the settings/preferences menu
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        return this.menuAdapter.onOptionSelected(item);
-    }
+
 
 
     @Override
@@ -101,16 +105,19 @@ public class CategoryList extends AppCompatActivity implements UIInterface
         {
             catList.add(cat.getCategoryTitle());
         }
-
-        gridAdapter = new CategoryAdapter(this, catList);
-        gridview.setAdapter(gridAdapter);
+        if (getActivity()!=null) {
+            gridAdapter = new CategoryAdapter(getActivity().getApplicationContext(), catList);
+            gridview.setAdapter(gridAdapter);
+        }
+        //end the refresh animation
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
     public void firebaseSuccess(String message_title, String message_content)
     {
-        FirestoreAgent fsAgent = new FirestoreAgent();
-        fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
+        FirestoreAgent fsAgent = FirestoreAgent.getInstance();
+        fsAgent.getCategoryCollection("",this);
     }
 
     @Override
@@ -118,24 +125,18 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
     }
     //Add menu to action bar
+
+
+    //Called when refreshed via gesture
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
-        return true;
+    public void onRefresh() {
+        refreshLayout.setRefreshing(true);
+        fsAgent.getCategoryCollection("",this);
     }
 
-    //Receive sign-in status
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CATEGORY_CREATE)
-        {
-            FirestoreAgent fsAgent = new FirestoreAgent();
-            fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
-        }
+    public static CategoryList newInstance(){
+
+        return new CategoryList();
     }
 
 }

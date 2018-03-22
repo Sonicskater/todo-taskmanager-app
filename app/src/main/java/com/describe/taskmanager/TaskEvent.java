@@ -52,6 +52,13 @@ public class TaskEvent implements Serializable {
     //default
     public TaskEvent(){ }
 
+    public TaskEvent(TaskEvent task){
+        this.title = task.title;
+        this.description = task.description;
+        this.date = task.date;
+        this.time = task.time;
+    }
+
     public TaskEvent(String title, String description, Date date, String time){
         this.title = title;
         this.description = description;

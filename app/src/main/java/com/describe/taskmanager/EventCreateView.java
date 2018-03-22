@@ -22,12 +22,12 @@ import java.util.Locale;
 
 
 public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
-    //initialized instance varibles
+    //initialized instance variables
     Date chosenDate = new Date();
 
 
     Spinner categoriesSpinner;
-    FirestoreAgent fbAgent = new FirestoreAgent();
+    FirestoreAgent fbAgent = FirestoreAgent.getInstance();
     String debug_user = "";
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
@@ -159,7 +159,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
 
     }
 
-    //what is this method??
     @Override
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
     {
