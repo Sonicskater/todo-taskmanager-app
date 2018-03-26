@@ -6,7 +6,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-
+//Currently un-used, meant for future feature
 public class FBStorageAgent {
     private FirebaseStorage firebaseStorageInstance;
     private StorageReference   storageRef;

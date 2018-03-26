@@ -122,7 +122,7 @@ public class
         
         event.setDescription(getTextValue(R.id.descriptionText));
 
-        event.setTime(getTextValue(R.id.timeText));
+        event.setCreateTime(getTextValue(R.id.timeText));
 
         event.setDate(this.chosenDate);
     }

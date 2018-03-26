@@ -26,8 +26,8 @@ public class MenuActions {
                 parentActivity.startActivity(i);
                 break;
             case R.id.action_search:
-                FragmentSearch searchFragment =  FragmentSearch.newInstance();
-                searchFragment.show(parentActivity.getFragmentManager(), "search");
+                SearchFragment searchFragment =  SearchFragment.newInstance();
+                searchFragment.show(parentActivity.getSupportFragmentManager(), "search");
 
                // Toast toast = Toast.makeText(this.parentActivity,"hello", Toast.LENGTH_SHORT);
                 //toast.show();
