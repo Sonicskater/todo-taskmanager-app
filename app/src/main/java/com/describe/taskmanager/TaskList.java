@@ -5,10 +5,12 @@ import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
 
+
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
+
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -37,6 +39,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     //static ArrayList<TaskEvent> taskEvents;
     FirestoreAgent fsAgent;
     SwipeRefreshLayout refreshLayout;
+    MenuActions menuAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+
         if (item.getItemId()==android.R.id.home)
         {
             finish();
@@ -111,6 +115,10 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
         if (item.getItemId()==R.id.action_refresh)
         {
             this.onRefresh();
+        }
+        if (item.getItemId()==R.id.action_search){
+            SearchFragment searchFragment = SearchFragment.newInstance();
+            searchFragment.show(getSupportFragmentManager(), "Frag");
         }
         return true;
     }
@@ -183,14 +191,20 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
                     Log.d("TaskList", "TaskEvent for taskEvent: " + o.get("Title") + ".");
                     return;  //taskEvent for
                 }
-
+/*
                 Intent i = new Intent(getApplicationContext(),TaskEventView.class);
                 i.putExtra("taskEvent", taskEvent);
                 i.putExtra("category",self.categoryName);
                 startActivity(i);
+                */
+                TaskEventDetails detailsFragment = TaskEventDetails.newInstance(taskEvent,categoryName);
+                detailsFragment.show(getSupportFragmentManager(), "Frag");
+
 
                 //should now rebuild the list from the fbAgent
             }
+
+
 
             private TaskEvent findTaskByTitle(String title) {
                 for (TaskEvent event : taskEvents) {

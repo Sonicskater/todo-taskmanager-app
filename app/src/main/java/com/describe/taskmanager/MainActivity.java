@@ -1,6 +1,7 @@
 package com.describe.taskmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter adapterViewPager;
@@ -31,6 +33,29 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(vpPager);
 
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        if (item.getItemId()==android.R.id.home)
+        {
+            finish();
+        }
+        if (item.getItemId()==R.id.action_settings)
+        {
+            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(i);
+        }
+        if (item.getItemId()==R.id.action_refresh)
+        {
+
+        }
+        if (item.getItemId()==R.id.action_search){
+            SearchFragment searchFragment = SearchFragment.newInstance();
+            searchFragment.show(getSupportFragmentManager(), "Frag");
+        }
+        return true;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

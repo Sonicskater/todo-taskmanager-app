@@ -1,9 +1,5 @@
 package com.describe.taskmanager;
 
-/**
- * Created by devon on 3/20/2018.
- */
-
 public interface FSNotificationInterface extends FirestoreInterface {
     //These would have default methods, but if we added them then our app wouldn't support devices older than API 24/Android 7.0,
     //meaning most of our test devices wouldn't work.(All except Devons Phone)

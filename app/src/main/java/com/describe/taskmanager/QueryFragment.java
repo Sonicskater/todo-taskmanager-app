@@ -4,5 +4,6 @@ import android.support.v4.app.Fragment;
 
 
 public abstract class QueryFragment extends Fragment {
-    public abstract QueryTerm addTerm();
+    // ensures that there is a fragment to display inside the advanced search dialog.
+    public abstract QueryTerm generateTerm();
 }

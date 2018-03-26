@@ -53,7 +53,7 @@ public class CategoryCreateView extends AppCompatActivity implements UIInterface
 
     private void createCategory(Category c)
     {
-        FirestoreAgent fs = new FirestoreAgent();
+        FirestoreAgent fs = FirestoreAgent.getInstance();
         fs.addCategory("",c,this);
     }
 

@@ -45,6 +45,7 @@ public class SearchAgent implements UIInterface {
         cachedDatabase = new HashMap<>();
         fsAgent.getCategoryCollection("",this);
     }
+    @Deprecated
     public HashMap<Category,ArrayList<TaskEvent>> SearchString(ArrayList<String> searchTerms){
         HashMap<Category,ArrayList<TaskEvent>> result = cacheCopy();
 
