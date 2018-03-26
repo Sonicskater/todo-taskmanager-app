@@ -1,51 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="112dp"
-    android:orientation="horizontal"
-    >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.describe.taskmanager.Notification"
+    android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/notify_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:src="@android:drawable/ic_dialog_info"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="9dp"/>
-    
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_alignBottom="@+id/notify_icon"
-        android:layout_toRightOf="@+id/notify_icon"
-        android:layout_toEndOf="@+id/notify_icon"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp"
-        />
 
-    <TextView
-        android:id="@+id/notify_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:paddingTop="8dp"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:textColor="#ffffff"
-        android:text="IMPLEMENTING TEXT LATER"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        />
+    <EditText
+        android:id="@+id/edittext_title"
+        android:hint="Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittext_message"
+        android:hint="Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_channel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/progressBar"
-        android:text="Notification icon" />
+        android:text="send on channel 1" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/button_channel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send on channel 2" />
+
+</LinearLayout>
