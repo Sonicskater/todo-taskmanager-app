@@ -221,7 +221,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             findPreference("TestNotify").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(getActivity().getApplicationContext(), ReminderUI.class));
+                    startActivity(new Intent(getActivity().getApplicationContext(), Notification.class));
                     return false;
                 }
             });
@@ -310,7 +310,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(getActivity().getApplicationContext(),"Signed out successfully",Toast.LENGTH_SHORT).show();
                                 }
-                    });
+                            });
                     return false;
                 }
             });

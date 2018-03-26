@@ -28,6 +28,7 @@
         <activity android:name=".DatePickerPopup" />
         <activity android:name=".TimePickerPopup" />
         <activity android:name=".TaskEventView" />
+
         <activity
             android:name=".LandingScreen"
             android:label="@string/title_activity_landing_screen"
@@ -41,6 +42,19 @@
                 <action android:name="Button_Pressed" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".CategoryEditView"
+            android:label="Edit a Category"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name=".CategoryDelete"
+            android:label="Delete a Category"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name=".DailyViewActivity"
+            android:label="Day View"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
             android:name=".ReminderUI"

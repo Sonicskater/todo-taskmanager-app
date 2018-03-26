@@ -45,6 +45,7 @@ class FirestoreAgent {
         }
         else{
             AuthInstance.signInAnonymously();
+            UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
     }
 
@@ -146,6 +147,7 @@ class FirestoreAgent {
         }
 
     }
+
     void addCategory(final String user, final Category categoryObj, final UIInterface callingObject){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
@@ -166,6 +168,44 @@ class FirestoreAgent {
             });
         }
     }
+
+
+    void deleteCategory(final Category categoryObj, final UIInterface callingObject)
+    {
+        db.collection("users").document(UserID).collection("categories").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            for (DocumentSnapshot taskDoc : task.getResult()) {
+                                Category cat = taskDoc.toObject(Category.class);
+                                if(cat.getCategoryTitle().equals(categoryObj.getCategoryTitle())){
+                                    db.collection("users").document(UserID).collection("categories").document(Integer.toString(cat.getCategoryID())).delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>()
+                                                                  {
+                                                                      @Override
+                                                                      public void onSuccess(Void aVoid)
+                                                                      {
+                                                                          callingObject.firebaseSuccess("Deleted category", "category deleted successfully");
+                                                                      }
+                                                                  }
+                                            ).addOnFailureListener(new OnFailureListener()
+                                    {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e)
+                                        {
+                                            callingObject.firebaseFailure("1x000A", "Failed to delete category", "failed to delete category " + Integer.toString(categoryObj.getCategoryID()) + " User");
+                                        }
+                                    });
+                                }
+                            }
+
+                        }
+                    }
+                });
+    }
+
     void addTask(final String user, final String category, final TaskEvent taskObj, final UIInterface callingObject){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
