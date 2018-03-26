@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="219dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/buttonCreateCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonCancelCreateCategory"
+            android:layout_alignBottom="@+id/buttonCancelCreateCategory"
+            android:layout_alignStart="@+id/categoryNameText"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:text="Add"
+            tools:layout_editor_absoluteX="69dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <Button
+            android:id="@+id/buttonDeleteCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/categoryNameText"
+            android:layout_below="@+id/categoryNameText"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:text="Delete"
+            tools:layout_editor_absoluteX="196dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <Button
+            android:id="@+id/buttonCancelCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/categoryNameText"
+            android:layout_below="@+id/categoryNameText"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:text="Cancel"
+            tools:layout_editor_absoluteX="196dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

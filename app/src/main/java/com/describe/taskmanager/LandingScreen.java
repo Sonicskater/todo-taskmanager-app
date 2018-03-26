@@ -20,10 +20,6 @@ import java.util.List;
 @Deprecated
 public class LandingScreen extends AppCompatActivity {
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,8 +1,10 @@
 package com.describe.taskmanager;
 
 
+import java.io.Serializable;
 
-public class Category {
+public class Category implements Serializable
+{
 
     private int categoryID = 0;
     private String categoryTitle  = "Default";
@@ -18,7 +20,7 @@ public class Category {
     //category constructor
     public Category(int categoryID, String categoryTitle){
         this.categoryID = categoryID;
-        this.categoryTitle = categoryTitle;
+        this.categoryTitle = getCategoryTitle();
 
     }
 
@@ -31,7 +33,8 @@ public class Category {
         this.categoryID = categoryID;
     }
 
-    public String getCategoryTitle() {
+    public String getCategoryTitle()
+    {
         return categoryTitle;
     }
 
