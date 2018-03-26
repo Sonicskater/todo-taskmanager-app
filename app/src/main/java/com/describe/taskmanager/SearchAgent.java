@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//Replaced by QueryAgent for future expansion
 @Deprecated
 public class SearchAgent implements UIInterface {
     //Ensure that the same instance of search agent is reused.

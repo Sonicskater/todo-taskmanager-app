@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.content.Context;
 
-
-
+//Replaced by Notification.class
+@Deprecated
 public class ReminderUI extends AppCompatActivity {
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
@@ -27,16 +27,19 @@ public class ReminderUI extends AppCompatActivity {
         context = this;
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.reminder_notification);
-
+        /*
         remoteViews.setImageViewResource(R.id.notify_icon, R.mipmap.ic_launcher);
         remoteViews.setTextViewText(R.id.notify_title, "Text");
+        */
+        /*
         remoteViews.setProgressBar(R.id.progressBar, 100, 50, true);
-
+        */
         notification_id = (int) System.currentTimeMillis();
         Intent button_intent = new Intent("Button_Pressed");
         button_intent.putExtra("id", notification_id);
 
         PendingIntent p_button_intent = PendingIntent.getBroadcast(context,123, button_intent,0);
+        /*
         remoteViews.setOnClickPendingIntent(R.id.button, p_button_intent);
 
 
@@ -54,6 +57,7 @@ public class ReminderUI extends AppCompatActivity {
 
             }
         });
+        */
 
 
 

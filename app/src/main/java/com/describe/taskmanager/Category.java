@@ -20,7 +20,7 @@ public class Category implements Serializable
     //category constructor
     public Category(int categoryID, String categoryTitle){
         this.categoryID = categoryID;
-        this.categoryTitle = getCategoryTitle();
+        this.categoryTitle = categoryTitle;
 
     }
 
