@@ -3,9 +3,6 @@ package com.describe.taskmanager;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by bencook on 2018-01-31.
- */
 
 public class TaskEvent implements Serializable {
 
@@ -14,8 +11,9 @@ public class TaskEvent implements Serializable {
     private String title;
     private String description;
     private Date date;
-    private String time;
-    private Category category;
+    private String createTime;
+    private Date alarmDate;
+
 
     //getters and setters
 
@@ -42,11 +40,17 @@ public class TaskEvent implements Serializable {
     public Date getDate(){
         return this.date;
     }
-    public void setTime (String newTime){
-        this.time = newTime;
+    public void setCreateTime(String newTime){
+        this.createTime = newTime;
     }
-    public String getTime(){
-        return time;
+    public String getCreateTime(){
+        return createTime;
+    }
+    public void setAlarmDate (Date newDate){
+        this.alarmDate = newDate;
+    }
+    public Date getAlarmDate(){
+        return this.alarmDate;
     }
 
     //default
@@ -56,13 +60,28 @@ public class TaskEvent implements Serializable {
         this.title = task.title;
         this.description = task.description;
         this.date = task.date;
-        this.time = task.time;
+        this.createTime = task.createTime;
+        this.alarmDate = task.alarmDate;
     }
 
-    public TaskEvent(String title, String description, Date date, String time){
+    public TaskEvent(String title, String description, Date date, String createTime){
         this.title = title;
         this.description = description;
         this.date = date;
-        this.time = time;
+        this.createTime = createTime;
+        this.alarmDate = null;
+
+    }
+    public TaskEvent(String title, String description, Date date, String createTime,Date alarmDate){
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.createTime = createTime;
+        setAlarmDate(alarmDate);
+
+    }
+
+    boolean hasAlarm(){
+        return (this.alarmDate!=null);
     }
 }

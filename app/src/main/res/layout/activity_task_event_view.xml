@@ -74,7 +74,7 @@
             android:layout_alignTop="@+id/dateText"
             android:layout_marginEnd="45dp"
 
-            android:text="time here" />
+            android:text="createTime here" />
 
         <TextView
             android:id="@+id/textView7"

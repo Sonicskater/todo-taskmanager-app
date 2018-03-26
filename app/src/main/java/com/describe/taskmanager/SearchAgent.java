@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+@Deprecated
 public class SearchAgent implements UIInterface {
     //Ensure that the same instance of search agent is reused.
     static private SearchAgent instance = null;
@@ -45,6 +45,7 @@ public class SearchAgent implements UIInterface {
         cachedDatabase = new HashMap<>();
         fsAgent.getCategoryCollection("",this);
     }
+    @Deprecated
     public HashMap<Category,ArrayList<TaskEvent>> SearchString(ArrayList<String> searchTerms){
         HashMap<Category,ArrayList<TaskEvent>> result = cacheCopy();
 

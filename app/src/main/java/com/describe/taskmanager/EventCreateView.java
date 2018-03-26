@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -50,30 +52,59 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         fbAgent.getCategoryCollection("",this);
 
         //the textbox in the main window, (outside of the popup)
-        TextView dateField = findViewById(R.id.dateText);
+        final TextView dateField = findViewById(R.id.dateText);
+        final TextView dateTitle = findViewById(R.id.textView7);
+        final TextView timeTitle = findViewById(R.id.textView8);
         //set the onclick listener for date picker
         final DateTimeInterface self = this;
         dateField.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-
-                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(chosenDate,self);
-                datePickerFragment.show(getSupportFragmentManager(),"Frag");
+                CheckBox check = findViewById(R.id.setAlarm);
+                if (check.isChecked()) {
+                    DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(chosenDate, self);
+                    datePickerFragment.show(getSupportFragmentManager(), "Frag");
+                }
             }
         });
 
         //the textbox in the main window (outside of popup)
-        TextView timeField = findViewById(R.id.timeText);
+        final TextView timeField = findViewById(R.id.timeText);
         //sets the onclick listener to pop up the time picker fragment
 
         timeField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(chosenDate,self);
-                timePickerFragment.show(getSupportFragmentManager(),"Frag");
+                CheckBox check = findViewById(R.id.setAlarm);
+                if(check.isChecked()) {
+                    TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(chosenDate, self);
+                    timePickerFragment.show(getSupportFragmentManager(), "Frag");
+                }
 
+            }
+        });
+        timeField.setAlpha(0.2f);
+        timeTitle.setAlpha(0.2f);
+        dateField.setAlpha(0.2f);
+        dateTitle.setAlpha(0.2f);
+        final CheckBox check = findViewById(R.id.setAlarm);
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!check.isChecked()){
+                    timeField.setAlpha(0.2f);
+                    timeTitle.setAlpha(0.2f);
+                    dateField.setAlpha(0.2f);
+                    dateTitle.setAlpha(0.2f);
+                }
+                else{
+                    timeField.setAlpha(1f);
+                    timeTitle.setAlpha(1f);
+                    dateField.setAlpha(1f);
+                    dateTitle.setAlpha(1f);
+                }
             }
         });
 
@@ -128,7 +159,12 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         //should update this so it updates the task with it's category from the drop down menu
 
         //returns the task with filled out fields
-        return new TaskEvent(title, description, this.chosenDate, time);
+        CheckBox check = findViewById(R.id.setAlarm);
+        if (check.isChecked()) {
+            return new TaskEvent(title, description, Calendar.getInstance().getTime(), time,this.chosenDate);
+        }
+
+        return new TaskEvent(title, description, Calendar.getInstance().getTime(), time);
     }
 
     //function to simply extract the text from a textfield turn it into a string

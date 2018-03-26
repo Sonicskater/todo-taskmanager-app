@@ -5,6 +5,7 @@ package com.describe.taskmanager;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +19,12 @@ import java.util.List;
 public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader; // header titles
+    private List<Category> _listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
+    private HashMap<Category, List<TaskEvent>> _listDataChild;
 
-    public SearchExpandableListAdapter(Context context, List<String> listDataHeader,
-                                       HashMap<String, List<String>> listChildData) {
+    SearchExpandableListAdapter(Context context, List<Category> listDataHeader,
+                                       HashMap<Category, List<TaskEvent>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
@@ -42,20 +43,38 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
+                             boolean isLastChild, View convertView, final ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final TaskEvent childText = (TaskEvent) getChild(groupPosition, childPosition);
+        final Category category = getGroup(groupPosition);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_tasklist_item, null);
+            if (inflater != null) {
+                convertView = inflater.inflate(R.layout.layout_tasklist_item, null);
+            }
         }
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+        if (convertView != null){
+            TextView txtListChild = convertView
+                    .findViewById(R.id.lblListItem);
 
-        txtListChild.setText(childText);
+        txtListChild.setText(childText.getTitle());
+
+        txtListChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(parent.getContext(), TaskEventView.class);
+                i.putExtra("taskEvent", childText);
+                i.putExtra("category", category.getCategoryTitle());
+
+                parent.getContext().startActivity(i);
+            }
+        });
+    }
+
         return convertView;
     }
 
@@ -66,7 +85,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
+    public Category getGroup(int groupPosition) {
         return this._listDataHeader.get(groupPosition);
     }
 
@@ -83,18 +102,22 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        Category headerTitle = getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.layout_category_group, null);
+            if (infalInflater != null) {
+                convertView = infalInflater.inflate(R.layout.layout_category_group, null);
+            }
         }
 
-        TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.lblListHeader);
-        lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
+        if (convertView!=null) {
+            TextView lblListHeader = convertView
+                    .findViewById(R.id.lblListHeader);
 
+            lblListHeader.setTypeface(null, Typeface.BOLD);
+            lblListHeader.setText(headerTitle.getCategoryTitle());
+        }
         return convertView;
     }
 

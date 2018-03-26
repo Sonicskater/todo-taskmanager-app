@@ -26,7 +26,7 @@ class FirestoreAgent {
     private FirebaseAuth AuthInstance = FirebaseAuth.getInstance();
     private Random randTaskID = new Random();
     private String UserID = "";
-    private static FirestoreAgent instance;
+    private static FirestoreAgent instance = null;
     //reuse instance of FirestoreAgent instead of creating a new one every time.
     static FirestoreAgent getInstance(){
         if(instance == null){
@@ -58,87 +58,8 @@ class FirestoreAgent {
             this.UserID=AuthInstance.getCurrentUser().getUid();
         }
     }
-    @Deprecated
-    void getUserDocument( final UIInterface callingObject, final String fieldName){
-        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
-
-        this.updateUserID();
-        if (!this.UserID.equals("")){
-            DocumentReference docRef = db.collection("users").document(UserID);
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document != null) {
-
-                            callingObject.updateObject(fieldName,task.getResult().getData().toString());
-
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
-        }
-
-
-    }
-
-    //Gets a specified CategoryDocument and return it to the requested field
-    @Deprecated
-    void getCategoryDocument( final UIInterface callingObject, final String fieldName){
-        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
-
-        this.updateUserID();
-        if (!this.UserID.equals("")) {
-            DocumentReference docRef = db.collection("users").document(UserID).collection("categories").document("Category");
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document != null) {
-
-                            callingObject.updateObject(fieldName, task.getResult().getData().toString());
-
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
-        }
-    }
-    //Gets a specified TaskDocument and return it to the requested field
-    @Deprecated
-    void getTaskDocument(String category, String task, final UIInterface callingObject, final String fieldName){
-        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
-        this.updateUserID();
-        if (!this.UserID.equals("")) {
-            DocumentReference docRef = db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(task);
-
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        @NonNull
-                        TaskEvent taskObj = task.getResult().toObject(TaskEvent.class);
-
-                        callingObject.updateObject(fieldName, taskObj);
-
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
-        }
-    }
     // Returns the collection of categories from a specified User.
+    @Deprecated
     void getCategoryCollection(final String user,final UIInterface callingObject){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
@@ -160,7 +81,51 @@ class FirestoreAgent {
         }
 
     }
+    void getCategoryCollection(final FirestoreInterface callingObject){
+        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
+        this.updateUserID();
+        if (!this.UserID.equals("")) {
+            db.collection("users").document(UserID).collection("categories").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                ArrayList<Category> docs = new ArrayList<>();
+
+                                for (DocumentSnapshot taskDoc : task.getResult()) {
+                                    docs.add(taskDoc.toObject(Category.class));
+                                }
+                                callingObject.updateCategoryCollection(UserID + "/" + callingObject.toString(), docs);
+                            }
+                        }
+                    });
+        }
+
+    }
+    @Deprecated
     void getTaskCollection(final String user,final UIInterface callingObject,final String category){
+        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
+        this.updateUserID();
+        if (!this.UserID.equals("")) {
+            db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                ArrayList<TaskEvent> docs = new ArrayList<>();
+
+                                for (DocumentSnapshot taskDoc : task.getResult()) {
+                                    docs.add(taskDoc.toObject(TaskEvent.class));
+                                    Log.d("TASK_ADDED", taskDoc.toObject(TaskEvent.class).getTitle());
+                                }
+                                callingObject.updateTaskCollection(category, docs);
+                            }
+                        }
+                    });
+        }
+
+    }
+    void getTaskCollection(final FirestoreInterface callingObject,final String category){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
         if (!this.UserID.equals("")) {
@@ -310,5 +275,88 @@ class FirestoreAgent {
                 callingObject.firebaseFailure("1x000A", "Failed to delete task", "failed to delete task " +Integer.toString(taskObj.getId())+ " User");
             }
         });
+    }
+
+    /////////////////// DEPRECATED CODE, KEPT FOR REFERENCE////////////////////////////
+
+    @Deprecated
+    void getUserDocument( final UIInterface callingObject, final String fieldName){
+        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
+
+        this.updateUserID();
+        if (!this.UserID.equals("")){
+            DocumentReference docRef = db.collection("users").document(UserID);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+
+                            callingObject.updateObject(fieldName,task.getResult().getData().toString());
+
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }
+
+
+    }
+
+    //Gets a specified CategoryDocument and return it to the requested field
+    @Deprecated
+    void getCategoryDocument( final UIInterface callingObject, final String fieldName){
+        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
+
+        this.updateUserID();
+        if (!this.UserID.equals("")) {
+            DocumentReference docRef = db.collection("users").document(UserID).collection("categories").document("Category");
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+
+                            callingObject.updateObject(fieldName, task.getResult().getData().toString());
+
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }
+    }
+    //Gets a specified TaskDocument and return it to the requested field
+    @Deprecated
+    void getTaskDocument(String category, String task, final UIInterface callingObject, final String fieldName){
+        //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
+        this.updateUserID();
+        if (!this.UserID.equals("")) {
+            DocumentReference docRef = db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(task);
+
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        @NonNull
+                        TaskEvent taskObj = task.getResult().toObject(TaskEvent.class);
+
+                        callingObject.updateObject(fieldName, taskObj);
+
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }
     }
 }
