@@ -14,13 +14,13 @@ public class Category implements Serializable
 
     public Category(Category category){
         this.categoryID = category.categoryID;
-        this.categoryTitle = category.categoryTitle;
+        this.categoryTitle = category.getCategoryTitle();
     }
 
     //category constructor
     public Category(int categoryID, String categoryTitle){
         this.categoryID = categoryID;
-        this.categoryTitle = getCategoryTitle();
+        this.categoryTitle = categoryTitle;
 
     }
 

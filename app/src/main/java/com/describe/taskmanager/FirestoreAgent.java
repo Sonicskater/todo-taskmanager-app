@@ -216,7 +216,7 @@ class FirestoreAgent {
                             for (DocumentSnapshot taskDoc : task.getResult()) {
                                 Category cat = taskDoc.toObject(Category.class);
                                 if(cat.getCategoryTitle().equals(categoryObj.getCategoryTitle())){
-                                    db.collection("users").document(UserID).collection("categories").document(Integer.toString(cat.getCategoryID())).delete()
+                                    db.collection("users").document(UserID).collection("categories").document(cat.getCategoryTitle()).delete()
                                             .addOnSuccessListener(new OnSuccessListener<Void>()
                                                                   {
                                                                       @Override
