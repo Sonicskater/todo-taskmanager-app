@@ -5,29 +5,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
+
 import android.widget.TextView;
-import android.widget.TimePicker;
+
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
-import java.util.GregorianCalendar;
+
+import java.util.Locale;
 
 
-public class TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
-    //initialized instance varibles
-    private final String TAG = "TaskEventView";
+public class
+ TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
+    //initialized instance variables
+
     private TaskEvent currentEvent;
+    private String category;
     Dialog datePickerDialog;
     Date chosenDate = new Date();
     Dialog timePickerDialog;
     //firebase database agent
-    FirestoreAgent fbAgent = new FirestoreAgent();
-    String debug_user = "g2x3irLzu1DTJXbymPXw";
+    FirestoreAgent fbAgent = FirestoreAgent.getInstance();
+
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
@@ -40,8 +42,8 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
 
         //
         this.currentEvent = (TaskEvent)getIntent().getSerializableExtra("taskEvent");
-        //log to make sure that the object is passed in
-        Log.d(TAG, "got the title " + this.currentEvent.getTitle());
+        this.category = (String)getIntent().getSerializableExtra("category");
+
 
         //create the new date and time picker dialogs
         datePickerDialog = new Dialog(this);
@@ -71,8 +73,8 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
 
     private void updateUIFields(TaskEvent currentEvent) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
 
         this.chosenDate = currentEvent.getDate();
 
@@ -88,8 +90,8 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
     }
 
     private void showEventDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
 
         TextView date   = findViewById(R.id.dateText);
         date.setText(dateFormat.format(chosenDate));
@@ -98,48 +100,37 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
         time.setText(timeFormat.format(chosenDate));
     }
 
-    private TaskEvent setProperties(TaskEvent event) {
-        EditText title   = findViewById(R.id.titleText);
-        event.setTitle(title.getText().toString());
-
-        EditText description   = findViewById(R.id.descriptionText);
-        event.setDescription(description.getText().toString());
-
-        event.setDate(this.chosenDate);
-
-        TextView time = findViewById(R.id.timeText);
-        event.setTime(time.getText().toString());
-
-        return event;
-    }
-
     public void onDelete(View view) {
         Log.d("onDelete", "onDelete: ");
 
 
-        fbAgent.deleteTask("category", currentEvent,this);
+        fbAgent.deleteTask(this.category, currentEvent,this);
     }
 
     public void onSave(View view) {
         Log.d("onSave", "onSave: ");
         this.setProperties();
 
-        fbAgent.updateTask("category", currentEvent,this);
+        fbAgent.updateTask(this.category, currentEvent,this);
     }
 
     private void setProperties() {
         TaskEvent event = this.currentEvent;
 
-        EditText title   = findViewById(R.id.titleText);
-        event.setTitle(title.getText().toString());
 
-        EditText description   = findViewById(R.id.descriptionText);
-        event.setDescription(description.getText().toString());
+        event.setTitle(getTextValue(R.id.titleText));
+        
+        event.setDescription(getTextValue(R.id.descriptionText));
+
+        event.setTime(getTextValue(R.id.timeText));
 
         event.setDate(this.chosenDate);
+    }
 
-        TextView time = findViewById(R.id.timeText);
-        event.setTime(time.getText().toString());
+    //function to simply extract the text from a textfield turn it into a string
+    private String getTextValue(int fieldId) {
+        TextView field = findViewById(fieldId);
+        return field.getText().toString();
     }
 
     @Override
@@ -159,11 +150,15 @@ public class TaskEventView extends AppCompatActivity implements UIInterface,Date
 
     @Override
     public void firebaseSuccess(String message_title, String message_content) {
-
+        Toast toast = Toast.makeText(TaskEventView.this,message_title, Toast.LENGTH_SHORT);
+        toast.show();
+        finish();
     }
 
     @Override
     public void firebaseFailure(String error_code, String message_title, String extra_content) {
+        Toast toast = Toast.makeText(TaskEventView.this,message_title, Toast.LENGTH_SHORT);
+        toast.show();
 
     }
 

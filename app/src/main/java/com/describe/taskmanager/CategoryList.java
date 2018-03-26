@@ -1,88 +1,89 @@
 package com.describe.taskmanager;
 
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
+import android.support.v4.widget.SwipeRefreshLayout;
+
+import android.view.LayoutInflater;
+
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
-
-import com.firebase.ui.auth.AuthUI;
-
-import com.google.firebase.auth.FirebaseAuth;
-
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class CategoryList extends AppCompatActivity implements UIInterface
+public class CategoryList extends Fragment implements UIInterface, SwipeRefreshLayout.OnRefreshListener
 {
-    private static final int RC_SIGN_IN = 1;
+    private static final int CATEGORY_CREATE = 2;
     CategoryAdapter gridAdapter;
     GridView gridview;
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-            //new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
-            //new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-            //new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()
-    );
+    FirestoreAgent fsAgent;
+    SwipeRefreshLayout refreshLayout;
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        //Open Sign-in Prompt
-
-        //Code derived from Android Documentation
-        FirestoreAgent fsAgent = new FirestoreAgent();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_list);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
+        View view = inflater.inflate(R.layout.activity_category_list,viewGroup,false);
 
 
 
-        gridview =findViewById(R.id.gridview);
-        fsAgent.getCategoryCollection("g2x3irLzu1DTJXbymPXw",this);
+        refreshLayout = view.findViewById(R.id.swiperefresh);
+        refreshLayout.setOnRefreshListener(this);
+
+        this.fsAgent = FirestoreAgent.getInstance();
+        gridview = view.findViewById(R.id.gridview);
+        //gets the category collection from firebase
+
+        //fsAgent.getCategoryCollection("",this);
+        this.onRefresh();
+
         gridview.setAdapter(gridAdapter);
 
+        //onclick listener
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                Toast.makeText(getApplicationContext(), "Your Category ;D", Toast.LENGTH_SHORT).show();
+                String categoryName = (String)gridview.getItemAtPosition(position);
+                if (getActivity()!=null) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), TaskList.class);
+                    intent.putExtra("categoryName", categoryName);
+
+                    startActivity(intent);
+                }
+
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (getActivity()!=null) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), CategoryCreateView.class);
+                    startActivityForResult(intent, CATEGORY_CREATE);
+                }
             }
 
         });
+        return view;
     }
+
+
+    //onResume is triggered when this activity is brought back into focus
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if (item.getItemId()==R.id.action_settings){
-            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
-            startActivity(i);
-        }
-        return true;
+    public void onResume(){
+        super.onResume();
+        this.onRefresh();
     }
+
+    //opens the settings/preferences menu
+
 
 
     @Override
@@ -92,24 +93,31 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
-
     }
-    @Override
-    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
 
+    //
+    @Override
+    public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent)
+    {
         ArrayList<String> catList = new ArrayList<>();
 
-        for (Category cat : collectionContent){
+        for (Category cat : collectionContent)
+        {
             catList.add(cat.getCategoryTitle());
         }
-
-        gridAdapter = new CategoryAdapter(this,catList);
-        gridview.setAdapter(gridAdapter);
+        if (getActivity()!=null) {
+            gridAdapter = new CategoryAdapter(getActivity().getApplicationContext(), catList);
+            gridview.setAdapter(gridAdapter);
+        }
+        //end the refresh animation
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
-    public void firebaseSuccess(String message_title, String message_content) {
-
+    public void firebaseSuccess(String message_title, String message_content)
+    {
+        FirestoreAgent fsAgent = FirestoreAgent.getInstance();
+        fsAgent.getCategoryCollection("",this);
     }
 
     @Override
@@ -117,32 +125,18 @@ public class CategoryList extends AppCompatActivity implements UIInterface
 
     }
     //Add menu to action bar
+
+
+    //Called when refreshed via gesture
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
-        return true;
+    public void onRefresh() {
+        refreshLayout.setRefreshing(true);
+        fsAgent.getCategoryCollection("",this);
     }
 
+    public static CategoryList newInstance(){
 
-    //Receive sign-in status
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-
-                Log.d("AUTH","Successfully signed in,UID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
-                // ...
-            } else {
-                // Sign in failed, check response for error code
-                Log.d("AUTH","Sign-in failed");
-                // ...
-            }
-        }
+        return new CategoryList();
     }
+
 }

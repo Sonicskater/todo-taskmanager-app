@@ -11,11 +11,16 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".EventCreateView"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".CategoryList"
-            android:label="@string/title_activity_category_list"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".TaskList"
             android:label="Task List"
@@ -26,6 +31,28 @@
         <activity
             android:name=".LandingScreen"
             android:label="@string/title_activity_landing_screen"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+
+        <receiver android:name=".ButtonCheck">
+            <intent-filter>
+                <action android:name="Button_Pressed" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ReminderUI"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".CategoryCreateView"
+            android:label="Create a new Category"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,18 +60,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"/>
-        <receiver
-            android:name=".ButtonCheck">
-            <intent-filter>
-                <action android:name="Button_Pressed" />
-            </intent-filter>
-        </receiver>/
-        <activity android:name=".ReminderUI"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-
     </application>
 
 </manifest>
