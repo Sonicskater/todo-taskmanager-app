@@ -148,6 +148,50 @@ class FirestoreAgent {
 
     }
 
+    void getAllTasks(final String user,final UIInterface callingObject)
+    {
+        db.collection("users").document(UserID).collection("categories").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+
+                            for (DocumentSnapshot taskDoc : task.getResult())
+                            {
+                                final Category category = taskDoc.toObject(Category.class);
+
+                                db.collection("users").document(UserID).collection("categories").document(category.getCategoryTitle()).collection("tasks").get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                                        {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task)
+                                            {
+                                                if (task.isSuccessful())
+                                                {
+                                                    ArrayList<TaskEvent> docs = new ArrayList<>();
+
+                                                    for (DocumentSnapshot taskDoc : task.getResult())
+                                                    {
+                                                        docs.add(taskDoc.toObject(TaskEvent.class));
+                                                        Log.d("TASK_ADDED", taskDoc.toObject(TaskEvent.class).getTitle());
+                                                    }
+                                                    callingObject.updateTaskCollection(category.getCategoryTitle(), docs);
+
+                                                }
+
+                                            }
+                                        });
+                            }
+
+                        }
+                    }
+                });
+
+    }
+
     void addCategory(final String user, final Category categoryObj, final UIInterface callingObject){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
@@ -181,7 +225,7 @@ class FirestoreAgent {
                             for (DocumentSnapshot taskDoc : task.getResult()) {
                                 Category cat = taskDoc.toObject(Category.class);
                                 if(cat.getCategoryTitle().equals(categoryObj.getCategoryTitle())){
-                                    db.collection("users").document(UserID).collection("categories").document(Integer.toString(cat.getCategoryID())).delete()
+                                    db.collection("users").document(UserID).collection("categories").document(cat.getCategoryTitle()).delete()
                                             .addOnSuccessListener(new OnSuccessListener<Void>()
                                                                   {
                                                                       @Override

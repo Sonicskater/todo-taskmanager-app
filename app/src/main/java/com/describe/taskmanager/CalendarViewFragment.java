@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by camila on 2018-03-21.
@@ -40,80 +42,81 @@ public class CalendarViewFragment extends Fragment implements UIInterface, Swipe
              {
                  Calendar calendar = Calendar.getInstance();
                  calendar.set(year, month, day);
-                 int week = calendar.get(Calendar.DAY_OF_WEEK);
-
-                 String monthString = null;
-                 switch (month)
-                 {
-                     case 0:
-                         monthString = "January";
-                         break;
-                     case 1:
-                         monthString = "February";
-                         break;
-                     case 2:
-                         monthString = "March";
-                         break;
-                     case 3:
-                         monthString = "April";
-                         break;
-                     case 4:
-                         monthString = "May";
-                         break;
-                     case 5:
-                         monthString = "June";
-                         break;
-                     case 6:
-                         monthString = "July";
-                         break;
-                     case 7:
-                         monthString = "August";
-                         break;
-                     case 8:
-                         monthString = "September";
-                         break;
-                     case 9:
-                         monthString = "October";
-                         break;
-                     case 10:
-                         monthString = "November";
-                         break;
-                     case 11:
-                         monthString = "December";
-                         break;
-                 }
-
-                 String weekString = "";
-                 switch (week)
-                 {
-                     case 1:
-                         weekString = "Sunday";
-                         break;
-                     case 2:
-                         weekString = "Monday";
-                         break;
-                     case 3:
-                         weekString = "Tuesday";
-                         break;
-                     case 4:
-                         weekString = "Wednesday";
-                         break;
-                     case 5:
-                         weekString = "Thursday";
-                         break;
-                     case 6:
-                         weekString = "Friday";
-                         break;
-                     case 7:
-                         weekString = "Saturday";
-                         break;
-                 }
-
-                 String date = weekString + "  " + monthString + " " + day + ", " + year;
-                 Log.d(TAG, "onSelectedDayChange: dd/mm/yyyy" + date);
+//                 int week = calendar.get(Calendar.DAY_OF_WEEK);
+//
+//                 String monthString = null;
+//                 switch (month)
+//                 {
+//                     case 0:
+//                         monthString = "January";
+//                         break;
+//                     case 1:
+//                         monthString = "February";
+//                         break;
+//                     case 2:
+//                         monthString = "March";
+//                         break;
+//                     case 3:
+//                         monthString = "April";
+//                         break;
+//                     case 4:
+//                         monthString = "May";
+//                         break;
+//                     case 5:
+//                         monthString = "June";
+//                         break;
+//                     case 6:
+//                         monthString = "July";
+//                         break;
+//                     case 7:
+//                         monthString = "August";
+//                         break;
+//                     case 8:
+//                         monthString = "September";
+//                         break;
+//                     case 9:
+//                         monthString = "October";
+//                         break;
+//                     case 10:
+//                         monthString = "November";
+//                         break;
+//                     case 11:
+//                         monthString = "December";
+//                         break;
+//                 }
+//
+//                 String weekString = "";
+//                 switch (week)
+//                 {
+//                     case 1:
+//                         weekString = "Sunday";
+//                         break;
+//                     case 2:
+//                         weekString = "Monday";
+//                         break;
+//                     case 3:
+//                         weekString = "Tuesday";
+//                         break;
+//                     case 4:
+//                         weekString = "Wednesday";
+//                         break;
+//                     case 5:
+//                         weekString = "Thursday";
+//                         break;
+//                     case 6:
+//                         weekString = "Friday";
+//                         break;
+//                     case 7:
+//                         weekString = "Saturday";
+//                         break;
+//                 }
+//
+//                 String date = weekString + "  " + monthString + " " + day + ", " + year;
+//                 Log.d(TAG, "onSelectedDayChange: dd/mm/yyyy" + date);
 
                  Intent intent = new Intent(getActivity().getApplicationContext(), DailyViewActivity.class);
-                 intent.putExtra("date", date);
+                 SimpleDateFormat sdf = new SimpleDateFormat("EEE MMMM dd, yyyy", Locale.ENGLISH);
+                 intent.putExtra("date", sdf.format(calendar.getTime()));
                  startActivity(intent);
 
              }
