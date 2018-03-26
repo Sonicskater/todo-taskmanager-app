@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public static class MainPagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
-        private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+        private String tabTitles[] = new String[] { "Calendar ", "Categories", "Tab3" };
         private Context context;
 
         MainPagerAdapter(FragmentManager fragmentManager,Context context) {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             //Add new fragments here (Add a new case)
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    return CategoryList.newInstance();
+                    return CalendarViewFragment.newInstance();
                 case 1:
                     return CategoryList.newInstance();
                 default:

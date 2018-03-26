@@ -5,11 +5,8 @@ import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-
 import android.support.v4.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,16 +16,16 @@ import java.util.ArrayList;
 
 public class CategoryList extends Fragment implements UIInterface, SwipeRefreshLayout.OnRefreshListener
 {
-    private static final int CATEGORY_CREATE = 2;
+    private static final int CATEGORY_EDIT = 2;
     CategoryAdapter gridAdapter;
     GridView gridview;
     FirestoreAgent fsAgent;
     SwipeRefreshLayout refreshLayout;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState)
+    {
         View view = inflater.inflate(R.layout.activity_category_list,viewGroup,false);
-
-
 
         refreshLayout = view.findViewById(R.id.swiperefresh);
         refreshLayout.setOnRefreshListener(this);
@@ -37,7 +34,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
         gridview = view.findViewById(R.id.gridview);
         //gets the category collection from firebase
 
-        //fsAgent.getCategoryCollection("",this);
+        fsAgent.getCategoryCollection("",this);
         this.onRefresh();
 
         gridview.setAdapter(gridAdapter);
@@ -58,15 +55,18 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
             }
         });
 
+
+
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                if (getActivity()!=null) {
-                    Intent intent = new Intent(getActivity().getApplicationContext(), CategoryCreateView.class);
-                    startActivityForResult(intent, CATEGORY_CREATE);
+                if (getActivity()!=null)
+                {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), CategoryEditView.class);
+                    startActivityForResult(intent, CATEGORY_EDIT);
                 }
             }
 
@@ -134,8 +134,8 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
         fsAgent.getCategoryCollection("",this);
     }
 
-    public static CategoryList newInstance(){
-
+    public static CategoryList newInstance()
+    {
         return new CategoryList();
     }
 }

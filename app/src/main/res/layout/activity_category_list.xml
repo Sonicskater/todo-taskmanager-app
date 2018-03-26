@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="com.describe.taskmanager.CategoryList">
 
     <LinearLayout
@@ -27,13 +26,14 @@
                 android:horizontalSpacing="10dp"
                 android:numColumns="auto_fit"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp"
+                android:verticalSpacing="30dp"
                 android:visibility="visible"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:layout_editor_absoluteY="122dp">
 
             </GridView>
         </android.support.v4.widget.SwipeRefreshLayout>
+
 
     </LinearLayout>
 

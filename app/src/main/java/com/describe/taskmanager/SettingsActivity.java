@@ -310,7 +310,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(getActivity().getApplicationContext(),"Signed out successfully",Toast.LENGTH_SHORT).show();
                                 }
-                    });
+                            });
                     return false;
                 }
             });

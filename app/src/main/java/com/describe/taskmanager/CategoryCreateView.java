@@ -1,13 +1,13 @@
 package com.describe.taskmanager;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,20 +24,38 @@ public class CategoryCreateView extends AppCompatActivity implements UIInterface
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_category_popup);
-        categoryName = (EditText) findViewById(R.id.categoryNameText);
-        createBtn = (Button) findViewById(R.id.buttonCreateCategory);
+        categoryName = (EditText) findViewById(R.id.categoryCreateNameText);
+        createBtn = (Button) findViewById(R.id.buttonCreateNewCategory);
         createBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                if(categoryName.getText().length()>0)
-                {
-                    Category c = new Category(new Random().nextInt(),categoryName.getText().toString());
-                    createCategory(c);
-                }
-            }
-        }
+                                     {
+                                         @Override
+                                         public void onClick(View view)
+                                         {
+                                             if (categoryName.getText().length() >= 21)
+                                             {
+                                                 Context context = getApplicationContext();
+                                                 CharSequence text = "Name of your category is too long";
+                                                 int duration = Toast.LENGTH_SHORT;
+
+                                                 Toast toast = Toast.makeText(context, text, duration);
+                                                 toast.show();
+                                             }
+                                             else if (categoryName.getText().length() <= 0)
+                                             {
+                                                 Context context = getApplicationContext();
+                                                 CharSequence text = "Please enter a name for your category";
+                                                 int duration = Toast.LENGTH_SHORT;
+
+                                                 Toast toast = Toast.makeText(context, text, duration);
+                                                 toast.show();
+                                             }
+                                             else
+                                             {
+                                                 Category c = new Category(new Random().nextInt(),categoryName.getText().toString());
+                                                 createCategory(c);
+                                             }
+                                         }
+                                     }
         );
 
         cancelBtn = (Button) findViewById(R.id.buttonCancelCreateCategory);
@@ -53,9 +71,10 @@ public class CategoryCreateView extends AppCompatActivity implements UIInterface
 
     private void createCategory(Category c)
     {
-        FirestoreAgent fs = new FirestoreAgent();
-        fs.addCategory("",c,this);
+        FirestoreAgent fs = FirestoreAgent.getInstance();
+        fs.addCategory("", c,this);
     }
+
 
     @Override
     public void updateObject(String fieldName, Object requestedObj)
@@ -87,4 +106,3 @@ public class CategoryCreateView extends AppCompatActivity implements UIInterface
         this.finish();
     }
 }
-
