@@ -160,6 +160,7 @@ class FirestoreAgent {
         }
 
     }
+
     void getTaskCollection(final String user,final UIInterface callingObject,final String category){
         //Check if ID is valid (not empty) before getting any data to reduce load on server and for security.
         this.updateUserID();
@@ -180,6 +181,50 @@ class FirestoreAgent {
                         }
                     });
         }
+
+    }
+
+    void getAllTasks(final String user,final UIInterface callingObject)
+    {
+        db.collection("users").document(UserID).collection("categories").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+
+                            for (DocumentSnapshot taskDoc : task.getResult())
+                            {
+                                final Category category = taskDoc.toObject(Category.class);
+
+                                db.collection("users").document(UserID).collection("categories").document(category.getCategoryTitle()).collection("tasks").get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                                        {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task)
+                                            {
+                                                if (task.isSuccessful())
+                                                {
+                                                    ArrayList<TaskEvent> docs = new ArrayList<>();
+
+                                                    for (DocumentSnapshot taskDoc : task.getResult())
+                                                    {
+                                                        docs.add(taskDoc.toObject(TaskEvent.class));
+                                                        Log.d("TASK_ADDED", taskDoc.toObject(TaskEvent.class).getTitle());
+                                                    }
+                                                    callingObject.updateTaskCollection(category.getCategoryTitle(), docs);
+
+                                                }
+
+                                            }
+                                        });
+                            }
+
+                        }
+                    }
+                });
 
     }
 
