@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 //import java.util.Map;
 
-public class TaskList extends AppCompatActivity implements UIInterface, SwipeRefreshLayout.OnRefreshListener {
+public class TaskList extends AppCompatActivity implements FSNotificationInterface, SwipeRefreshLayout.OnRefreshListener {
 
     String categoryName;
     SimpleAdapter adapter;
@@ -93,12 +93,6 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
         super.onResume();
         this.onRefresh();
     }
-
-    @Override
-    public void updateObject(String fieldName, Object requestedObj) {
-
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -164,21 +158,7 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
 
             listItems.add(resultsMap);
         }
-        /*
-        while (iter.hasNext()) {
-
-            HashMap<String, String> resultsMap = new HashMap<>();
-            Map.Entry pair = (Map.Entry)iter.next();
-
-            resultsMap.put("Title", pair.getKey().toString());
-            resultsMap.put("Content", pair.getValue().toString());
-
-            listItems.add(resultsMap);
-        }
-        */
-
         resultsListView.setClickable(true);
-        final TaskList self = this;
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -238,6 +218,6 @@ public class TaskList extends AppCompatActivity implements UIInterface, SwipeRef
     @Override
     public void onRefresh() {
         refreshLayout.setRefreshing(true);
-        fsAgent.getTaskCollection("", this, this.categoryName);
+        fsAgent.getTaskCollection( this, this.categoryName);
     }
 }

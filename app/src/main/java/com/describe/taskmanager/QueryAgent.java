@@ -44,7 +44,7 @@ public class QueryAgent implements FirestoreInterface{
             localCopy.put(catRef, collectionContent);
         }
         else{
-            Log.d("SearchAgent",collectionName+" was not found in catList");
+            Log.d("QueryAgent",collectionName+" was not found in catList");
         }
     }
 

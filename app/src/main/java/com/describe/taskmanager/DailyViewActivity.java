@@ -2,7 +2,6 @@ package com.describe.taskmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by camila on 2018-03-23.
- */
 
-public class DailyViewActivity extends AppCompatActivity implements UIInterface, SwipeRefreshLayout.OnRefreshListener
+public class DailyViewActivity extends AppCompatActivity implements FirestoreInterface, SwipeRefreshLayout.OnRefreshListener
 {
     ListView resultsListView;
     FirestoreAgent fsAgent;
@@ -40,7 +36,6 @@ public class DailyViewActivity extends AppCompatActivity implements UIInterface,
     {
         super.onCreate(savedState);
         setContentView(R.layout.activity_daily_view);
-        FloatingActionButton addTask = findViewById(R.id.addTask);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         refreshLayout = findViewById(R.id.swiperefresh);
@@ -65,7 +60,7 @@ public class DailyViewActivity extends AppCompatActivity implements UIInterface,
         taskE = new ArrayList<>();
 
         fsAgent = FirestoreAgent.getInstance();
-        fsAgent.getAllTasks("",this);
+        fsAgent.getAllTasks(this);
 
         resultsListView = findViewById(R.id.results_listview);
     }
@@ -94,11 +89,6 @@ public class DailyViewActivity extends AppCompatActivity implements UIInterface,
             this.onRefresh();
         }
         return true;
-    }
-
-    @Override
-    public void updateObject(String fieldName, Object requestedObj) {
-
     }
 
     @Override
@@ -154,7 +144,6 @@ while (iter.hasNext()) {
 */
 
         resultsListView.setClickable(true);
-        final DailyViewActivity self = this;
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -194,16 +183,6 @@ while (iter.hasNext()) {
 
     @Override
     public void updateCategoryCollection(String collectionName, ArrayList<Category> collectionContent) {
-
-    }
-
-    @Override
-    public void firebaseSuccess(String message_title, String message_content) {
-
-    }
-
-    @Override
-    public void firebaseFailure(String error_code, String message_title, String extra_content) {
 
     }
 }

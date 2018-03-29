@@ -14,6 +14,16 @@ public class TaskEvent implements Serializable {
     private String createTime;
     private Date alarmDate;
 
+    public boolean isSynced() {
+        return synced;
+    }
+
+    public void setSynced(boolean synced) {
+        this.synced = synced;
+    }
+
+    private boolean synced;
+
 
     //getters and setters
 

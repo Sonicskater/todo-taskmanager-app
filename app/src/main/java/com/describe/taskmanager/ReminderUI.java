@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RemoteViews;
 import android.content.Context;
 
@@ -14,19 +13,15 @@ import android.content.Context;
 @Deprecated
 public class ReminderUI extends AppCompatActivity {
     private NotificationCompat.Builder builder;
-    private NotificationManager notificationManager;
-    private int notification_id;
-    private RemoteViews remoteViews;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reminder_notification);
 
-        context = this;
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        remoteViews = new RemoteViews(getPackageName(), R.layout.reminder_notification);
+        Context context = this;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.reminder_notification);
         /*
         remoteViews.setImageViewResource(R.id.notify_icon, R.mipmap.ic_launcher);
         remoteViews.setTextViewText(R.id.notify_title, "Text");
@@ -34,7 +29,7 @@ public class ReminderUI extends AppCompatActivity {
         /*
         remoteViews.setProgressBar(R.id.progressBar, 100, 50, true);
         */
-        notification_id = (int) System.currentTimeMillis();
+        int notification_id = (int) System.currentTimeMillis();
         Intent button_intent = new Intent("Button_Pressed");
         button_intent.putExtra("id", notification_id);
 

@@ -10,11 +10,8 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by camila on 2018-03-20.
- */
 
-public class CategoryDelete extends AppCompatActivity implements UIInterface
+public class CategoryDelete extends AppCompatActivity implements FSNotificationInterface
 {
     Button deleteBtn;
     Button cancelBtn;
@@ -25,21 +22,20 @@ public class CategoryDelete extends AppCompatActivity implements UIInterface
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_category_popup);
-        categoryName = (EditText) findViewById(R.id.categoryDeleteNameText);
-        deleteBtn = (Button) findViewById(R.id.buttonNowDeleteCategory);
+        categoryName =  findViewById(R.id.categoryDeleteNameText);
+        deleteBtn =  findViewById(R.id.buttonNowDeleteCategory);
         deleteBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 Category c = new Category(new Random().nextInt(),categoryName.getText().toString());
-                //dont know how to check if category already exists
                 deleteCategory(c);
             }
         }
         );
 
-        cancelBtn = (Button) findViewById(R.id.buttonCancelDeleteCategory);
+        cancelBtn =  findViewById(R.id.buttonCancelDeleteCategory);
         cancelBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -55,12 +51,6 @@ public class CategoryDelete extends AppCompatActivity implements UIInterface
         FirestoreAgent fs = FirestoreAgent.getInstance();
         fs.deleteCategory(c, this);
     }
-
-    @Override
-    public void updateObject(String fieldName, Object requestedObj) {
-
-    }
-
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
 

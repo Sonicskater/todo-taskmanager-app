@@ -19,7 +19,7 @@ import java.util.Locale;
 
 
 public class
- TaskEventView extends AppCompatActivity implements UIInterface,DateTimeInterface {
+ TaskEventView extends AppCompatActivity implements FSNotificationInterface,DateTimeInterface {
     //initialized instance variables
 
     private TaskEvent currentEvent;
@@ -133,10 +133,6 @@ public class
         return field.getText().toString();
     }
 
-    @Override
-    public void updateObject(String fieldName, Object requestedObj) {
-
-    }
 
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {

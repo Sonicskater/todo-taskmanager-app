@@ -1,8 +1,6 @@
 package com.describe.taskmanager;
 
-/**
- * Created by bencook on 2018-03-18.
- */
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -52,29 +50,30 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (inflater != null) {
-                convertView = inflater.inflate(R.layout.layout_tasklist_item, null);
+                convertView = inflater.inflate(R.layout.layout_tasklist_item, parent);
             }
+
+            if (convertView != null) {
+                TextView txtListChild = convertView
+                        .findViewById(R.id.lblListItem);
+
+                txtListChild.setText(childText.getTitle());
+
+                txtListChild.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent i = new Intent(parent.getContext(), TaskEventView.class);
+                        i.putExtra("taskEvent", childText);
+                        i.putExtra("category", category.getCategoryTitle());
+
+                        parent.getContext().startActivity(i);
+                    }
+                });
+            }
+
+
         }
-
-        if (convertView != null){
-            TextView txtListChild = convertView
-                    .findViewById(R.id.lblListItem);
-
-        txtListChild.setText(childText.getTitle());
-
-        txtListChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(parent.getContext(), TaskEventView.class);
-                i.putExtra("taskEvent", childText);
-                i.putExtra("category", category.getCategoryTitle());
-
-                parent.getContext().startActivity(i);
-            }
-        });
-    }
-
         return convertView;
     }
 
@@ -100,14 +99,13 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
-        Category headerTitle = getGroup(groupPosition);
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        Category headerTitle =  getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (infalInflater != null) {
-                convertView = infalInflater.inflate(R.layout.layout_category_group, null);
+                convertView = infalInflater.inflate(R.layout.layout_category_group, parent);
             }
         }
 

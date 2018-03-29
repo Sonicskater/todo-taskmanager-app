@@ -23,14 +23,13 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class EventCreateView extends AppCompatActivity implements UIInterface,DateTimeInterface{
+public class EventCreateView extends AppCompatActivity implements FSNotificationInterface,DateTimeInterface{
     //initialized instance variables
     Date chosenDate = new Date();
 
 
     Spinner categoriesSpinner;
     FirestoreAgent fbAgent = FirestoreAgent.getInstance();
-    String debug_user = "";
 
     //initialize everything that has to do with the screen (like a constructor for the screen)
     @Override
@@ -49,7 +48,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         //create the new date and time picker dialogs
 
         categoriesSpinner = findViewById(R.id.categoriesSpinner);
-        fbAgent.getCategoryCollection("",this);
+        fbAgent.getCategoryCollection(this);
 
         //the textbox in the main window, (outside of the popup)
         final TextView dateField = findViewById(R.id.dateText);
@@ -131,7 +130,7 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         //saves the text in the field after the submit button pressed
 
         //Uploads task to Firestore
-        fbAgent.addTask(debug_user,categoriesSpinner.getSelectedItem().toString(),newEvent,this);
+        fbAgent.addTask(categoriesSpinner.getSelectedItem().toString(),newEvent,this);
 
 
     }
@@ -184,12 +183,6 @@ public class EventCreateView extends AppCompatActivity implements UIInterface,Da
         return text;
     }
     */
-
-    @Override
-    public void updateObject(String fieldName, Object requestedObj) {
-
-    }
-
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
 

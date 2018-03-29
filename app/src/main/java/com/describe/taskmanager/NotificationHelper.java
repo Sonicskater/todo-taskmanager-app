@@ -8,9 +8,7 @@ import android.content.ContextWrapper;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
-/**
- * Created by solanduressa on 2018-03-23.
- */
+
 
 public class NotificationHelper extends ContextWrapper {
 

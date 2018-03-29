@@ -7,6 +7,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 //Currently un-used, meant for future feature
+@SuppressWarnings("FieldCanBeLocal")
 public class FBStorageAgent {
     private FirebaseStorage firebaseStorageInstance;
     private StorageReference   storageRef;
@@ -29,7 +30,7 @@ public class FBStorageAgent {
         }
     }
     public ArrayList<String> getFileList(){
-        ArrayList<String> fileList = new ArrayList<String>();
+        ArrayList<String> fileList = new ArrayList<>();
         if (enabled) {
 
 

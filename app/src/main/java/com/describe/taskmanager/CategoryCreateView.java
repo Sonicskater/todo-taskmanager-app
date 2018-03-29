@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class CategoryCreateView extends AppCompatActivity implements UIInterface
+public class CategoryCreateView extends AppCompatActivity implements FSNotificationInterface
 {
     Button createBtn;
     Button cancelBtn;
@@ -24,8 +24,8 @@ public class CategoryCreateView extends AppCompatActivity implements UIInterface
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_category_popup);
-        categoryName = (EditText) findViewById(R.id.categoryCreateNameText);
-        createBtn = (Button) findViewById(R.id.buttonCreateNewCategory);
+        categoryName = findViewById(R.id.categoryCreateNameText);
+        createBtn = findViewById(R.id.buttonCreateNewCategory);
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -54,7 +54,7 @@ public class CategoryCreateView extends AppCompatActivity implements UIInterface
             }}
         );
 
-        cancelBtn = (Button) findViewById(R.id.buttonCancelCreateCategory);
+        cancelBtn = findViewById(R.id.buttonCancelCreateCategory);
         cancelBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -68,14 +68,7 @@ public class CategoryCreateView extends AppCompatActivity implements UIInterface
     private void createCategory(Category c)
     {
         FirestoreAgent fs = FirestoreAgent.getInstance();
-        fs.addCategory("",c,this);
-    }
-
-
-    @Override
-    public void updateObject(String fieldName, Object requestedObj)
-    {
-
+        fs.addCategory(c,this);
     }
 
     @Override
