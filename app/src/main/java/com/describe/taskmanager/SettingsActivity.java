@@ -22,7 +22,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.auth.api.Auth;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -289,9 +289,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return false;
                 }
             });
-            if (FirebaseAuth.getInstance().getCurrentUser()!= null){
-                if(!FirebaseAuth.getInstance().getCurrentUser().isAnonymous()) {
-                    findPreference("SignOut").setSummary("Currently signed in with " + FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            com.google.firebase.auth.FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
+            if (User!= null){
+                if(User.isAnonymous()) {
+                    findPreference("SignOut").setSummary("Currently signed in with " + User.getEmail());
                 }
                 else{
                     findPreference("SignOut").setSummary("Signed in anonymously. Data saved cannot be accessed from other devices.");

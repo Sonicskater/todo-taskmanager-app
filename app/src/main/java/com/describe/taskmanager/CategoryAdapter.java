@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by camila on 2018-02-07.
- */
 
 
 public class CategoryAdapter extends BaseAdapter
@@ -19,7 +16,7 @@ public class CategoryAdapter extends BaseAdapter
     private Context context;
     private final ArrayList<String> textViewValues;
 
-    public CategoryAdapter(Context context, ArrayList<String> textViewValues)
+    CategoryAdapter(Context context, ArrayList<String> textViewValues)
     {
         this.context = context;
         this.textViewValues = textViewValues;
@@ -32,7 +29,7 @@ public class CategoryAdapter extends BaseAdapter
 
         View gridView;
 
-        if (convertView == null)
+        if (convertView == null && inflater!=null)
         {
             // get reminder_notification from mobile.xml
             gridView = inflater.inflate(R.layout.grid_item_label, null);
@@ -44,7 +41,7 @@ public class CategoryAdapter extends BaseAdapter
         }
         else
         {
-            gridView = (View) convertView;
+            gridView = convertView;
         }
 
         return gridView;

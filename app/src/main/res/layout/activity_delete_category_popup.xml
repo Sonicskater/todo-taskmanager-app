@@ -15,8 +15,6 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/categoryDeleteNameText"
         android:text="Name"
         tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="23dp" />
@@ -25,8 +23,6 @@
         android:id="@+id/categoryDeleteNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -38,29 +34,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+        <Button
+            android:id="@+id/buttonCancelDeleteCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:text="Cancel"
+            tools:layout_editor_absoluteX="196dp"
+            tools:layout_editor_absoluteY="126dp"
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/buttonNowDeleteCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/buttonCancelDeleteCategory"
-            android:layout_alignBottom="@+id/buttonCancelDeleteCategory"
-            android:layout_alignStart="@+id/categoryDeleteNameText"
+
             android:layout_weight="1"
             android:text="Delete"
             tools:layout_editor_absoluteX="69dp"
-            tools:layout_editor_absoluteY="126dp" />
+            tools:layout_editor_absoluteY="126dp"
+            style="?android:attr/buttonBarButtonStyle"/>
 
-        <Button
-            android:id="@+id/buttonCancelDeleteCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/categoryDeleteNameText"
-            android:layout_below="@+id/categoryDeleteNameText"
-            android:layout_weight="1"
-            android:text="Cancel"
-            tools:layout_editor_absoluteX="196dp"
-            tools:layout_editor_absoluteY="126dp" />
+
     </LinearLayout>
 
 </LinearLayout>

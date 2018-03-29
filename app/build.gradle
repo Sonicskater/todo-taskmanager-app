@@ -55,7 +55,7 @@ android {
     def versionPropsFile = file('version.properties')
 
     if (versionPropsFile.canRead()) {
-        def Properties versionProps = new Properties()
+        Properties versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
         def code = 0
@@ -63,6 +63,7 @@ android {
             code = System.getenv("CI_PIPELINE_ID").toInteger() - 8100
         }
         catch (Exception exception) {
+            print(exception)
             code = 1
         }
         def name = versionProps['VERSION_NAME']

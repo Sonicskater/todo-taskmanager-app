@@ -14,7 +14,7 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
-public class CategoryList extends Fragment implements UIInterface, SwipeRefreshLayout.OnRefreshListener
+public class CategoryList extends Fragment implements FSNotificationInterface, SwipeRefreshLayout.OnRefreshListener
 {
     private static final int CATEGORY_EDIT = 2;
     CategoryAdapter gridAdapter;
@@ -34,7 +34,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
         gridview = view.findViewById(R.id.gridview);
         //gets the category collection from firebase
 
-        fsAgent.getCategoryCollection("",this);
+        fsAgent.getCategoryCollection(this);
         this.onRefresh();
 
         gridview.setAdapter(gridAdapter);
@@ -85,12 +85,6 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
     //opens the settings/preferences menu
 
 
-
-    @Override
-    public void updateObject(String fieldName, Object requestedObj) {
-
-    }
-
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
     }
@@ -117,7 +111,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
     public void firebaseSuccess(String message_title, String message_content)
     {
         FirestoreAgent fsAgent = FirestoreAgent.getInstance();
-        fsAgent.getCategoryCollection("",this);
+        fsAgent.getCategoryCollection(this);
     }
 
     @Override
@@ -131,7 +125,7 @@ public class CategoryList extends Fragment implements UIInterface, SwipeRefreshL
     @Override
     public void onRefresh() {
         refreshLayout.setRefreshing(true);
-        fsAgent.getCategoryCollection("",this);
+        fsAgent.getCategoryCollection(this);
     }
 
     public static CategoryList newInstance()
