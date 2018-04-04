@@ -11,6 +11,18 @@ public class TaskEvent implements Serializable {
     private String title;
     private String description;
     private Date date;
+
+    public long getCalID() {
+        return calID;
+    }
+
+    public void setCalID(long calID) {
+        if (this.isSynced()) {
+            this.calID = calID;
+        }
+    }
+
+    private long calID;
     private String createTime;
     private Date alarmDate;
 
@@ -74,19 +86,21 @@ public class TaskEvent implements Serializable {
         this.alarmDate = task.alarmDate;
     }
 
-    public TaskEvent(String title, String description, Date date, String createTime){
+    public TaskEvent(String title, String description, Date date, String createTime,boolean synced){
         this.title = title;
         this.description = description;
         this.date = date;
         this.createTime = createTime;
         this.alarmDate = null;
+        setSynced(synced);
 
     }
-    public TaskEvent(String title, String description, Date date, String createTime,Date alarmDate){
+    public TaskEvent(String title, String description, Date date, String createTime,boolean synced,Date alarmDate){
         this.title = title;
         this.description = description;
         this.date = date;
         this.createTime = createTime;
+        setSynced(synced);
         setAlarmDate(alarmDate);
 
     }

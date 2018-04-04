@@ -66,7 +66,7 @@ public class TaskList extends AppCompatActivity implements FSNotificationInterfa
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), EventCreateView.class);
+                Intent i = new Intent(getApplicationContext(), TaskEventCreateView.class);
                 startActivity(i);
 
             }

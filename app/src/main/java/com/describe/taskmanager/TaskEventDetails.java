@@ -21,6 +21,7 @@ public class TaskEventDetails extends DialogFragment {
         view = inflater.inflate(R.layout.fragment_task_details_layout, viewGroup, false);
 
 
+
         if (getArguments()!=null) {
             final TaskEvent task = (TaskEvent) getArguments().getSerializable("task");
             taskEvent = task;

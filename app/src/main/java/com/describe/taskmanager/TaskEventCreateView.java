@@ -2,7 +2,9 @@ package com.describe.taskmanager;
 
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +25,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class EventCreateView extends AppCompatActivity implements FSNotificationInterface,DateTimeInterface{
+public class TaskEventCreateView extends AppCompatActivity implements FSNotificationInterface,DateTimeInterface,NotifyInterface{
     //initialized instance variables
     Date chosenDate = new Date();
 
@@ -35,6 +37,10 @@ public class EventCreateView extends AppCompatActivity implements FSNotification
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        if (Build.VERSION.SDK_INT>=23) {
+            String[] permissions = {android.Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR};
+            requestPermissions(permissions,1357);
+        }
 
 
         //base Android onCreate functionality
@@ -130,6 +136,7 @@ public class EventCreateView extends AppCompatActivity implements FSNotification
         //saves the text in the field after the submit button pressed
 
         //Uploads task to Firestore
+        CalendarAgent.getInstance().createEvent(this,newEvent,getApplicationContext());
         fbAgent.addTask(categoriesSpinner.getSelectedItem().toString(),newEvent,this);
 
 
@@ -160,10 +167,10 @@ public class EventCreateView extends AppCompatActivity implements FSNotification
         //returns the task with filled out fields
         CheckBox check = findViewById(R.id.setAlarm);
         if (check.isChecked()) {
-            return new TaskEvent(title, description, Calendar.getInstance().getTime(), time,this.chosenDate);
+            return new TaskEvent(title, description, Calendar.getInstance().getTime(), time,true,this.chosenDate);
         }
 
-        return new TaskEvent(title, description, Calendar.getInstance().getTime(), time);
+        return new TaskEvent(title, description, Calendar.getInstance().getTime(), time,false);
     }
 
     //function to simply extract the text from a textfield turn it into a string
@@ -172,17 +179,6 @@ public class EventCreateView extends AppCompatActivity implements FSNotification
         return field.getText().toString();
     }
 
-    //dont need this, an event doesn't need to know its category
-    /*
-    //to get the category as a string out from the drop down menu
-    //IT WORKS :D String tho?
-    private String getCategoryFromSpinner(Spinner mySpinner){
-
-        String text = mySpinner.getSelectedItem().toString();
-        //System.out.println(text);
-        return text;
-    }
-    */
     @Override
     public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
 
@@ -202,14 +198,14 @@ public class EventCreateView extends AppCompatActivity implements FSNotification
     @Override
     public void firebaseSuccess(String message_title, String message_content)
     {
-        Toast toast = Toast.makeText(EventCreateView.this,message_title, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(TaskEventCreateView.this,message_title, Toast.LENGTH_SHORT);
         toast.show();
         finish();
     }
 
     @Override
     public void firebaseFailure(String error_code, String message_title, String extra_content) {
-        Toast toast = Toast.makeText(EventCreateView.this,message_title, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(TaskEventCreateView.this,message_title, Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -217,5 +213,11 @@ public class EventCreateView extends AppCompatActivity implements FSNotification
     public void passDateTime(Date passedDate) {
         this.chosenDate = passedDate;
         this.showEventDate();
+    }
+
+    @Override
+    public void NotifyUser(String out) {
+        Toast toast = Toast.makeText(TaskEventCreateView.this,out, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
