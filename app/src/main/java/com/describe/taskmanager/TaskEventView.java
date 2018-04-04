@@ -19,7 +19,7 @@ import java.util.Locale;
 
 
 public class
- TaskEventView extends AppCompatActivity implements FSNotificationInterface,DateTimeInterface {
+ TaskEventView extends AppCompatActivity implements FSNotificationInterface,DateTimeInterface,NotifyInterface {
     //initialized instance variables
 
     private TaskEvent currentEvent;
@@ -103,6 +103,7 @@ public class
     public void onDelete(View view) {
         Log.d("onDelete", "onDelete: ");
 
+        CalendarAgent.getInstance().deleteEvent(this,currentEvent,getApplicationContext());
 
         fbAgent.deleteTask(this.category, currentEvent,this);
     }
@@ -110,6 +111,7 @@ public class
     public void onSave(View view) {
         Log.d("onSave", "onSave: ");
         this.setProperties();
+        CalendarAgent.getInstance().updateEvent(this,currentEvent,getApplicationContext());
 
         fbAgent.updateTask(this.category, currentEvent,this);
     }
@@ -162,5 +164,11 @@ public class
     public void passDateTime(Date passedDate) {
         this.chosenDate = passedDate;
         this.showEventDate();
+    }
+
+    @Override
+    public void NotifyUser(String out) {
+        Toast toast = Toast.makeText(TaskEventView.this,out, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
