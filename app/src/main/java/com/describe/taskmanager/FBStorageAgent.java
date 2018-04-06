@@ -60,6 +60,10 @@ public class FBStorageAgent {
             }
         });
     }
+    public void deleteImage(final TaskEvent event){
+        storageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()+event.getPath()).delete();
+
+    }
     public void uploadImage(final TaskEvent event,Bitmap image){
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String path = "/"+Integer.toString((new Random()).nextInt())+".jpg/";

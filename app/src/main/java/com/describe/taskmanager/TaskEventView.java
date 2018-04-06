@@ -104,6 +104,9 @@ public class
         Log.d("onDelete", "onDelete: ");
 
         CalendarAgent.getInstance().deleteEvent(this,currentEvent,getApplicationContext());
+        if(currentEvent.hasImage()){
+            FBStorageAgent.getInstance().deleteImage(currentEvent);
+        }
 
         fbAgent.deleteTask(this.category, currentEvent,this);
     }
