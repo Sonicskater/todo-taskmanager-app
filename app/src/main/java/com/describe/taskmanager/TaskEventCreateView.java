@@ -4,6 +4,7 @@ package com.describe.taskmanager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,21 +14,27 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.model.Image;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
 public class TaskEventCreateView extends AppCompatActivity implements FSNotificationInterface,DateTimeInterface,NotifyInterface{
     //initialized instance variables
     Date chosenDate = new Date();
+    Bitmap selectedImage;
 
 
     Spinner categoriesSpinner;
@@ -62,6 +69,14 @@ public class TaskEventCreateView extends AppCompatActivity implements FSNotifica
         final TextView timeTitle = findViewById(R.id.textView8);
         //set the onclick listener for date picker
         final DateTimeInterface self = this;
+        final TaskEventCreateView self2 = this;
+        findViewById(R.id.imageButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.create(self2).single().start();
+
+            }
+        });
         dateField.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -137,6 +152,9 @@ public class TaskEventCreateView extends AppCompatActivity implements FSNotifica
 
         //Uploads task to Firestore
         CalendarAgent.getInstance().createEvent(this,newEvent,getApplicationContext());
+        if (selectedImage!=null){
+            FBStorageAgent.getInstance().uploadImage(newEvent,selectedImage);
+        }
         fbAgent.addTask(categoriesSpinner.getSelectedItem().toString(),newEvent,this);
 
 
@@ -177,6 +195,19 @@ public class TaskEventCreateView extends AppCompatActivity implements FSNotifica
     private String getTextValue(int fieldId) {
         TextView field = findViewById(fieldId);
         return field.getText().toString();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+            // or get a single image only
+            Image image = ImagePicker.getFirstImageOrNull(data);
+            selectedImage = ImageUtils.getImage(image.getPath());
+            ((ImageView)findViewById(R.id.imageView2)).setImageBitmap(selectedImage);
+
+
+        }
+
     }
 
     @Override
