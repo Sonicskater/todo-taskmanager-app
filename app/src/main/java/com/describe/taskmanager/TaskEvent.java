@@ -1,5 +1,7 @@
 package com.describe.taskmanager;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +13,29 @@ public class TaskEvent implements Serializable {
     private String title;
     private String description;
     private Date date;
+
+    public boolean hasImage(){
+        return !(this.path==null);
+    }
+    public Uri getDlURL() {
+        return dlURL;
+    }
+
+    public void setDlURL(Uri dlURL) {
+        this.dlURL = dlURL;
+    }
+
+    private Uri dlURL;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    private String path;
 
     public long getCalID() {
         return calID;
