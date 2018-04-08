@@ -16,35 +16,57 @@ import java.util.Date;
 public class AlarmReceiver extends BroadcastReceiver {
 
 
+    //when the AlarmReceiver receives an intent
     @Override
     public void onReceive(Context context, Intent intent) {
+        //creates a helper class TaskNotificationService (defined below)
         TaskNotificationService service = new TaskNotificationService(context);
 
-        Log.d("AlarmReceiver", "looking for tasks to notify on");
+        Log.i("AlarmReceiver", "looking for tasks to notify on");
 
+        //gets an instance of the repository
         FirestoreAgent.getInstance().getAllTasks(service);
     }
 
 
+    //helper class TaskNotificationService
+    //implements the Firestore interface
     private class TaskNotificationService implements FirestoreInterface {
+        //context of the activity
         private Context context;
 
+        //constructor
         public TaskNotificationService(Context context) {
             this.context = context;
         }
 
+
         @Override
         public void updateTaskCollection(String collectionName, ArrayList<TaskEvent> collectionContent) {
 
-            Date current = new Date();
+            Log.i("AlarmReceiver", "checking tasks...");
+
+            //sets the "now" variable to the current date and time to be compared to
+            //the taskEvents
+            Date now = new Date();
+            //for each task in the repository
             for (TaskEvent task : collectionContent) {
 
-                Date eventDate = task.getDate();
+                //get the date
+                long eventMillies = task.getDate().getTime();
+                long nowAsMillis = now.getTime();
+                long difference = Math.abs(nowAsMillis - eventMillies);
 
-                if (eventDate.compareTo(current) < 0 && task.getHasNotified() == false) {
+                System.out.println("hello");
+
+                //if the difference between the current date and the date to check is less than 30 seconds
+                //display a notification
+                if (difference <= 120000) {
 
                     String message = String.format("Task: %s, Description: %s", task.getTitle(), task.getDescription());
+                    //TODo replace this toast with a notification
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
 
                     System.out.println(task.getTitle());
                     System.out.println("getDate: " + task.getDate());
@@ -54,7 +76,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
 
-                   // Log.d("AlarmReceiver", message);
+                   Log.d("AlarmReceiver", message);
                 }
             }
         }
