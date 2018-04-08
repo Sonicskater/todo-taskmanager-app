@@ -46,7 +46,7 @@ public class CalendarAgent {
 
         }
         else{
-            callingObject.NotifyUser("Updating Calendar Event Failed");
+            callingObject.NotifyUser("");
         }
 
     }
@@ -75,7 +75,7 @@ public class CalendarAgent {
 
         }
         else{
-            callingObject.NotifyUser("Creating Calendar Event Failed");
+            callingObject.NotifyUser("");
         }
     }
     public void deleteEvent(NotifyInterface callingObject,TaskEvent event,Context context){
@@ -86,7 +86,7 @@ public class CalendarAgent {
 
         }
         else{
-            callingObject.NotifyUser("Deleting Calendar Event Failed");
+            callingObject.NotifyUser("");
         }
     }
 }

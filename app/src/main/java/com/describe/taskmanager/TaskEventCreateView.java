@@ -248,7 +248,5 @@ public class TaskEventCreateView extends AppCompatActivity implements FSNotifica
 
     @Override
     public void NotifyUser(String out) {
-        Toast toast = Toast.makeText(TaskEventCreateView.this,out, Toast.LENGTH_SHORT);
-        toast.show();
     }
 }
