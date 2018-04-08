@@ -171,7 +171,5 @@ public class
 
     @Override
     public void NotifyUser(String out) {
-        Toast toast = Toast.makeText(TaskEventView.this,out, Toast.LENGTH_SHORT);
-        toast.show();
     }
 }
