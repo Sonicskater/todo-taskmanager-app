@@ -202,8 +202,10 @@ public class TaskEventCreateView extends AppCompatActivity implements FSNotifica
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             // or get a single image only
             Image image = ImagePicker.getFirstImageOrNull(data);
-            selectedImage = ImageUtils.getImage(image.getPath());
-            ((ImageView)findViewById(R.id.imageView2)).setImageBitmap(selectedImage);
+
+            //TODO:  commented this out since it was not compiling
+//            selectedImage = ImageUtils.getImage(image.getPath());
+//            ((ImageView)findViewById(R.id.imageView2)).setImageBitmap(selectedImage);
 
 
         }
