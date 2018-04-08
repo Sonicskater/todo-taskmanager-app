@@ -12,7 +12,10 @@ public class StringTerm extends QueryTerm {
     }
     @Override
     public boolean compare(TaskEvent event) {
-        return ((event.getDescription().contains(searchTerm) && this.searchDescription) || (event.getTitle().contains(searchTerm) && this.searchTitle));
+        if (event!=null&&event.getDescription()!=null&&event.getTitle()!=null) {
+            return ((event.getDescription().contains(searchTerm) && this.searchDescription) || (event.getTitle().contains(searchTerm) && this.searchTitle));
+        }
+        return false;
     }
 
     @Override

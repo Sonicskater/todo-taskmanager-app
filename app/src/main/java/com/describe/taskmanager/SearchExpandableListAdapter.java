@@ -50,7 +50,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (inflater != null) {
-                convertView = inflater.inflate(R.layout.layout_tasklist_item, parent);
+                convertView = inflater.inflate(R.layout.layout_tasklist_item, parent,false);
             }
 
             if (convertView != null) {
@@ -105,7 +105,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (infalInflater != null) {
-                convertView = infalInflater.inflate(R.layout.layout_category_group, parent);
+                convertView = infalInflater.inflate(R.layout.layout_category_group, parent,false);
             }
         }
 
