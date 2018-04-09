@@ -22,7 +22,7 @@ class QueryResult {
                 ArrayList<TaskEvent> tempList = new ArrayList<>();
                 for (TaskEvent task : data.get(cat)) {
                     //Call the queries .compare() function to check for validity.
-                    if (term.compare(task)){
+                    if (term!=null&&term.compare(task)){
                         tempList.add(task);
                     }
                 }

@@ -96,7 +96,7 @@ public class SearchFragment extends DialogFragment implements View.OnClickListen
     public void onClick(View view) {
 
         String searchString = this.searchText.getText().toString();
-        if (searchString.length() != 0) {
+        if (searchString.length() != 0&&searchString!=null) {
             ArrayList<QueryTerm> qTerms = new ArrayList<>();
             qTerms.add(new StringTerm(searchString, true, true));
             QueryResult qResult = qAgent.Query(qTerms);
