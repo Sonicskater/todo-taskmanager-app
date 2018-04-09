@@ -34,6 +34,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     private class TaskNotificationService implements FirestoreInterface {
         //context of the activity
         private Context context;
+        private NotificationHelper mNotificationHelper;
+
 
         //constructor
         public TaskNotificationService(Context context) {
@@ -57,7 +59,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 long nowAsMillis = now.getTime();
                 long difference = Math.abs(nowAsMillis - eventMillies);
 
-                System.out.println("hello");
+                //System.out.println("hello");
 
                 //if the difference between the current date and the date to check is less than 30 seconds
                 //display a notification
@@ -65,15 +67,24 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                     String message = String.format("Task: %s, Description: %s", task.getTitle(), task.getDescription());
                     //TODo replace this toast with a notification
+
+
+                    mNotificationHelper  = new NotificationHelper(context);
+                    mNotificationHelper.createChannels();
+                    mNotificationHelper.sendOnChannel1(task.getTitle(),task.getDescription());
+
+
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
 
+
+                    /*
                     System.out.println(task.getTitle());
                     System.out.println("getDate: " + task.getDate());
                     System.out.println("getAlarmDate: " + task.getAlarmDate());
                     System.out.println("getCreateTime: " + task.getCreateTime());
                     System.out.println("");
-
+                    */
 
 
                    Log.d("AlarmReceiver", message);
