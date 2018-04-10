@@ -13,6 +13,7 @@ public class TaskEvent implements Serializable {
     private String title;
     private String description;
     private Date date;
+    private boolean hasNotified = false; //used to note when the event has notified
 
     public boolean hasImage(){
         return !(this.path==null);
@@ -99,6 +100,8 @@ public class TaskEvent implements Serializable {
     public Date getAlarmDate(){
         return this.alarmDate;
     }
+    public boolean getHasNotified() {return this.hasNotified;}
+    public void setHasNotified(boolean hasNotified) { this.hasNotified = hasNotified;}
 
     //default
     public TaskEvent(){ }

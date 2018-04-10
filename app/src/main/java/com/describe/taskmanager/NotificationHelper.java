@@ -66,4 +66,9 @@ public class NotificationHelper extends ContextWrapper {
                 .setContentText(message)
                 .setSmallIcon(R.drawable.ic_two);
     }
+
+    public void sendOnChannel1(String title, String message) {
+        NotificationCompat.Builder nb = this.getChannel1Notification(title, message);
+        this.getManager().notify(1, nb.build());
+    }
 }

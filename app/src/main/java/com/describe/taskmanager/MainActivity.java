@@ -1,7 +1,10 @@
 package com.describe.taskmanager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +20,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter adapterViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +36,14 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
 
-
+        //set up alarm manager
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        Intent Alarmintent = new Intent(MainActivity.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, Alarmintent, 0);
+        //trigger to fire every 10 seconds
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 10000, pendingIntent);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -64,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.action_menu, menu);
         return true;
     }
+
     public static class MainPagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
         private String tabTitles[] = new String[] { "Calendar ", "Categories", "Tab3" };

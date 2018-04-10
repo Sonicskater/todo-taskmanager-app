@@ -8,18 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
-
-
-
-
 public class Notification extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextMessage;
 
     private NotificationHelper mNotificationHelper;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
