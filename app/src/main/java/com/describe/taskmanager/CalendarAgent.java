@@ -40,6 +40,8 @@ public class CalendarAgent {
                 resolver.update(uri,values,null,null);
             }catch(SecurityException exception){
                 callingObject.NotifyUser("Missing Calendar Permission");
+            }catch(Exception e){
+
             }
 
 
