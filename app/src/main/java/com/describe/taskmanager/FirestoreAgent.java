@@ -42,7 +42,6 @@ class FirestoreAgent {
         }
         else{
             AuthInstance.signInAnonymously();
-            instance = new FirestoreAgent();
         }
     }
 

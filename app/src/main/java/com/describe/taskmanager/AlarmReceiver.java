@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,7 +27,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         Log.i("AlarmReceiver", "looking for tasks to notify on");
 
         //gets an instance of the repository
-        FirestoreAgent.getInstance().getAllTasks(service);
+
+        if (FirebaseAuth.getInstance().getCurrentUser()!=null&&!FirebaseAuth.getInstance().getCurrentUser().isAnonymous()) {
+
+            FirestoreAgent.getInstance().getAllTasks(service);
+        }
     }
 
 
