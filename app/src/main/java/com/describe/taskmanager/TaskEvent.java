@@ -82,9 +82,11 @@ public class TaskEvent implements Serializable {
     public String getDescription(){
         return this.description;
     }
+    @Deprecated
     public void setDate (Date newDate){
         this.date = newDate;
     }
+    @Deprecated
     public Date getDate(){
         return this.date;
     }

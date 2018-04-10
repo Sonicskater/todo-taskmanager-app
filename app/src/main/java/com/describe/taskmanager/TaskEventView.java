@@ -76,7 +76,7 @@ public class
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
 
-        this.chosenDate = currentEvent.getDate();
+        this.chosenDate = currentEvent.getAlarmDate();
 
         setText(currentEvent.getTitle(), R.id.titleText);
         setText(currentEvent.getDescription(), R.id.descriptionText);
@@ -129,7 +129,7 @@ public class
 
         event.setCreateTime(getTextValue(R.id.timeText));
 
-        event.setDate(this.chosenDate);
+        event.setAlarmDate(this.chosenDate);
     }
 
     //function to simply extract the text from a textfield turn it into a string

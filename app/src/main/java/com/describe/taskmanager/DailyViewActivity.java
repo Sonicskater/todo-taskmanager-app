@@ -96,11 +96,12 @@ public class DailyViewActivity extends AppCompatActivity implements FirestoreInt
     {
         for (TaskEvent event : collectionContent)
         {
-            Calendar eventDate = Calendar.getInstance();
-            eventDate.setTime(event.getDate());
-            if (eventDate.get(Calendar.YEAR) == date.get(Calendar.YEAR) && eventDate.get(Calendar.MONTH) == date.get(Calendar.MONTH) && eventDate.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH))
-            {
-            taskE.add(event);
+            if (event.hasAlarm()) {
+                Calendar eventDate = Calendar.getInstance();
+                eventDate.setTime(event.getAlarmDate());
+                if (eventDate.get(Calendar.YEAR) == date.get(Calendar.YEAR) && eventDate.get(Calendar.MONTH) == date.get(Calendar.MONTH) && eventDate.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)) {
+                    taskE.add(event);
+                }
             }
         }
         final ArrayList<TaskEvent> taskEvents = taskE; //will use later.

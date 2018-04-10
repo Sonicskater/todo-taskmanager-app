@@ -34,7 +34,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private class TaskNotificationService implements FirestoreInterface {
         //context of the activity
         private Context context;
-        private NotificationHelper mNotificationHelper;
+        private NotificationHelper notificationHelper;
 
 
         //constructor
@@ -55,27 +55,24 @@ public class AlarmReceiver extends BroadcastReceiver {
             for (TaskEvent task : collectionContent) {
 
                 //get the date
-                long eventMillies = task.getDate().getTime();
-                long nowAsMillis = now.getTime();
-                long difference = Math.abs(nowAsMillis - eventMillies);
+                if (task.hasAlarm()) {
+                    long eventMillies = task.getAlarmDate().getTime();
+                    long nowAsMillis = now.getTime();
+                    long difference = Math.abs(nowAsMillis - eventMillies);
 
-                //System.out.println("hello");
+                    //System.out.println("hello");
 
-                //if the difference between the current date and the date to check is less than 30 seconds
-                //display a notification
-                if (difference <= 120000) {
+                    //if the difference between the current date and the date to check is less than 30 seconds
+                    //display a notification
+                    if (difference <= 30000) {
 
-                    String message = String.format("Task: %s, Description: %s", task.getTitle(), task.getDescription());
-                    //TODo replace this toast with a notification
-
-
-                    mNotificationHelper  = new NotificationHelper(context);
-                    mNotificationHelper.createChannels();
-                    mNotificationHelper.sendOnChannel1(task.getTitle(),task.getDescription());
+                        String message = String.format("Task: %s, Description: %s", task.getTitle(), task.getDescription());
 
 
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
+                        notificationHelper = new NotificationHelper(context);
+                        notificationHelper.createChannels();
+                        notificationHelper.sendOnChannel1(task.getTitle(), task.getDescription());
 
 
                     /*
@@ -87,7 +84,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                     */
 
 
-                   Log.d("AlarmReceiver", message);
+                        Log.d("AlarmReceiver", message);
+                    }
                 }
             }
         }

@@ -30,7 +30,7 @@ android {
         applicationId 'com.describe.taskmanager'
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 1
+        versionCode 150
         versionName '0.1.0'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionNameSuffix 'Alpha'
@@ -65,7 +65,7 @@ android {
         }
         catch (Exception exception) {
             print(exception)
-            code = 1
+            code = 150
         }
         def name = versionProps['VERSION_NAME']
         versionProps['VERSION_CODE'] = code.toString()
