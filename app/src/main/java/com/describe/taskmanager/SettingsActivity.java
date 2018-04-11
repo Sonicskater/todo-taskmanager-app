@@ -25,6 +25,7 @@ import com.firebase.ui.auth.AuthUI;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
@@ -215,12 +216,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class AccountPreferencesFragment extends PreferenceFragment {
-
+        final AccountPreferencesFragment self = this;
+        Bundle savedInstanceState;
         @Override
-        public void onCreate (Bundle savedInstanceState){
+        public void onCreate (final Bundle savedInstanceState){
+            this.savedInstanceState = savedInstanceState;
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_account);
             setHasOptionsMenu(true);
+
             // Add a listener to launch the FirebaseAuth activity when the option is clicked on.
 
             findPreference("SignIn").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -232,6 +236,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     );
                     final int RC_SIGN_IN = 1;
                     startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(),RC_SIGN_IN);
+
                     return false;
                 }
             });
@@ -245,22 +250,36 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             }
             else {
-                findPreference("SignOut").setSummary("Not signed in.");
+                findPreference("SignOut").setSummary("ERROR:Not signed in.");
             }
 
             findPreference("SignOut").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    AuthUI.getInstance().signOut(getActivity().getApplicationContext())
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(getActivity().getApplicationContext(),"Signed out successfully",Toast.LENGTH_SHORT).show();
-                                    FirebaseAuth.getInstance().signInAnonymously();
-                                }
-                            });
-                    return false;
-                }
+                    com.google.firebase.auth.FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
+                    if (User!=null&&!User.isAnonymous()) {
+                        AuthUI.getInstance().signOut(getActivity().getApplicationContext())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Signed out successfully", Toast.LENGTH_SHORT).show();
+                                        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                self.onCreate(savedInstanceState);
+                                            }
+                                        });
+
+
+                                    }
+                                });
+                    }
+                    else{
+                        Toast.makeText(getActivity().getApplicationContext(), "Already Signed Out", Toast.LENGTH_SHORT).show();
+                    }
+                        return false;
+                    }
+
             });
 
 
@@ -275,6 +294,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
-
+        @Override
+        public void onActivityResult(int ReequestCode,int resultCode,Intent data){
+            self.onCreate(savedInstanceState);
+        }
     }
 }
