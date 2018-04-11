@@ -10,6 +10,11 @@ public class QueryAgent implements FirestoreInterface{
     private HashMap<Category,ArrayList<TaskEvent>> localCopy = null;
     private static QueryAgent instance = null;
     private ArrayList<Category> catList;
+    //only deprecated so no one uses except for tests
+    @Deprecated
+    public void setLocalCopy(HashMap<Category,ArrayList<TaskEvent>> newLocal){
+        this.localCopy = newLocal;
+    }
     public static QueryAgent getInstance(){
         if (instance== null){
             instance=new QueryAgent();
@@ -18,7 +23,8 @@ public class QueryAgent implements FirestoreInterface{
         instance.getLocalCopy();
         return instance;
     }
-    private QueryAgent(){
+    @Deprecated
+    public QueryAgent(){
 
     }
     private void getLocalCopy(){
@@ -26,7 +32,7 @@ public class QueryAgent implements FirestoreInterface{
 
         fsAgent.getCategoryCollection(this);
     }
-    QueryResult Query(ArrayList<QueryTerm> queryTerms){
+    public QueryResult Query(ArrayList<QueryTerm> queryTerms){
 
         return new QueryResult(localCopy,queryTerms);
     }
