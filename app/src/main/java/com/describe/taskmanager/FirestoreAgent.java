@@ -29,6 +29,7 @@ class FirestoreAgent {
         if(instance == null){
             instance = new FirestoreAgent();
         }
+        instance.updateUserID();
         return instance;
     }
 
@@ -168,6 +169,7 @@ class FirestoreAgent {
 
     void deleteCategory(final Category categoryObj, final FSNotificationInterface callingObject)
     {
+        this.updateUserID();
         db.collection("users").document(UserID).collection("categories").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -241,6 +243,7 @@ class FirestoreAgent {
     }
 
     void updateTask(String category, final TaskEvent taskObj, final FSNotificationInterface callingObject) {
+        this.updateUserID();
         db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(taskObj.getId())).set(taskObj
 
         ).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -258,6 +261,7 @@ class FirestoreAgent {
     }
 
     void deleteTask(String category, final TaskEvent taskObj, final FSNotificationInterface callingObject) {
+        this.updateUserID();
         db.collection("users").document(UserID).collection("categories").document(category).collection("tasks").document(Integer.toString(taskObj.getId())).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                    @Override
