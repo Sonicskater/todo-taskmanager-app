@@ -60,8 +60,8 @@ public class QueryAgentTest {
         testAgainst.put(testCat2,templist2);
 
         assertTrue(testAgainst.keySet().size()==out.keySet().size());
-        assertTrue(out.get(testCat1).size()==3);
-        assertTrue(out.get(testCat2).size()==1);
+        assertTrue(out.get(testCat1).size()==testAgainst.get(testCat1).size());
+        assertTrue(out.get(testCat2).size()==testAgainst.get(testCat2).size());
 
     }
 }
