@@ -12,6 +12,7 @@ class QueryResult {
 
     private HashMap<Category,ArrayList<TaskEvent>> data;
 
+    //Constructs a subset of the database based on provided parameters
     QueryResult(HashMap<Category,ArrayList<TaskEvent>> data,ArrayList<QueryTerm> terms){
         this.data = data;
 
@@ -31,6 +32,7 @@ class QueryResult {
             this.data = temp;
         }
     }
+    //return result seperated by category
     HashMap<Category,ArrayList<TaskEvent>> getResultWithCategories(searchPriority priority){
         switch (priority) {
             case DEFAULT:
@@ -46,12 +48,14 @@ class QueryResult {
         }
 
     }
+    //unused functions for sorting the data. couldn't design ui to make use of in time.
     private HashMap<Category,ArrayList<TaskEvent>> startDateSortCategories(){
         return this.data;
     }
     private HashMap<Category,ArrayList<TaskEvent>>   endDateSortCategories(){
         return this.data;
     }
+    //remvoes tasks from their categories.
     private ArrayList<TaskEvent> flattenData(){
         ArrayList<TaskEvent> out = new ArrayList<>();
         for(Category category:this.data.keySet()){
@@ -59,6 +63,7 @@ class QueryResult {
         }
         return out;
     }
+    //returns tasks, NOT seperated into categories.
     public ArrayList<TaskEvent> getResult(searchPriority priority){
         switch (priority) {
             case DEFAULT:
@@ -74,6 +79,7 @@ class QueryResult {
         }
     }
 
+    //Sort by data, crappy bubble sort. Not used for same reason as start/endDateCategories
     private ArrayList<TaskEvent> startDateSort() {
         ArrayList<TaskEvent> temp = flattenData();
         boolean done = false;
@@ -93,6 +99,7 @@ class QueryResult {
         return temp;
     }
 
+    //same as above, reverse direction
     private ArrayList<TaskEvent> endDateSort() {
         ArrayList<TaskEvent> temp = new ArrayList<>();
 

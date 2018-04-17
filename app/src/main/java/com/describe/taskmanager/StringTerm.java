@@ -10,6 +10,7 @@ public class StringTerm extends QueryTerm {
         this.searchDescription = description;
         this.searchTerm = term;
     }
+    //generic compare fxn used in the design of QueryAgent.
     @Override
     public boolean compare(TaskEvent event) {
         if (event!=null&&event.getDescription()!=null&&event.getTitle()!=null) {
@@ -18,6 +19,7 @@ public class StringTerm extends QueryTerm {
         return false;
     }
 
+    //String representation. not used
     @Override
     public String toString() {
         String out = "Search ";

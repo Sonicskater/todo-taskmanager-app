@@ -29,11 +29,10 @@ public class FBStorageAgent {
     private FBStorageAgent(){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null){
-            if (!currentUser.isAnonymous()){
                 enabled = true;
                 firebaseStorageInstance = FirebaseStorage.getInstance();
                 storageRef = firebaseStorageInstance.getReference();
-            }
+
         }
     }
     public ArrayList<String> getFileList(){

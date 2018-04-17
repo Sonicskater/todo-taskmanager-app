@@ -15,6 +15,7 @@ public class QueryAgent implements FirestoreInterface{
     public void setLocalCopy(HashMap<Category,ArrayList<TaskEvent>> newLocal){
         this.localCopy = newLocal;
     }
+    //Singleton pattern
     public static QueryAgent getInstance(){
         if (instance== null){
             instance=new QueryAgent();
@@ -23,19 +24,23 @@ public class QueryAgent implements FirestoreInterface{
         instance.getLocalCopy();
         return instance;
     }
+    //empty constructor for units tests
     @Deprecated
     public QueryAgent(){
 
     }
+    //Caches the database for searching so as not to spam the database.
     private void getLocalCopy(){
         localCopy = new HashMap<>();
 
         fsAgent.getCategoryCollection(this);
     }
-    public QueryResult Query(ArrayList<QueryTerm> queryTerms){
+    //Main Query Function
+    QueryResult Query(ArrayList<QueryTerm> queryTerms){
 
         return new QueryResult(localCopy,queryTerms);
     }
+
 
 
     @Override
