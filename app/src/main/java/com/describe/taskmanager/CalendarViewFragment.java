@@ -33,6 +33,7 @@ public class CalendarViewFragment extends Fragment implements  SwipeRefreshLayou
          calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
          {
              @Override
+             //Takes you to the daily view of the date selected.
              public void onSelectedDayChange(@NonNull CalendarView newCalendarView, int year, int month, int day)
              {
                  Calendar calendar = Calendar.getInstance();
