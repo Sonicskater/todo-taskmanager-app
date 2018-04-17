@@ -30,6 +30,7 @@ public class CalendarViewFragment extends Fragment implements  SwipeRefreshLayou
         this.fsAgent = FirestoreAgent.getInstance();
         calendarView = view.findViewById(R.id.CalendarView);
 
+        //Listen to any clicks on the calendar.
          calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
          {
              @Override
@@ -39,6 +40,7 @@ public class CalendarViewFragment extends Fragment implements  SwipeRefreshLayou
                  Calendar calendar = Calendar.getInstance();
                  calendar.set(year, month, day);
 
+                 //Opens the daily view.
                  if(getActivity()!=null) {
                      Intent intent = new Intent(getActivity().getApplicationContext(), DailyViewActivity.class);
                      SimpleDateFormat sdf = new SimpleDateFormat("EEE MMMM dd, yyyy", Locale.ENGLISH);
