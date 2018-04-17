@@ -30,6 +30,7 @@ public class CategoryCreateView extends AppCompatActivity implements FSNotificat
             @Override
             public void onClick(View view)
             {
+                //Makes sure that the category tittle is a reasonable length.
                 if (categoryName.getText().length() >= 21)
                 {
                     Context context = getApplicationContext();

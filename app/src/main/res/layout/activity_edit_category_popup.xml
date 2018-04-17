@@ -6,8 +6,7 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    android:orientation="vertical">
+    android:paddingTop="16dp">
 
 
     <LinearLayout
@@ -19,8 +18,8 @@
             android:id="@+id/buttonCreateCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="end"
+            android:layout_weight="1"
             android:text="Add"
             tools:layout_editor_absoluteX="69dp"
             tools:layout_editor_absoluteY="126dp" />
@@ -30,8 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_weight="1"
             android:layout_gravity="end"
+            android:layout_weight="1"
             android:text="Delete"
             tools:layout_editor_absoluteX="196dp"
             tools:layout_editor_absoluteY="126dp" />
